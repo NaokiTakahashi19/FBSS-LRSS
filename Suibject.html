@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ja"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>数学・復習ドリル開始画面</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;family=Noto+Sans+JP:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#136dec",
+                        "primary-dark": "#0f5bb5",
+                        "accent": "#4c6c9a",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e293b",
+                        "math-accent": "#4379F2", /* Blue-ish for Math */
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "Noto Sans JP", "sans-serif"],
+                        "body": ["Noto Sans JP", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'card': '0 2px 8px rgba(0, 0, 0, 0.04)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        .lexend {
+            font-family: 'Lexend', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-body transition-colors duration-200">
+<!-- Top App Bar -->
+<header class="sticky top-0 z-50 bg-surface-light dark:bg-surface-dark shadow-sm border-b border-slate-200 dark:border-slate-700">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<button class="p-2 -ml-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex flex-col sm:flex-row sm:items-baseline sm:gap-3">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded text-xs font-bold bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-300 tracking-wide">数学</span>
+<h1 class="text-lg font-bold leading-tight text-slate-900 dark:text-white truncate max-w-[200px] sm:max-w-none">変域とグラフの読み取り</h1>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-full">
+<span class="material-symbols-outlined text-slate-500 text-[20px]">timer</span>
+<span class="text-sm font-bold text-slate-600 dark:text-slate-300 whitespace-nowrap"><span class="lexend">10</span>分</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex flex-col p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full gap-6">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full">
+<!-- Left Column: Mission & Data (Tablet Landscape main area) -->
+<div class="lg:col-span-7 flex flex-col gap-6">
+<!-- Hero Card: Today's Mission -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-soft overflow-hidden border border-slate-100 dark:border-slate-700 relative group">
+<div class="absolute top-0 left-0 w-1.5 h-full bg-primary"></div>
+<div class="p-6 sm:p-8">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">flag</span>
+<span class="text-primary font-bold tracking-wider text-sm uppercase lexend">Today's Mission</span>
+</div>
+<h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-3">今日のミッション</h2>
+<div class="flex flex-col sm:flex-row gap-6">
+<div class="flex-1">
+<p class="text-lg text-slate-700 dark:text-slate-300 font-medium leading-relaxed mb-4">
+                                    一次関数の変域を正確に読み解き、<br class="hidden sm:block"/>グラフと式を自由に往復できるようにする。
+                                </p>
+<div class="inline-flex items-start gap-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800/30 p-4 rounded-xl">
+<span class="material-symbols-outlined text-amber-600 dark:text-amber-400 shrink-0">lightbulb</span>
+<div>
+<p class="text-sm font-bold text-amber-800 dark:text-amber-200 mb-0.5">分析結果</p>
+<p class="text-sm text-amber-700 dark:text-amber-300 leading-snug">直近の模試で、この単元の正答率が平均を下回っています。ここを固めると得点が安定します。</p>
+</div>
+</div>
+</div>
+<!-- Visual Decoration for Tablet -->
+<div class="hidden sm:block w-32 shrink-0 aspect-square rounded-xl bg-slate-100 dark:bg-slate-800 relative overflow-hidden self-center" data-alt="Abstract geometric shapes representing linear functions on a graph">
+<div class="absolute inset-0 opacity-50 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-100 via-transparent to-transparent"></div>
+<svg class="w-full h-full p-4 text-primary/40" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24">
+<path d="M3 3v18h18"></path>
+<path d="M5 19l14-14"></path>
+<circle class="text-primary" cx="5" cy="19" fill="currentColor" r="2"></circle>
+<circle cx="19" cy="5" fill="white" r="2" stroke="currentColor"></circle>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<!-- Why Now Section -->
+<div class="flex flex-col gap-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400">psychology</span>
+                        なぜ今やるのか
+                    </h3>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+<!-- Card 1 -->
+<div class="bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium">
+<span>模試正答率</span>
+<span class="material-symbols-outlined text-[18px]">pie_chart</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="text-2xl font-bold text-slate-900 dark:text-white lexend">32</span>
+<span class="text-sm font-bold text-slate-500">%</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-1.5 mt-auto">
+<div class="bg-red-500 h-1.5 rounded-full" style="width: 32%"></div>
+</div>
+<p class="text-xs text-red-500 font-medium mt-1">要復習エリア</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium">
+<span>志望校平均差</span>
+<span class="material-symbols-outlined text-[18px]">trending_down</span>
+</div>
+<div class="flex items-baseline gap-1">
+<span class="text-2xl font-bold text-slate-900 dark:text-white lexend text-red-500">-12</span>
+<span class="text-sm font-bold text-slate-500">点</span>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-1.5 mt-auto flex justify-center relative">
+<div class="absolute left-1/2 w-px h-2 bg-slate-300 -top-0.5"></div>
+<div class="bg-red-500 h-1.5 rounded-full absolute right-1/2" style="width: 40%"></div>
+</div>
+<p class="text-xs text-slate-500 mt-1">平均まであと少し</p>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-light dark:bg-surface-dark p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium">
+<span>克服メリット</span>
+<span class="material-symbols-outlined text-[18px] text-amber-500">trophy</span>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<span class="text-base font-bold text-primary dark:text-primary-300">大問3完答へ</span>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">入試頻出パターン</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Summary & Action -->
+<div class="lg:col-span-5 flex flex-col gap-6">
+<!-- Learning Content Summary -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">学習内容サマリー</h3>
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<div class="bg-blue-50 dark:bg-blue-900/30 p-2 rounded-lg text-primary dark:text-primary-300">
+<span class="material-symbols-outlined text-[20px]">format_list_numbered</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white">問題構成</h4>
+<p class="text-sm text-slate-600 dark:text-slate-400">基本問題 2問 / 応用問題 3問</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<div class="bg-blue-50 dark:bg-blue-900/30 p-2 rounded-lg text-primary dark:text-primary-300">
+<span class="material-symbols-outlined text-[20px]">draw</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white">形式</h4>
+<p class="text-sm text-slate-600 dark:text-slate-400">グラフ作成、変域の計算、選択問題</p>
+</div>
+</li>
+</ul>
+<hr class="my-5 border-slate-100 dark:border-slate-700"/>
+<!-- Projection Gauge -->
+<div class="bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-700">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-bold text-slate-500 uppercase tracking-wide">推定学力アップ</span>
+<span class="material-symbols-outlined text-primary text-[20px]">trending_up</span>
+</div>
+<div class="flex items-end gap-2 mb-3">
+<span class="text-3xl font-bold text-primary dark:text-primary-400 lexend">+0.8</span>
+<span class="text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">偏差値</span>
+</div>
+<div class="h-2 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-cyan-400 w-[60%] rounded-full animate-pulse"></div>
+</div>
+<p class="text-xs text-center mt-3 text-slate-500">このドリル完了後の見込み値です</p>
+</div>
+</div>
+<!-- Action Area (Sticky on mobile if needed, but relative here for tablet layout) -->
+<div class="mt-auto bg-surface-light dark:bg-surface-dark rounded-2xl p-6 border border-primary/20 shadow-[0_0_20px_rgba(19,109,236,0.1)]">
+<div class="flex justify-between items-center mb-4 px-1">
+<div class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium">
+<span class="material-symbols-outlined text-[16px] text-slate-400">headphones</span>
+                            音声ヒントあり
+                        </div>
+<div class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-medium">
+<span class="material-symbols-outlined text-[16px] text-slate-400">center_focus_strong</span>
+                            集中モード
+                        </div>
+</div>
+<button class="w-full bg-primary hover:bg-primary-dark text-white text-lg font-bold py-4 px-6 rounded-xl shadow-lg shadow-primary/30 active:scale-[0.98] transition-all flex items-center justify-center gap-3 group">
+<span>学習を開始する</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<p class="text-center text-xs text-slate-400 mt-4 flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]">save</span>
+                        途中でやめても、続きから再開できます
+                    </p>
+</div>
+</div>
+</div>
+</main>
+</body></html>

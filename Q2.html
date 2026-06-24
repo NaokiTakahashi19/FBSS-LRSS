@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ja"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Math Review Drill - Geometry</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;family=Noto+Sans+JP:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#136dec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "Noto Sans JP", "sans-serif"],
+                        "body": ["Noto Sans JP", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Hide scrollbar for clean look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Custom styles for mathematical text if needed */
+        .math-text {
+            font-family: 'Lexend', serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 flex flex-col h-screen overflow-hidden antialiased selection:bg-primary/30 selection:text-primary">
+<!-- Top Navigation & Progress -->
+<header class="flex-none bg-background-light dark:bg-background-dark z-20">
+<div class="flex items-center justify-between px-4 py-3">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-colors text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex flex-col items-center">
+<h2 class="text-base font-bold text-slate-900 dark:text-white tracking-tight">平面図形</h2>
+<span class="text-xs text-slate-500 dark:text-slate-400 font-medium">第3問 / 全10問</span>
+</div>
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-200/50 dark:hover:bg-slate-800 transition-colors text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Progress Bar -->
+<div class="px-0 w-full">
+<div class="h-1 w-full bg-slate-200 dark:bg-slate-800">
+<div class="h-full bg-primary transition-all duration-500 ease-out" style="width: 30%;"></div>
+</div>
+</div>
+</header>
+<!-- Main Content Area (Scrollable) -->
+<main class="flex-1 overflow-y-auto no-scrollbar relative w-full max-w-2xl mx-auto flex flex-col">
+<!-- Timer Widget (Floating or Inline) -->
+<div class="sticky top-0 z-10 flex justify-center py-4 bg-gradient-to-b from-background-light via-background-light to-transparent dark:from-background-dark dark:via-background-dark">
+<div class="bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 rounded-full px-4 py-1.5 flex items-center gap-2.5">
+<span class="material-symbols-outlined text-primary text-[20px]">timer</span>
+<span class="font-display font-bold text-lg tabular-nums tracking-tight text-slate-800 dark:text-slate-100">14:20</span>
+</div>
+</div>
+<div class="px-4 pb-24 flex flex-col gap-5">
+<!-- Problem Card -->
+<section class="bg-white dark:bg-slate-900 rounded-xl shadow-sm overflow-hidden border border-slate-100 dark:border-slate-800">
+<!-- Question Text -->
+<div class="p-5 border-b border-slate-50 dark:border-slate-800/50">
+<p class="text-base leading-7 font-body text-slate-800 dark:text-slate-200">
+                        下の図で、点 <span class="math-text italic">A, B, C, D</span> は円 <span class="math-text italic">O</span> の周上にあり、<span class="math-text italic">AC</span> は直径である。<br/>
+<span class="math-text">∠BDC = 35°</span> のとき、<span class="math-text font-bold text-primary">∠x</span> の大きさを求めなさい。
+                    </p>
+</div>
+<!-- Geometry Canvas (Interactive Area) -->
+<div class="relative w-full aspect-[4/3] bg-slate-50 dark:bg-[#0B1119] group/canvas">
+<!-- Grid Pattern Overlay for technical feel -->
+<div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.1]" style="background-image: radial-gradient(#64748b 1px, transparent 1px); background-size: 20px 20px;"></div>
+<!-- Main Geometry Figure -->
+<div class="absolute inset-0 flex items-center justify-center p-6">
+<div class="w-full h-full bg-contain bg-center bg-no-repeat transition-transform duration-300 ease-out hover:scale-[1.02]" data-alt="幾何学図形: 円Oの中に四角形ABCDが内接しており、ACは直径。角度BDCが35度、角度xを求める問題の図" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC_kJHAQ8hIZP2JxdnOUUj0eIiaL1PhwcYFuTqvNd-89QHRzxTeItqSqi31eF9vsrywwvKnU-Su3VraekRxgZ4OCdkTKWY4Ysf1k51oD9HCp7TYJH5TRjT6AmGaYKlHJ5uiIkN_LbspckCNZZIZcxiHgBOag8-gjALJZg-1CbLHuyzTEDLKnvH9URCjV7xljBc5W1rBT2OKUd5BSVrmrURWz-hDgvTSZt399n38Zjv69ECH2Nm1BdnesK62509kSKgx_q1_99NRLNc');">
+</div>
+</div>
+<!-- Floating Canvas Controls -->
+<div class="absolute bottom-4 right-4 flex flex-col gap-2 opacity-90">
+<button aria-label="Zoom In" class="size-9 bg-white dark:bg-slate-700 rounded-lg shadow-md border border-slate-100 dark:border-slate-600 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-600 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+<button aria-label="Zoom Out" class="size-9 bg-white dark:bg-slate-700 rounded-lg shadow-md border border-slate-100 dark:border-slate-600 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-600 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+<button aria-label="Reset View" class="size-9 bg-white dark:bg-slate-700 rounded-lg shadow-md border border-slate-100 dark:border-slate-600 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-600 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]">restart_alt</span>
+</button>
+</div>
+<!-- Highlight Badge -->
+<div class="absolute top-4 left-4 bg-primary/10 backdrop-blur-sm px-2.5 py-1 rounded text-xs font-bold text-primary dark:text-blue-400 border border-primary/20">
+                        拡大・縮小可能
+                    </div>
+</div>
+</section>
+<!-- Answer Section -->
+<section class="flex flex-col gap-3">
+<div class="flex items-center justify-between px-1">
+<h3 class="text-sm font-bold text-slate-500 dark:text-slate-400 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">ads_click</span>
+                        解答を選択
+                    </h3>
+<button class="text-xs font-bold text-primary hover:text-blue-600 dark:hover:text-blue-400 flex items-center gap-1 px-2 py-1 rounded hover:bg-primary/5 transition-colors">
+<span class="material-symbols-outlined text-[16px]">lightbulb</span>
+                        ヒント
+                    </button>
+</div>
+<div class="grid grid-cols-2 gap-3 sm:gap-4">
+<!-- Option 1 -->
+<button class="relative h-16 sm:h-20 rounded-xl bg-white dark:bg-slate-900 border-2 border-transparent shadow-sm hover:border-primary/30 hover:shadow-md dark:shadow-none transition-all flex items-center justify-center group">
+<span class="text-xl font-bold text-slate-700 dark:text-slate-200 group-hover:text-primary transition-colors">35°</span>
+<div class="absolute inset-0 rounded-xl ring-0 group-focus:ring-2 ring-primary ring-offset-2 dark:ring-offset-slate-900 transition-all"></div>
+</button>
+<!-- Option 2 -->
+<button class="relative h-16 sm:h-20 rounded-xl bg-white dark:bg-slate-900 border-2 border-transparent shadow-sm hover:border-primary/30 hover:shadow-md dark:shadow-none transition-all flex items-center justify-center group">
+<span class="text-xl font-bold text-slate-700 dark:text-slate-200 group-hover:text-primary transition-colors">45°</span>
+<div class="absolute inset-0 rounded-xl ring-0 group-focus:ring-2 ring-primary ring-offset-2 dark:ring-offset-slate-900 transition-all"></div>
+</button>
+<!-- Option 3 (Selected State Simulation) -->
+<button class="relative h-16 sm:h-20 rounded-xl bg-primary/5 dark:bg-primary/10 border-2 border-primary shadow-sm flex items-center justify-center group">
+<span class="text-xl font-bold text-primary dark:text-blue-400">55°</span>
+<div class="absolute top-2 right-2 size-5 bg-primary rounded-full flex items-center justify-center animate-in zoom-in duration-200">
+<span class="material-symbols-outlined text-white text-[14px] font-bold">check</span>
+</div>
+</button>
+<!-- Option 4 -->
+<button class="relative h-16 sm:h-20 rounded-xl bg-white dark:bg-slate-900 border-2 border-transparent shadow-sm hover:border-primary/30 hover:shadow-md dark:shadow-none transition-all flex items-center justify-center group">
+<span class="text-xl font-bold text-slate-700 dark:text-slate-200 group-hover:text-primary transition-colors">65°</span>
+<div class="absolute inset-0 rounded-xl ring-0 group-focus:ring-2 ring-primary ring-offset-2 dark:ring-offset-slate-900 transition-all"></div>
+</button>
+</div>
+</section>
+</div>
+</main>
+<!-- Sticky Bottom Navigation -->
+<footer class="flex-none bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 p-4 pb-6 sm:pb-4 w-full z-30">
+<div class="max-w-2xl mx-auto flex gap-4">
+<button class="flex-1 h-12 rounded-lg border border-slate-300 dark:border-slate-600 font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+<span class="text-sm">前へ</span>
+</button>
+<button class="flex-[2] h-12 rounded-lg bg-primary hover:bg-blue-600 text-white font-bold shadow-lg shadow-blue-500/20 active:translate-y-0.5 transition-all flex items-center justify-center gap-2">
+<span class="text-sm">次の問題へ</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</footer>
+</body></html>

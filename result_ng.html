@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ja"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>数学・不正解フィードバック</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;700&amp;family=Noto+Sans+JP:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#136dec",
+                        "background-light": "#f0f6ff",
+                        "background-dark": "#101822",
+                        "accent-warn": "#f59e0b", // Amber-500 for encouragement/warning
+                        "accent-soft": "#fff7ed", // Amber-50 for backgrounds
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "Noto Sans JP", "sans-serif"],
+                        "body": ["Noto Sans JP", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-50 font-display antialiased selection:bg-primary/20">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-white dark:bg-slate-900 shadow-xl">
+<!-- TopAppBar -->
+<div class="sticky top-0 z-50 flex items-center bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm p-4 border-b border-slate-100 dark:border-slate-800 justify-between">
+<button class="text-slate-600 dark:text-slate-300 flex size-10 shrink-0 items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
+<h2 class="text-slate-800 dark:text-slate-100 text-base font-bold leading-tight tracking-wide flex-1 text-center">数学・復習ドリル</h2>
+<button class="flex h-10 px-3 items-center justify-center rounded-full hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-bold leading-normal tracking-wide shrink-0">中断</p>
+</button>
+</div>
+<main class="flex-1 flex flex-col px-5 py-6 gap-6 pb-32">
+<!-- Encouragement Header -->
+<div class="flex flex-col items-center gap-3 text-center animate-fade-in-up">
+<div class="bg-amber-100 dark:bg-amber-900/30 text-accent-warn p-3 rounded-full flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-[32px]">lightbulb</span>
+</div>
+<h1 class="text-slate-800 dark:text-slate-100 text-xl font-bold tracking-tight">
+                    おしい！ ここを確認しよう
+                </h1>
+</div>
+<!-- Problem Recap Area (Graph) -->
+<div class="w-full relative group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm bg-white dark:bg-slate-800">
+<div class="bg-slate-50 dark:bg-slate-800 relative w-full aspect-[16/9] bg-cover bg-center" data-alt="Parabolic graph illustrating math function with range highlighted" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDzyZdrPktzfQ48ESskRUmArKp9D-cHwBk2lxCCQIffsVZHsTDFgBFllahNn04a0Qq-RxvUrE7AlZlYrv4khTDGji-Aw72OODa_u1cQStvMymooB0s_135D6zQhfIEx9V74at_xeCKfA40d7wgxVLGtQKoa8D0m2FmAUfE20oA41Bnw5lsAnxIVJmbmrxl-vOq6Os-t0zjZvxdlpZi1O3y1UD_kn2m2zn1mIuKnXiNPuojmNZJK8HTJUgW3CkcW24rgpaoO-A-a_4Q");'>
+<!-- Overlay to make graph cleaner -->
+<div class="absolute inset-0 bg-white/40 dark:bg-slate-900/40"></div>
+<!-- Simulated Highlight Overlay for "Focus Area" -->
+<div class="absolute top-[20%] left-[30%] w-[40%] h-[60%] border-2 border-dashed border-accent-warn rounded-lg bg-accent-warn/10 flex items-center justify-center">
+<span class="bg-accent-warn text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-sm">注目!</span>
+</div>
+</div>
+<div class="px-4 py-2 bg-slate-50 dark:bg-slate-800 border-t border-slate-100 dark:border-slate-700">
+<p class="text-xs text-slate-500 dark:text-slate-400 text-center font-medium">問題再掲：二次関数の変域</p>
+</div>
+</div>
+<!-- Core Feedback Card -->
+<div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border-l-4 border-accent-warn relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
+<span class="material-symbols-outlined text-6xl text-accent-warn">check_circle</span>
+</div>
+<h3 class="text-accent-warn text-sm font-bold uppercase tracking-wider mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">info</span>
+                    ポイント
+                </h3>
+<p class="text-slate-800 dark:text-slate-100 text-lg font-bold leading-relaxed">
+                    yの変域は、<br/>
+<span class="bg-yellow-100 dark:bg-yellow-900/40 px-1 rounded mx-0.5">xの範囲の中で一番大きいyと一番小さいy</span><br/>
+                    を考えます。
+                </p>
+<p class="text-slate-600 dark:text-slate-400 text-sm mt-3 leading-relaxed">
+                    変域の端だけでなく、頂点が含まれるかどうかも確認しましょう。
+                </p>
+</div>
+<!-- Hint Section -->
+<div class="flex flex-col gap-3">
+<h3 class="text-slate-800 dark:text-slate-200 text-base font-bold flex items-center gap-2 px-1">
+<span class="material-symbols-outlined text-primary">help</span>
+                    ヒント
+                </h3>
+<!-- Hint 1 (Visible) -->
+<div class="bg-primary/5 dark:bg-primary/10 rounded-xl p-4 border border-primary/10 dark:border-primary/20">
+<div class="flex gap-3">
+<div class="flex-shrink-0 mt-0.5">
+<span class="bg-primary text-white text-xs font-bold size-5 flex items-center justify-center rounded-full">1</span>
+</div>
+<p class="text-slate-700 dark:text-slate-300 text-sm font-medium leading-relaxed">
+                            まず、xの範囲の両端でのyの値を計算してみよう。<br/>
+                            x = -2 のとき、yはいくつになるかな？
+                        </p>
+</div>
+</div>
+<!-- Hint 2 (Accordion / Collapsed state) -->
+<button class="group flex items-center justify-between w-full bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl p-4 border border-slate-200 dark:border-slate-700 transition-all text-left">
+<div class="flex items-center gap-3">
+<div class="flex-shrink-0">
+<span class="bg-slate-300 dark:bg-slate-600 text-white text-xs font-bold size-5 flex items-center justify-center rounded-full group-hover:bg-primary/70 transition-colors">2</span>
+</div>
+<span class="text-slate-600 dark:text-slate-400 text-sm font-bold group-hover:text-primary transition-colors">ヒント②を見る</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">expand_more</span>
+</button>
+</div>
+</main>
+<!-- Fixed Bottom Action Area -->
+<div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 p-5 z-40 pb-8 safe-area-bottom">
+<div class="flex flex-col gap-3 items-center">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium text-center">
+                    ヒントを参考に、もう一度考えてみよう
+                </p>
+<button class="w-full bg-primary hover:bg-blue-600 text-white font-bold text-lg py-4 rounded-xl shadow-lg shadow-primary/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">refresh</span>
+                    もう一度解く
+                </button>
+<p class="text-slate-400 dark:text-slate-500 text-xs text-center mt-1">
+                    何度間違えても大丈夫。<br/>考え直すことで、学力は定着します。
+                </p>
+</div>
+<!-- Background gradient fade for smooth transition behind fixed footer -->
+<div class="absolute -top-12 left-0 right-0 h-12 bg-gradient-to-t from-white dark:from-slate-900 to-transparent pointer-events-none"></div>
+</div>
+</div>
+</body></html>

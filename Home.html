@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html class="light" lang="ja"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>生徒用ホームダッシュボード - 学習アプリ</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&amp;family=Noto+Sans+JP:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#3b82f6","primary-dark": "#1d4ed8",
+                        "primary-light": "#eff6ff",
+                        "secondary": "#8b5cf6","background-light": "#f8fafc",
+                        "background-dark": "#0f172a",
+                        "text-main": "#1e293b",
+                        "text-sub": "#64748b",
+                        "accent-success": "#10b981","accent-warning": "#f59e0b","accent-danger": "#ef4444",
+                        "card-bg": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "Noto Sans JP", "sans-serif"],
+                        "sans": ["Noto Sans JP", "Lexend", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.375rem", "lg": "0.75rem", "xl": "1rem", "2xl": "1.5rem", "full": "9999px"},
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 15px rgba(59, 130, 246, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Noto Sans JP', 'Lexend', sans-serif;
+        }
+        .font-display {
+            font-family: 'Lexend', 'Noto Sans JP', sans-serif;
+        }::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }.text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #3b82f6, #8b5cf6);
+        }
+        .chart-grid line {
+            stroke: #f1f5f9;
+            stroke-dasharray: 4;
+        }@keyframes pulse-soft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(0.98); }
+        }
+        .animate-pulse-soft {
+            animation: pulse-soft 2s ease-in-out infinite;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-text-main font-sans min-h-screen flex flex-col overflow-x-hidden">
+<header class="sticky top-0 z-50 bg-card-bg/80 backdrop-blur-lg border-b border-slate-200/60 dark:border-slate-800 shadow-sm">
+<div class="max-w-[1400px] mx-auto px-4 sm:px-6 h-18 py-2 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="relative group cursor-pointer">
+<div class="absolute -inset-0.5 bg-gradient-to-br from-primary to-secondary rounded-full opacity-30 group-hover:opacity-100 blur transition duration-300"></div>
+<div class="relative bg-center bg-no-repeat bg-cover rounded-full size-11 ring-2 ring-white dark:ring-slate-900" data-alt="User profile avatar of a smiling student" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCn6KuspIge-x6iujkPMWoC3IM0BKs9zuJhoOzn3ljf8ZVTRLlU4pxvWy410h6pBbeYOoVpqlxiNmAVlBZ6s3YzEQkeybkQdx3cRmh6cHOzQTUVH_WHX0dvgOWr7rapihfJCl0aF12ObIO5C_CikazWdDBktOD3qd2FE4QJCtDevOVfxEDI4dX6UyShBJ9i2ZnW1988uXJ2ytK1xShO3b6ogqO5f3OaM_BSwdwAFYwiC2GNOu2IO5tbaYBbOwSRXpwCBxdf6J779ts");'></div>
+<div class="absolute bottom-0 right-0 size-3 bg-accent-success border-2 border-white dark:border-slate-900 rounded-full"></div>
+</div>
+<div class="flex flex-col">
+<h1 class="text-sm sm:text-base font-bold leading-tight text-slate-700 dark:text-slate-200">こんにちは、健太さん 👋</h1>
+<p class="text-xs text-text-sub font-medium hidden sm:block">今日の目標達成まであと <span class="text-secondary font-bold">2つ</span></p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<div class="absolute -inset-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-xl blur opacity-20 group-hover:opacity-50 transition duration-500"></div>
+<div class="relative flex items-center bg-white dark:bg-slate-800 rounded-xl px-4 py-1.5 shadow-sm border border-slate-100 dark:border-slate-700">
+<div class="flex flex-col items-center mr-3 border-r border-slate-100 dark:border-slate-700 pr-3">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">次の模試</span>
+<span class="text-xs font-bold text-slate-600 dark:text-slate-300">8/25</span>
+</div>
+<div class="flex flex-col items-center justify-center">
+<span class="text-[9px] font-bold text-primary uppercase tracking-wider mb-[-2px]">あと</span>
+<div class="flex items-baseline gap-0.5">
+<span class="text-2xl sm:text-3xl font-black font-display text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-600">12</span>
+<span class="text-xs font-bold text-slate-400 pb-1">日</span>
+</div>
+</div>
+</div>
+</div>
+<button class="relative hidden sm:flex items-center justify-center size-10 rounded-full bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined text-[24px]">notifications</span>
+<span class="absolute top-2 right-2 size-2.5 bg-accent-danger rounded-full border-2 border-white dark:border-slate-800"></span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-text-main md:hidden">
+<span class="material-symbols-outlined text-[24px]">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 w-full max-w-[1400px] mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 pb-24 md:pb-6">
+<section class="lg:col-span-4 flex flex-col gap-6">
+<div class="bg-card-bg dark:bg-slate-800 rounded-2xl shadow-soft border border-slate-100 dark:border-slate-700 overflow-hidden relative group">
+<div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500"></div>
+<div class="p-5">
+<div class="flex justify-between items-start mb-2">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400 border border-blue-100 dark:border-blue-800/50">第一志望</span>
+<span class="text-xs text-text-sub">公立 / 普通科</span>
+</div>
+<h3 class="text-xl font-black text-text-main tracking-tight">県立朝日高等学校</h3>
+</div>
+<div class="bg-slate-50 dark:bg-slate-700/50 p-2 rounded-xl text-slate-400">
+<span class="material-symbols-outlined text-[20px]">school</span>
+</div>
+</div>
+<div class="relative flex flex-col items-center justify-center py-6">
+<div class="relative size-44">
+<svg class="size-full -rotate-90" viewBox="0 0 36 36">
+<defs>
+<linearGradient id="gaugeGradient" x1="0%" x2="100%" y1="0%" y2="0%">
+<stop offset="0%" style="stop-color:#22d3ee;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1"></stop>
+</linearGradient>
+</defs>
+<path class="text-slate-100 dark:text-slate-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="100, 100" stroke-linecap="round" stroke-width="2.5"></path>
+<path class="drop-shadow-md transition-all duration-1000 ease-out" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="url(#gaugeGradient)" stroke-dasharray="70, 100" stroke-linecap="round" stroke-width="2.5"></path>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-4xl font-black font-display text-text-main tracking-tighter">B</span>
+<span class="text-xs font-bold text-text-sub uppercase tracking-widest mt-1">判定</span>
+</div>
+<div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-800 shadow-sm border border-slate-100 px-3 py-1 rounded-full whitespace-nowrap">
+<span class="text-xs font-bold text-primary">70%</span>
+</div>
+</div>
+<div class="mt-2 text-center">
+<p class="text-sm font-medium text-text-sub">合格圏内まであと <span class="text-primary font-bold text-lg">+15</span> 点</p>
+</div>
+</div>
+<button class="w-full mt-2 py-3 rounded-xl bg-slate-50 dark:bg-slate-700 hover:bg-white hover:shadow-md border border-transparent hover:border-slate-100 text-sm font-bold text-slate-600 dark:text-slate-300 transition-all flex items-center justify-center gap-2 group">
+<span>詳細分析を見る</span>
+<span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="bg-card-bg dark:bg-slate-800 rounded-2xl shadow-soft border border-slate-100 dark:border-slate-700 p-5">
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-bold text-text-main flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">pentagon</span>
+                    教科バランス
+                </h3>
+<span class="text-[10px] font-bold bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded-md text-text-sub">前回模試</span>
+</div>
+<div class="flex items-center justify-center relative h-52 w-full">
+<svg class="w-full h-full max-w-[220px]" viewBox="0 0 200 200">
+<defs>
+<radialGradient cx="50%" cy="50%" fx="50%" fy="50%" id="radarGradient" r="50%">
+<stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.4"></stop>
+<stop offset="100%" style="stop-color:#3b82f6;stop-opacity:0.1"></stop>
+</radialGradient>
+</defs>
+<polygon fill="none" points="100,20 176,76 147,165 53,165 24,76" stroke="#e2e8f0" stroke-width="1"></polygon>
+<polygon fill="none" points="100,50 148,85 129,140 71,140 52,85" stroke="#e2e8f0" stroke-width="1"></polygon>
+<polygon fill="url(#radarGradient)" points="100,35 160,80 120,130 65,150 40,85" stroke="#8b5cf6" stroke-linejoin="round" stroke-width="2"></polygon>
+<text class="font-bold" fill="#64748b" font-size="11" text-anchor="middle" x="100" y="15">数学</text>
+<text class="font-bold" fill="#64748b" font-size="11" text-anchor="middle" x="185" y="75">英語</text>
+<text class="font-bold" fill="#64748b" font-size="11" text-anchor="middle" x="155" y="180">理科</text>
+<text class="font-bold" fill="#64748b" font-size="11" text-anchor="middle" x="45" y="180">社会</text>
+<text class="font-bold" fill="#64748b" font-size="11" text-anchor="middle" x="15" y="75">国語</text>
+<circle cx="100" cy="35" fill="#fff" r="3.5" stroke="#8b5cf6" stroke-width="2"></circle>
+<circle cx="160" cy="80" fill="#fff" r="3.5" stroke="#8b5cf6" stroke-width="2"></circle>
+<circle cx="120" cy="130" fill="#fff" r="3.5" stroke="#8b5cf6" stroke-width="2"></circle>
+<circle cx="65" cy="150" fill="#fff" r="3.5" stroke="#8b5cf6" stroke-width="2"></circle>
+<circle cx="40" cy="85" fill="#fff" r="3.5" stroke="#8b5cf6" stroke-width="2"></circle>
+</svg>
+</div>
+<div class="mt-2 flex gap-2">
+<div class="flex-1 bg-primary-light/50 p-2 rounded-lg flex items-center justify-between">
+<span class="text-[10px] font-bold text-primary uppercase">Best</span>
+<span class="text-xs font-bold text-slate-700">数学 <span class="text-primary ml-1">68</span></span>
+</div>
+<div class="flex-1 bg-orange-50 p-2 rounded-lg flex items-center justify-between">
+<span class="text-[10px] font-bold text-accent-warning uppercase">Weak</span>
+<span class="text-xs font-bold text-slate-700">社会 <span class="text-accent-warning ml-1">48</span></span>
+</div>
+</div>
+</div>
+</section>
+<section class="lg:col-span-8 flex flex-col gap-6">
+<div class="bg-card-bg dark:bg-slate-800 rounded-2xl shadow-soft border border-slate-100 dark:border-slate-700 p-6 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 dark:bg-blue-900/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
+<div class="flex flex-wrap items-end justify-between gap-4 mb-6 relative z-10">
+<div>
+<h3 class="font-bold text-lg text-text-main flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">show_chart</span>
+                        成績推移 (偏差値)
+                    </h3>
+<div class="flex items-center gap-3 mt-1">
+<span class="text-4xl font-black font-display text-text-main tracking-tight">62.5</span>
+<div class="flex flex-col">
+<span class="flex items-center text-accent-success font-bold text-sm">
+<span class="material-symbols-outlined text-lg">trending_up</span>
+                                +5.0
+                            </span>
+<span class="text-[10px] text-text-sub font-bold">前回比</span>
+</div>
+</div>
+</div>
+<div class="flex bg-slate-100 dark:bg-slate-700 p-1 rounded-xl">
+<button class="px-4 py-1.5 text-xs font-bold rounded-lg text-text-sub hover:text-text-main transition">3ヶ月</button>
+<button class="px-4 py-1.5 text-xs font-bold rounded-lg bg-white dark:bg-slate-600 text-primary shadow-sm">6ヶ月</button>
+</div>
+</div>
+<div class="w-full h-48 sm:h-64 relative z-10">
+<svg class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 800 200">
+<defs>
+<linearGradient id="chartFillGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#3b82f6" stop-opacity="0.25"></stop>
+<stop offset="100%" stop-color="#3b82f6" stop-opacity="0"></stop>
+</linearGradient>
+<linearGradient id="chartStrokeGradient" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0%" stop-color="#3b82f6"></stop>
+<stop offset="100%" stop-color="#22d3ee"></stop>
+</linearGradient>
+</defs>
+<g class="chart-grid text-slate-100 dark:text-slate-700/50">
+<line stroke="currentColor" stroke-width="1" x1="0" x2="800" y1="0" y2="0"></line>
+<line stroke="currentColor" stroke-width="1" x1="0" x2="800" y1="50" y2="50"></line>
+<line stroke="currentColor" stroke-width="1" x1="0" x2="800" y1="100" y2="100"></line>
+<line stroke="currentColor" stroke-width="1" x1="0" x2="800" y1="150" y2="150"></line>
+<line stroke="currentColor" stroke-width="1" x1="0" x2="800" y1="200" y2="200"></line>
+</g>
+<path d="M0,140 L160,130 L320,110 L480,90 L640,110 L800,40 V200 H0 Z" fill="url(#chartFillGradient)"></path>
+<path d="M0,140 L160,130 L320,110 L480,90 L640,110 L800,40" fill="none" filter="drop-shadow(0px 4px 6px rgba(59, 130, 246, 0.3))" stroke="url(#chartStrokeGradient)" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></path>
+<circle cx="0" cy="140" fill="#ffffff" r="5" stroke="#3b82f6" stroke-width="2.5"></circle>
+<circle cx="160" cy="130" fill="#ffffff" r="5" stroke="#3b82f6" stroke-width="2.5"></circle>
+<circle cx="320" cy="110" fill="#ffffff" r="5" stroke="#3b82f6" stroke-width="2.5"></circle>
+<circle cx="480" cy="90" fill="#ffffff" r="5" stroke="#3b82f6" stroke-width="2.5"></circle>
+<circle cx="640" cy="110" fill="#ffffff" r="5" stroke="#3b82f6" stroke-width="2.5"></circle>
+<circle cx="800" cy="40" fill="#22d3ee" r="6" stroke="#fff" stroke-width="3"></circle> 
+</svg>
+<div class="flex justify-between mt-4 text-xs font-bold text-slate-400 font-display">
+<span>4月</span>
+<span>5月</span>
+<span>6月</span>
+<span>9月</span>
+<span>10月</span>
+<span class="text-primary">11月</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-card-bg dark:bg-slate-800 rounded-2xl shadow-soft border border-slate-100 dark:border-slate-700 p-5 flex flex-col h-full">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-bold text-lg text-text-main flex items-center gap-2">
+<span class="bg-primary/10 p-1.5 rounded-lg text-primary">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</span>
+                        今日やること
+                    </h3>
+<span class="text-[10px] font-bold bg-primary text-white px-2.5 py-1 rounded-full shadow-sm">残り2つ</span>
+</div>
+<div class="space-y-3 flex-1">
+<label class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-700/30 cursor-pointer group hover:bg-slate-100 dark:hover:bg-slate-700 transition opacity-60">
+<div class="relative flex items-center">
+<input checked="" class="peer appearance-none size-5 border-2 border-slate-300 rounded text-primary focus:ring-0 checked:bg-slate-400 checked:border-slate-400" type="checkbox"/>
+<span class="material-symbols-outlined absolute text-white text-[16px] pointer-events-none opacity-0 peer-checked:opacity-100 left-0.5">check</span>
+</div>
+<div class="flex-1 line-through decoration-slate-400">
+<span class="block text-sm font-bold text-slate-500">英単語ターゲット1900</span>
+<span class="block text-xs text-slate-400">Section 5 テスト (10分)</span>
+</div>
+</label>
+<label class="relative overflow-hidden flex items-start gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 border-l-4 border-l-primary border-y border-r border-slate-100 dark:border-slate-700 shadow-sm cursor-pointer group hover:shadow-md transition">
+<div class="relative flex items-center mt-0.5">
+<input class="peer appearance-none size-5 border-2 border-slate-300 rounded text-primary focus:ring-offset-0 focus:ring-0 checked:bg-primary checked:border-primary" type="checkbox"/>
+<span class="material-symbols-outlined absolute text-white text-[16px] pointer-events-none opacity-0 peer-checked:opacity-100 left-0.5">check</span>
+</div>
+<div class="flex-1 z-10">
+<div class="flex justify-between items-start">
+<span class="block text-sm font-bold text-text-main group-hover:text-primary transition-colors">数学 過去問演習</span>
+<span class="text-[10px] font-bold text-secondary bg-secondary/10 px-1.5 py-0.5 rounded">重要</span>
+</div>
+<span class="block text-xs text-text-sub mt-0.5">大問3・4 (50分)</span>
+</div>
+</label>
+<label class="flex items-start gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm cursor-pointer group hover:border-primary/50 transition">
+<div class="relative flex items-center mt-0.5">
+<input class="peer appearance-none size-5 border-2 border-slate-300 rounded text-primary focus:ring-offset-0 focus:ring-0 checked:bg-primary checked:border-primary" type="checkbox"/>
+<span class="material-symbols-outlined absolute text-white text-[16px] pointer-events-none opacity-0 peer-checked:opacity-100 left-0.5">check</span>
+</div>
+<div class="flex-1">
+<span class="block text-sm font-bold text-text-main">社会 歴史 復習</span>
+<span class="block text-xs text-text-sub mt-0.5">江戸時代の文化 (30分)</span>
+</div>
+</label>
+</div>
+</div>
+<div class="relative bg-gradient-to-br from-[#4f46e5] to-[#7c3aed] rounded-2xl shadow-lg shadow-indigo-500/30 p-5 flex flex-col h-full text-white overflow-hidden group">
+<div class="absolute -top-10 -right-10 size-40 bg-white opacity-10 rounded-full blur-2xl group-hover:opacity-20 transition duration-500"></div>
+<div class="absolute bottom-0 right-0 p-4 opacity-10 transform translate-x-4 translate-y-4">
+<span class="material-symbols-outlined text-[120px]">bolt</span>
+</div>
+<div class="relative z-10 flex flex-col h-full">
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-white/20 p-1.5 rounded-lg backdrop-blur-sm shadow-inner border border-white/10">
+<span class="material-symbols-outlined text-white text-sm">lightbulb</span>
+</span>
+<span class="font-bold text-sm tracking-wide opacity-90 uppercase">AI 分析レコメンド</span>
+</div>
+<h3 class="font-bold text-xl mb-1">二次関数とグラフ</h3>
+<p class="text-indigo-100 text-sm mb-4 line-clamp-2 leading-relaxed opacity-90">
+                        正答率 <span class="font-bold text-white">40%</span>。ここを克服すると<br/>予測偏差値が <span class="font-bold text-amber-300">+2.0</span> アップします。
+                    </p>
+<div class="mt-auto bg-black/20 backdrop-blur-md rounded-xl p-3 border border-white/10 hover:bg-black/30 transition cursor-pointer">
+<div class="flex items-center gap-3 mb-3">
+<div class="relative bg-cover bg-center size-12 rounded-lg shrink-0 shadow-sm overflow-hidden" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBdBjuC8VVWG1J8UZlo0OpPcdHhPgxcE4Q3Py141rZv_R2lQIk274393e_85SDwxM_l_KJs-DMT0TPuUYFOKo9SwuyCt8GL405pqKRUwbIe9tR1aHjUA9Hykttf8qjUl0p5I2WYRvda5yP6wD-94rkFh5tizI71W9i0yQgntn1SYJJfHQxtRbodVMf9x8fXDodB0yKN4zKafHeTIwGdmImhRtDRspz3OsiHjjS-u_vWwSQ1jBVpJdr_5gOmR-vT70t-Oc0kV_pVNDc');">
+<div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm">play_arrow</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-bold text-sm truncate text-white">基礎から復習レッスン</p>
+<div class="flex items-center gap-2 text-xs text-indigo-200">
+<span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[10px]">timer</span> 15分</span>
+</div>
+</div>
+</div>
+<button class="w-full bg-white text-indigo-600 font-bold text-sm py-2 rounded-lg hover:bg-indigo-50 transition-colors flex items-center justify-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">play_circle</span>
+                            学習を始める
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+<a class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 hover:border-blue-400 hover:shadow-md hover:-translate-y-0.5 transition-all group text-center" href="#">
+<div class="w-10 h-10 mx-auto rounded-xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center mb-2 group-hover:bg-blue-500 group-hover:text-white transition-colors text-blue-600">
+<span class="font-bold font-display text-lg">Math</span>
+</div>
+<span class="text-xs font-bold text-text-sub group-hover:text-blue-600">数学</span>
+</a>
+<a class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 hover:border-red-400 hover:shadow-md hover:-translate-y-0.5 transition-all group text-center" href="#">
+<div class="w-10 h-10 mx-auto rounded-xl bg-red-50 dark:bg-red-900/30 flex items-center justify-center mb-2 group-hover:bg-red-500 group-hover:text-white transition-colors text-red-500">
+<span class="font-bold font-display text-lg">Eng</span>
+</div>
+<span class="text-xs font-bold text-text-sub group-hover:text-red-500">英語</span>
+</a>
+<a class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 hover:border-pink-400 hover:shadow-md hover:-translate-y-0.5 transition-all group text-center" href="#">
+<div class="w-10 h-10 mx-auto rounded-xl bg-pink-50 dark:bg-pink-900/30 flex items-center justify-center mb-2 group-hover:bg-pink-500 group-hover:text-white transition-colors text-pink-500">
+<span class="font-bold font-display text-lg">Jpn</span>
+</div>
+<span class="text-xs font-bold text-text-sub group-hover:text-pink-500">国語</span>
+</a>
+<a class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 hover:border-green-400 hover:shadow-md hover:-translate-y-0.5 transition-all group text-center" href="#">
+<div class="w-10 h-10 mx-auto rounded-xl bg-green-50 dark:bg-green-900/30 flex items-center justify-center mb-2 group-hover:bg-green-500 group-hover:text-white transition-colors text-green-600">
+<span class="font-bold font-display text-lg">Sci</span>
+</div>
+<span class="text-xs font-bold text-text-sub group-hover:text-green-600">理科</span>
+</a>
+<a class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 hover:border-orange-400 hover:shadow-md hover:-translate-y-0.5 transition-all group text-center" href="#">
+<div class="w-10 h-10 mx-auto rounded-xl bg-orange-50 dark:bg-orange-900/30 flex items-center justify-center mb-2 group-hover:bg-orange-500 group-hover:text-white transition-colors text-orange-500">
+<span class="font-bold font-display text-lg">Soc</span>
+</div>
+<span class="text-xs font-bold text-text-sub group-hover:text-orange-500">社会</span>
+</a>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md dark:bg-slate-900/95 border-t border-slate-200 dark:border-slate-800 md:hidden z-50">
+<div class="flex justify-around items-center h-16 pb-safe">
+<a class="flex flex-col items-center gap-1 text-primary w-full h-full justify-center hover:bg-slate-50" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-bold">ホーム</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-text-sub w-full h-full justify-center hover:bg-slate-50" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px] font-bold">分析</span>
+</a>
+<a class="group flex flex-col items-center gap-1 text-text-sub w-full h-full justify-center" href="#">
+<div class="bg-gradient-to-tr from-primary to-secondary rounded-2xl p-3 -mt-8 shadow-lg shadow-blue-500/30 border-4 border-white dark:border-slate-900 group-active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-white">edit_square</span>
+</div>
+<span class="text-[10px] font-bold">学習</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-text-sub w-full h-full justify-center hover:bg-slate-50" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-[10px] font-bold">計画</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-text-sub w-full h-full justify-center hover:bg-slate-50" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-bold">設定</span>
+</a>
+</div>
+</nav>
+
+</body></html>
