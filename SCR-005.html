@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>仕様について</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Material Symbols (for the "i" icon) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400&display=swap"
+    rel="stylesheet">
+
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-[#EEF1FF] flex items-center justify-center p-6">
+  <!-- Card -->
+  <div class="w-full max-w-[720px] bg-white rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.08)] px-8 py-10">
+    <!-- Icon -->
+    <div class="flex justify-center">
+      <div
+        class="w-16 h-16 rounded-full bg-[#1E66FF] flex items-center justify-center shadow-[0_10px_24px_rgba(30,102,255,0.25)]">
+        <span class="material-symbols-outlined text-white text-[28px]">info</span>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <h1 class="mt-6 text-center text-sm font-semibold text-slate-700 tracking-wide">
+      仕様について
+    </h1>
+
+    <!-- Description -->
+    <p class="mt-6 text-center text-sm text-slate-500 leading-relaxed">
+      実際のサービスでは、修了済みのユーザーは最新の過去問題を領域ごとに解くことができるようにする想定です。
+    </p>
+
+    <!-- Button -->
+    <div class="mt-10">
+      <a href="#" class="block w-full text-center bg-[#1E66FF] hover:bg-[#1757D6] active:scale-[0.99]
+                        text-white font-semibold text-sm py-4 rounded-xl
+                        shadow-[0_14px_30px_rgba(30,102,255,0.25)]
+                        transition">
+        了解
+      </a>
+    </div>
+  </div>
+</body>
+
+</html>
