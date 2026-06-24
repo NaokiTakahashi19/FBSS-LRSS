@@ -24,6 +24,24 @@
     body { min-height: 100dvh; background: #f5f8fc; }
     .progress-ring { transform: rotate(-90deg); transform-origin: 50% 50%; }
     .disabled-button { cursor: not-allowed; opacity: .52; }
+    .target-flag {
+      position: relative;
+      display: inline-block;
+      width: 16px;
+      height: 18px;
+      border-left: 3px solid #f59e0b;
+    }
+    .target-flag::after {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: 1px;
+      width: 12px;
+      height: 8px;
+      border: 2px solid #f59e0b;
+      border-left: 0;
+      border-radius: 2px;
+    }
   </style>
 </head>
 <body class="font-sans text-ink">
@@ -49,18 +67,8 @@
   </header>
 
   <main class="mx-auto max-w-6xl space-y-6 px-4 py-6 pb-12 sm:px-6">
-    <section class="rounded-2xl bg-gradient-to-r from-blue-700 to-indigo-600 p-5 text-white shadow-lg shadow-blue-200 sm:flex sm:items-center sm:justify-between">
-      <div>
-        <p class="text-sm font-bold text-blue-100">本日の学習</p>
-        <h1 class="mt-1 text-xl font-black sm:text-2xl">次にやるべき問題から、学習を始めましょう。</h1>
-      </div>
-      <div class="mt-4 flex items-center gap-2 rounded-xl bg-white/15 px-4 py-3 text-sm font-bold sm:mt-0">
-        <span class="material-symbols-outlined">schedule</span> 本日の目安 15分
-      </div>
-    </section>
-
     <section class="grid gap-5 lg:grid-cols-12">
-      <article class="rounded-2xl border border-slate-100 bg-white p-5 shadow-card lg:col-span-4">
+      <article class="min-h-[270px] rounded-2xl border border-slate-100 bg-white p-5 shadow-card lg:col-span-4">
         <div class="flex items-start justify-between">
           <div>
             <p class="text-xs font-bold text-slate-500">生徒のPT値（IRTによる学力値）</p>
@@ -84,7 +92,7 @@
         </div>
       </article>
 
-      <article class="rounded-2xl border border-slate-100 bg-white p-5 shadow-card lg:col-span-4">
+      <article class="min-h-[270px] rounded-2xl border border-slate-100 bg-white p-5 shadow-card lg:col-span-4">
         <div class="flex items-center justify-between">
           <div><p class="text-xs font-bold text-slate-500">教科バランス（4教科）</p><p class="mt-1 text-sm font-black">現在の学力値</p></div>
           <span class="material-symbols-outlined text-violet-600">radar</span>
@@ -99,7 +107,7 @@
         </div>
       </article>
 
-      <article class="rounded-2xl border border-slate-100 bg-white p-5 shadow-card lg:col-span-4">
+      <article class="min-h-[270px] rounded-2xl border border-slate-100 bg-white p-5 shadow-card lg:col-span-4">
         <div class="flex items-center justify-between"><div><p class="text-xs font-bold text-slate-500">進捗表示</p><p class="mt-1 text-sm font-black">教科の進捗率</p></div><span class="material-symbols-outlined text-emerald-600">donut_large</span></div>
         <div class="mt-5 flex items-center gap-5">
           <div class="relative grid size-24 place-items-center">
@@ -111,33 +119,115 @@
       </article>
     </section>
 
-    <section class="rounded-2xl border border-slate-100 bg-white p-5 shadow-card">
-      <div class="flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
-        <div><p class="text-xs font-bold text-slate-500">目標学力値に対する到達度（4教科）</p><h2 class="mt-1 text-lg font-black">全教科の目標到達度</h2></div>
-        <p class="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">合格目標学力値 90</p>
+    <section class="grid gap-5 lg:grid-cols-12">
+    <article class="min-h-[270px] rounded-2xl border border-slate-100 bg-white p-5 shadow-card lg:col-span-4">
+      <div class="mb-2 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="grid size-8 place-items-center rounded-xl bg-violet-50 text-violet-600">
+            <span class="material-symbols-outlined text-[22px]">pentagon</span>
+          </span>
+          <h2 class="text-lg font-black">領域別バランス</h2>
+        </div>
       </div>
-      <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div><div class="mb-1 flex justify-between text-xs font-bold"><span>数学</span><span class="text-blue-600">86 / 90</span></div><div class="h-3 rounded-full bg-slate-100"><div class="h-3 w-[96%] rounded-full bg-blue-500"></div></div></div>
-        <div><div class="mb-1 flex justify-between text-xs font-bold"><span>英語</span><span class="text-blue-600">78 / 90</span></div><div class="h-3 rounded-full bg-slate-100"><div class="h-3 w-[87%] rounded-full bg-rose-500"></div></div></div>
-        <div><div class="mb-1 flex justify-between text-xs font-bold"><span>国語</span><span class="text-blue-600">70 / 90</span></div><div class="h-3 rounded-full bg-slate-100"><div class="h-3 w-[78%] rounded-full bg-violet-500"></div></div></div>
-        <div><div class="mb-1 flex justify-between text-xs font-bold"><span>理科</span><span class="text-blue-600">74 / 90</span></div><div class="h-3 rounded-full bg-slate-100"><div class="h-3 w-[82%] rounded-full bg-emerald-500"></div></div></div>
+      <div class="mx-auto max-w-[270px]">
+        <svg class="h-auto w-full" viewBox="0 0 420 300" aria-label="数学の領域別バランス">
+          <g transform="translate(210 148)">
+            <g fill="none" stroke="#dbe4f0" stroke-width="1.5">
+              <circle r="96"></circle>
+              <circle r="72"></circle>
+              <circle r="48"></circle>
+              <circle r="24"></circle>
+              <line x1="0" y1="-120" x2="0" y2="120"></line>
+              <line x1="-120" y1="0" x2="120" y2="0"></line>
+              <polygon points="0,-120 120,0 0,120 -120,0"></polygon>
+            </g>
+            <polygon points="0,-120 102,0 0,105 -118,0" fill="none" stroke="#f59e0b" stroke-width="2"></polygon>
+            <polygon points="0,-82 96,0 0,92 -108,0" fill="#3b82f6" fill-opacity=".42" stroke="#3b82f6" stroke-width="3"></polygon>
+            <polygon points="0,-88 91,0 0,87 -101,0" fill="none" stroke="#10b981" stroke-dasharray="4 5" stroke-width="2"></polygon>
+            <circle cx="0" cy="-82" r="5" fill="#3b82f6"></circle>
+            <circle cx="96" cy="0" r="5" fill="#3b82f6"></circle>
+            <circle cx="0" cy="92" r="5" fill="#3b82f6"></circle>
+            <circle cx="-108" cy="0" r="5" fill="#3b82f6"></circle>
+            <circle cx="0" cy="-88" r="4" fill="#10b981"></circle>
+            <circle cx="91" cy="0" r="4" fill="#10b981"></circle>
+            <circle cx="0" cy="87" r="4" fill="#10b981"></circle>
+            <circle cx="-101" cy="0" r="4" fill="#10b981"></circle>
+            <circle cx="0" cy="-120" r="4" fill="#f59e0b"></circle>
+            <circle cx="102" cy="0" r="4" fill="#f59e0b"></circle>
+            <circle cx="0" cy="105" r="4" fill="#f59e0b"></circle>
+            <circle cx="-118" cy="0" r="4" fill="#f59e0b"></circle>
+          </g>
+          <g font-family="Noto Sans JP, sans-serif" font-weight="900" font-size="15" fill="#64748b">
+            <text x="210" y="22" text-anchor="middle">数と式</text>
+            <text x="348" y="153" text-anchor="middle">関数</text>
+            <text x="210" y="286" text-anchor="middle">図形</text>
+            <text x="72" y="153" text-anchor="middle">資料の活用</text>
+          </g>
+          <g font-family="Noto Sans JP, sans-serif" font-size="11" font-weight="800">
+            <circle cx="158" cy="294" r="4" fill="#3b82f6"></circle><text x="166" y="298" fill="#64748b">現在</text>
+            <circle cx="210" cy="294" r="4" fill="#f59e0b"></circle><text x="218" y="298" fill="#64748b">目標</text>
+            <circle cx="260" cy="294" r="4" fill="#10b981"></circle><text x="268" y="298" fill="#64748b">合格者平均</text>
+          </g>
+        </svg>
       </div>
+    </article>
+
+    <article class="min-h-[270px] rounded-3xl border border-slate-100 bg-white px-6 py-6 shadow-card lg:col-span-8">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div>
+          <div class="mb-2 flex flex-wrap items-center gap-3">
+            <span class="rounded-md bg-blue-50 px-3 py-1 text-xs font-black text-slate-600">第一志望</span>
+            <span class="text-sm font-black text-slate-600">県立朝日高等学校</span>
+          </div>
+          <h2 class="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-2xl font-black tracking-tight text-slate-900">目標到達度 <span class="text-sm font-black text-slate-500">合格目標学力値 <b class="text-xl text-slate-800">90</b></span></h2>
+        </div>
+        <div class="grid w-full max-w-[360px] grid-cols-[76px_76px_minmax(150px,1fr)] divide-x divide-slate-200 rounded-2xl border border-slate-100 bg-white px-5 py-3 shadow-card">
+          <div>
+            <p class="text-[10px] font-black uppercase tracking-wide text-slate-400">Current</p>
+            <p class="mt-1 font-display text-2xl font-black text-blue-600">86</p>
+          </div>
+          <div class="px-6">
+            <p class="text-[10px] font-black uppercase tracking-wide text-slate-400">Gap</p>
+            <p class="mt-1 font-display text-2xl font-black text-rose-500">-4</p>
+          </div>
+          <div class="pl-6">
+            <p class="whitespace-nowrap text-sm font-black text-slate-600">合格圏内まで</p>
+            <p class="mt-1 text-xs font-black text-orange-500">弱点補強が必要です</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-6">
+        <div class="mb-3 grid grid-cols-5 text-[11px] font-black text-slate-400">
+          <span>0</span><span>25</span><span>50</span><span>75</span><span class="text-right">100</span>
+        </div>
+        <div class="relative h-4 rounded-full bg-emerald-50">
+          <div class="h-4 w-[86%] rounded-full bg-gradient-to-r from-blue-400 to-blue-700"></div>
+          <div class="absolute left-[86%] top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-[5px] border-blue-700 bg-white"></div>
+          <div class="absolute left-[86%] top-6 -translate-x-1/2 rounded-md bg-blue-700 px-2 py-1 text-[10px] font-black text-white">現在 86</div>
+          <div class="absolute left-[90%] top-0 -translate-x-1/2 -translate-y-7 text-orange-500" aria-label="目標位置"><span class="target-flag"></span></div>
+          <div class="absolute left-[90%] top-6 -translate-x-1/2 rounded-md bg-orange-50 px-2 py-1 text-[10px] font-black text-orange-600 ring-1 ring-orange-200">目標 90</div>
+        </div>
+      </div>
+    </article>
     </section>
 
-    <section class="grid gap-5 lg:grid-cols-5">
-      <article class="rounded-2xl border border-blue-100 bg-white p-5 shadow-card lg:col-span-3">
-        <div class="flex items-center gap-2 text-amber-600"><span class="material-symbols-outlined">lightbulb</span><span class="text-xs font-black">次に挑戦する問題</span></div>
-        <div class="mt-4 flex flex-col gap-4 rounded-xl bg-blue-50 p-4 sm:flex-row sm:items-center sm:justify-between">
-          <div><p class="text-xs font-bold text-blue-600">優先度 1 ・ 数学</p><h2 class="mt-1 text-xl font-black">数と式</h2><p class="mt-1 text-sm text-slate-600">文字式の計算を復習して、基礎を固めよう。</p></div>
-          <a href="SCR-003.html" class="inline-flex shrink-0 items-center justify-center gap-1 rounded-xl bg-blue-600 px-5 py-3 text-sm font-black text-white shadow-md shadow-blue-200 hover:bg-blue-700"><span>開始する</span><span class="material-symbols-outlined text-base">arrow_forward</span></a>
-        </div>
-      </article>
-
-      <article class="rounded-2xl border border-slate-100 bg-white p-5 shadow-card lg:col-span-2">
-        <div class="flex items-center justify-between"><div><p class="text-xs font-bold text-slate-500">数学の目標学力値に対する進捗度</p><h2 class="mt-1 text-lg font-black">数と式</h2></div><b class="font-display text-2xl text-blue-600">76</b></div>
-        <div class="mt-5 h-3 rounded-full bg-slate-100"><div class="h-3 w-[84%] rounded-full bg-gradient-to-r from-blue-500 to-cyan-400"></div></div>
-        <div class="mt-2 flex justify-between text-xs font-bold text-slate-500"><span>現在 76</span><span>目標 90</span></div>
-      </article>
+    <section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <a href="SCR-003.html" class="group rounded-2xl border border-slate-100 bg-white p-5 text-center shadow-card transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-lg">
+        <div class="mx-auto grid size-14 place-items-center rounded-2xl bg-blue-50 font-display text-xl font-black text-blue-600">Math</div>
+        <p class="mt-4 text-sm font-black text-slate-600">数学</p>
+      </a>
+      <a href="SCR-06-01.html" class="group rounded-2xl border border-slate-100 bg-white p-5 text-center shadow-card transition hover:-translate-y-0.5 hover:border-rose-200 hover:shadow-lg">
+        <div class="mx-auto grid size-14 place-items-center rounded-2xl bg-rose-50 font-display text-xl font-black text-rose-500">Eng</div>
+        <p class="mt-4 text-sm font-black text-slate-600">英語</p>
+      </a>
+      <a href="SCR-10-01.html" class="group rounded-2xl border border-slate-100 bg-white p-5 text-center shadow-card transition hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-lg">
+        <div class="mx-auto grid size-14 place-items-center rounded-2xl bg-emerald-50 font-display text-xl font-black text-emerald-600">Sci</div>
+        <p class="mt-4 text-sm font-black text-slate-600">理科</p>
+      </a>
+      <a href="SCR-11-01.html" class="group rounded-2xl border border-slate-100 bg-white p-5 text-center shadow-card transition hover:-translate-y-0.5 hover:border-orange-200 hover:shadow-lg">
+        <div class="mx-auto grid size-14 place-items-center rounded-2xl bg-orange-50 font-display text-xl font-black text-orange-500">Soc</div>
+        <p class="mt-4 text-sm font-black text-slate-600">社会</p>
+      </a>
     </section>
 
     <section class="rounded-2xl border border-slate-100 bg-white p-5 shadow-card">
