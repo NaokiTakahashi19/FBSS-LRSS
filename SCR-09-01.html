@@ -165,7 +165,11 @@
 <h3 class="text-sm font-bold text-gray-600 dark:text-gray-300">回答欄</h3>
 </div>
 <div class="flex gap-1">
-<button type="button" data-target="answer" data-tool="pen" class="tool-active flex items-center justify-center h-9 w-10 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-400 hover:text-gray-600 rounded-l-md" aria-label="回答欄にペンで書く">
+<button type="button" class="ocr-trigger flex items-center gap-1.5 h-9 px-4 rounded-l-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" aria-label="回答欄を文字認識">
+<span class="material-symbols-outlined text-[18px]">spellcheck</span>
+<span class="text-[11px] font-bold">文字認識</span>
+</button>
+<button type="button" data-target="answer" data-tool="pen" class="tool-active flex items-center justify-center h-9 w-10 border-y border-x-0 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-400 hover:text-gray-600" aria-label="回答欄にペンで書く">
 <span class="material-symbols-outlined text-[20px] fill-icon">edit</span>
 </button>
 <button type="button" data-target="answer" data-tool="eraser" class="flex items-center justify-center h-9 w-10 border-y border-x border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-400 hover:text-gray-600" aria-label="回答欄の文字を消す">
@@ -187,7 +191,7 @@
 <span class="material-symbols-outlined text-gray-400 text-sm">visibility</span>
 <h3 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">認識結果</h3>
 </div>
-<button id="ocrBtn" type="button" class="flex items-center gap-1.5 h-9 px-4 rounded-lg bg-primary text-white shadow-sm shadow-primary/20 hover:brightness-110 active:scale-[0.98] transition-all text-xs font-bold whitespace-nowrap">
+<button type="button" class="ocr-trigger flex items-center gap-1.5 h-9 px-4 rounded-lg bg-primary text-white shadow-sm shadow-primary/20 hover:brightness-110 active:scale-[0.98] transition-all text-xs font-bold whitespace-nowrap">
 <span class="material-symbols-outlined text-[18px]">spellcheck</span>
 認識する
 </button>
@@ -435,13 +439,13 @@
   }
 
   // OCR (mock)
-  const ocrBtn = document.getElementById('ocrBtn');
+  const ocrBtns = document.querySelectorAll('.ocr-trigger');
   const ocrResultText = document.getElementById('ocrResultText');
-  if(ocrBtn && ocrResultText){
-    ocrBtn.addEventListener('click', () => {
+  if(ocrBtns.length && ocrResultText){
+    ocrBtns.forEach(ocrBtn => ocrBtn.addEventListener('click', () => {
       ocrResultText.className = 'text-base font-bold text-gray-800 dark:text-white tracking-tight math-text';
       ocrResultText.innerHTML = '(5<span class="math-var">a</span> + 6<span class="math-var">b</span>)(5<span class="math-var">a</span> - 6<span class="math-var">b</span>)';
-    });
+    }));
   }
 })();
 </script>
