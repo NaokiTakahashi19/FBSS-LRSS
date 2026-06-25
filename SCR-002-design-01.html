@@ -93,6 +93,68 @@
     .design-quiet .rounded-3xl {
       border-radius: 18px;
     }
+    .design-quiet main {
+      max-width: 1280px;
+    }
+    .design-quiet article {
+      position: relative;
+      overflow: hidden;
+    }
+    .design-quiet main > section:first-of-type article {
+      min-height: 230px;
+      border-left: 6px solid #1f66d1;
+      padding: 18px 20px;
+    }
+    .design-quiet main > section:first-of-type article:nth-child(2) {
+      border-left-color: #7c3aed;
+    }
+    .design-quiet main > section:first-of-type article:nth-child(3) {
+      border-left-color: #059669;
+    }
+    .design-quiet main > section:nth-of-type(2) article {
+      min-height: 248px;
+    }
+    .design-quiet main > section:nth-of-type(3) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .design-quiet main > section:nth-of-type(3) a {
+      display: flex;
+      min-height: 86px;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 16px;
+      text-align: left;
+      border-left: 8px solid #1f66d1;
+      padding: 18px;
+    }
+    .design-quiet main > section:nth-of-type(3) a:nth-child(2) {
+      border-left-color: #ef4444;
+    }
+    .design-quiet main > section:nth-of-type(3) a:nth-child(3) {
+      border-left-color: #059669;
+    }
+    .design-quiet main > section:nth-of-type(3) a:nth-child(4) {
+      border-left-color: #f97316;
+    }
+    .design-quiet main > section:nth-of-type(3) a > div {
+      margin: 0;
+      width: 52px;
+      height: 52px;
+      flex: 0 0 52px;
+      border-radius: 14px;
+      font-size: 15px;
+    }
+    .design-quiet main > section:nth-of-type(3) a > p {
+      margin-top: 0;
+      font-size: 16px;
+    }
+    .design-quiet main > section:last-child {
+      border-top: 6px solid #1f66d1;
+    }
+    .design-quiet main > section:last-child .mt-5 {
+      grid-template-columns: 1.4fr 1fr 1fr;
+    }
   </style>
 </head>
 <body class="design-quiet font-sans text-ink">
