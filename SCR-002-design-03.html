@@ -45,6 +45,10 @@
     body.design-report {
       background: #ffffff;
       color: #1f2933;
+      --report-green: #00906c;
+      --report-green-dark: #008860;
+      --report-gray: #808080;
+      --report-green-soft: #e9f6f2;
     }
     .design-report header {
       border-bottom: 1px solid #e9f2ef;
@@ -61,7 +65,7 @@
       box-shadow: 0 14px 28px rgba(8, 92, 72, .08) !important;
     }
     .design-report h2 {
-      color: #374151 !important;
+      color: var(--report-gray) !important;
       font-weight: 600 !important;
       line-height: 1.35;
     }
@@ -89,15 +93,22 @@
     .design-report .text-blue-700,
     .design-report .text-violet-600,
     .design-report .text-emerald-600 {
-      color: #00916e !important;
+      color: var(--report-green) !important;
+    }
+    .design-report .text-slate-400,
+    .design-report .text-slate-500,
+    .design-report .text-slate-600,
+    .design-report .text-slate-800 {
+      color: var(--report-gray) !important;
     }
     .design-report .text-rose-500 {
       color: #ff762c !important;
     }
     .design-report .bg-blue-600,
     .design-report .bg-blue-700,
-    .design-report .bg-emerald-500 {
-      background: #00916e !important;
+    .design-report .bg-emerald-500,
+    .design-report .bg-emerald-600 {
+      background: var(--report-green) !important;
     }
     .design-report .bg-rose-500,
     .design-report .bg-orange-500 {
@@ -107,11 +118,20 @@
     .design-report .bg-blue-100,
     .design-report .bg-violet-50,
     .design-report .bg-emerald-50 {
-      background: #eaf7f2 !important;
+      background: var(--report-green-soft) !important;
     }
     .design-report .border-blue-600,
-    .design-report .border-blue-700 {
-      border-color: #00916e !important;
+    .design-report .border-blue-700,
+    .design-report .border-emerald-600 {
+      border-color: var(--report-green) !important;
+    }
+    .design-report .from-emerald-400 {
+      --tw-gradient-from: var(--report-green) var(--tw-gradient-from-position) !important;
+      --tw-gradient-to: rgba(0, 144, 108, 0) var(--tw-gradient-to-position) !important;
+      --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+    }
+    .design-report .to-emerald-600 {
+      --tw-gradient-to: var(--report-green-dark) var(--tw-gradient-to-position) !important;
     }
     .design-report .text-orange-500,
     .design-report .text-orange-600 {
@@ -124,10 +144,10 @@
       background: #fff4ec !important;
     }
     .design-report svg polygon[stroke="#10b981"] {
-      stroke: #64b49d !important;
+      stroke: var(--report-green-dark) !important;
     }
     .design-report svg circle[fill="#10b981"] {
-      fill: #64b49d !important;
+      fill: var(--report-green-dark) !important;
     }
     .design-report svg polygon[stroke="#f59e0b"] {
       stroke: #ff762c !important;
@@ -179,11 +199,11 @@
         </div>
         <div class="grid w-full grid-cols-2 rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-card sm:max-w-[390px] sm:grid-cols-[92px_92px_minmax(150px,1fr)] sm:divide-x sm:divide-slate-200 sm:px-5">
           <div>
-            <p class="text-[10px] font-black uppercase tracking-wide text-slate-400">Current</p>
+            <p class="text-[10px] font-black uppercase tracking-wide text-slate-500">Current</p>
             <p class="mt-1 font-display text-2xl font-black text-blue-600">1032</p>
           </div>
           <div class="pl-4 sm:px-6">
-            <p class="text-[10px] font-black uppercase tracking-wide text-slate-400">Gap</p>
+            <p class="text-[10px] font-black uppercase tracking-wide text-slate-500">Gap</p>
             <p class="mt-1 font-display text-2xl font-black text-rose-500">-48</p>
           </div>
           <div class="col-span-2 mt-3 border-t border-slate-100 pt-3 sm:col-span-1 sm:mt-0 sm:border-t-0 sm:pl-6 sm:pt-0">
@@ -193,7 +213,7 @@
         </div>
       </div>
       <div class="mt-6">
-        <div class="mb-3 grid grid-cols-5 text-[11px] font-black text-slate-400">
+        <div class="mb-3 grid grid-cols-5 text-[11px] font-black text-slate-500">
           <span>0</span><span>300</span><span>600</span><span>900</span><span class="text-right">1200</span>
         </div>
         <div class="relative h-4 rounded-full bg-emerald-50">
@@ -226,22 +246,22 @@
                 <polygon points="0,-110 110,0 0,110 -110,0"></polygon>
               </g>
               <polygon points="0,-99 99,0 0,99 -99,0" fill="none" stroke="#f59e0b" stroke-width="2.5"></polygon>
-              <polygon points="0,-95 86,0 0,81 -90,0" fill="#00916e" fill-opacity=".18" stroke="#00916e" stroke-width="3"></polygon>
+              <polygon points="0,-95 86,0 0,81 -90,0" fill="#00906c" fill-opacity=".18" stroke="#00906c" stroke-width="3"></polygon>
               <polygon points="0,-88 84,0 0,86 -83,0" fill="none" stroke="#10b981" stroke-dasharray="4 5" stroke-width="2.5"></polygon>
               <circle cx="0" cy="-99" r="4" fill="#f59e0b"></circle>
               <circle cx="99" cy="0" r="4" fill="#f59e0b"></circle>
               <circle cx="0" cy="99" r="4" fill="#f59e0b"></circle>
               <circle cx="-99" cy="0" r="4" fill="#f59e0b"></circle>
-              <circle cx="0" cy="-95" r="5" fill="#00916e"></circle>
-              <circle cx="86" cy="0" r="5" fill="#00916e"></circle>
-              <circle cx="0" cy="81" r="5" fill="#00916e"></circle>
-              <circle cx="-90" cy="0" r="5" fill="#00916e"></circle>
+              <circle cx="0" cy="-95" r="5" fill="#00906c"></circle>
+              <circle cx="86" cy="0" r="5" fill="#00906c"></circle>
+              <circle cx="0" cy="81" r="5" fill="#00906c"></circle>
+              <circle cx="-90" cy="0" r="5" fill="#00906c"></circle>
               <circle cx="0" cy="-88" r="4" fill="#10b981"></circle>
               <circle cx="84" cy="0" r="4" fill="#10b981"></circle>
               <circle cx="0" cy="86" r="4" fill="#10b981"></circle>
               <circle cx="-83" cy="0" r="4" fill="#10b981"></circle>
             </g>
-            <g font-family="Noto Sans JP, sans-serif" font-weight="900" font-size="13" fill="#64748b">
+            <g font-family="Noto Sans JP, sans-serif" font-weight="900" font-size="13" fill="#808080">
               <text x="150" y="18" text-anchor="middle">数学 258</text>
               <text x="284" y="127" text-anchor="end">英語 234</text>
               <text x="150" y="242" text-anchor="middle">社会 222</text>
@@ -261,11 +281,11 @@
           </div>
           <div class="grid w-full grid-cols-2 rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-card sm:max-w-[390px] sm:grid-cols-[92px_92px_minmax(150px,1fr)] sm:divide-x sm:divide-slate-200 sm:px-5">
             <div>
-              <p class="text-[10px] font-black uppercase tracking-wide text-slate-400">Current</p>
+              <p class="text-[10px] font-black uppercase tracking-wide text-slate-500">Current</p>
               <p class="mt-1 font-display text-2xl font-black text-blue-600">228</p>
             </div>
             <div class="pl-4 sm:px-6">
-              <p class="text-[10px] font-black uppercase tracking-wide text-slate-400">Gap</p>
+              <p class="text-[10px] font-black uppercase tracking-wide text-slate-500">Gap</p>
               <p class="mt-1 font-display text-2xl font-black text-rose-500">-42</p>
             </div>
             <div class="col-span-2 mt-3 border-t border-slate-100 pt-3 sm:col-span-1 sm:mt-0 sm:border-t-0 sm:pl-6 sm:pt-0">
@@ -275,7 +295,7 @@
           </div>
         </div>
         <div class="mt-6">
-          <div class="mb-3 grid grid-cols-5 text-[11px] font-black text-slate-400">
+          <div class="mb-3 grid grid-cols-5 text-[11px] font-black text-slate-500">
             <span>0</span><span>75</span><span>150</span><span>225</span><span class="text-right">300</span>
           </div>
           <div class="relative h-4 rounded-full bg-emerald-50">
@@ -308,23 +328,23 @@
               <polygon points="0,-110 110,0 0,110 -110,0"></polygon>
             </g>
             <polygon points="0,-99 99,0 0,99 -99,0" fill="none" stroke="#f59e0b" stroke-width="2"></polygon>
-            <polygon points="0,-75 88,0 0,84 -99,0" fill="#00916e" fill-opacity=".18" stroke="#00916e" stroke-width="3"></polygon>
+            <polygon points="0,-75 88,0 0,84 -99,0" fill="#00906c" fill-opacity=".18" stroke="#00906c" stroke-width="3"></polygon>
             <polygon points="0,-80 83,0 0,80 -93,0" fill="none" stroke="#10b981" stroke-dasharray="4 5" stroke-width="2"></polygon>
-            <circle cx="0" cy="-75" r="5" fill="#00916e"></circle>
-            <circle cx="88" cy="0" r="5" fill="#00916e"></circle>
-            <circle cx="0" cy="84" r="5" fill="#00916e"></circle>
-            <circle cx="-99" cy="0" r="5" fill="#00916e"></circle>
+            <circle cx="0" cy="-75" r="5" fill="#00906c"></circle>
+            <circle cx="88" cy="0" r="5" fill="#00906c"></circle>
+            <circle cx="0" cy="84" r="5" fill="#00906c"></circle>
+            <circle cx="-99" cy="0" r="5" fill="#00906c"></circle>
           </g>
-          <g font-family="Noto Sans JP, sans-serif" font-weight="900" font-size="13" fill="#64748b">
+          <g font-family="Noto Sans JP, sans-serif" font-weight="900" font-size="13" fill="#808080">
             <text x="150" y="18" text-anchor="middle">数と式</text>
             <text x="284" y="127" text-anchor="end">関数</text>
             <text x="150" y="242" text-anchor="middle">図形</text>
             <text x="16" y="127">資料活用</text>
           </g>
           <g font-family="Noto Sans JP, sans-serif" font-size="10" font-weight="800">
-            <circle cx="91" cy="220" r="4" fill="#00916e"></circle><text x="99" y="224" fill="#64748b">現在</text>
-            <circle cx="141" cy="220" r="4" fill="#f59e0b"></circle><text x="149" y="224" fill="#64748b">目標</text>
-            <circle cx="184" cy="220" r="4" fill="#10b981"></circle><text x="192" y="224" fill="#64748b">中3平均</text>
+            <circle cx="91" cy="220" r="4" fill="#00906c"></circle><text x="99" y="224" fill="#808080">現在</text>
+            <circle cx="141" cy="220" r="4" fill="#f59e0b"></circle><text x="149" y="224" fill="#808080">目標</text>
+            <circle cx="184" cy="220" r="4" fill="#10b981"></circle><text x="192" y="224" fill="#808080">中3平均</text>
           </g>
         </svg>
       </div>
@@ -336,25 +356,25 @@
         <span class="pointer-events-none absolute inset-x-0 bottom-0 h-2 bg-orange-500 shadow-[0_-2px_8px_rgba(249,115,22,.22)]"></span>
         <span class="pointer-events-none absolute inset-0 grid place-items-center font-display text-3xl font-black text-orange-100 transition group-hover:text-orange-100">Math</span>
         <span class="relative block text-lg font-black text-orange-500">数学</span>
-        <span class="relative mt-0.5 block text-xs font-black text-slate-400">Math</span>
+        <span class="relative mt-0.5 block text-xs font-black text-slate-500">Math</span>
       </a>
       <a href="SCR-06-01.html" class="group relative min-h-[78px] overflow-hidden rounded-xl border border-slate-100 bg-white px-5 py-4 text-center shadow-card transition hover:-translate-y-0.5 hover:shadow-lg">
         <span class="pointer-events-none absolute inset-x-0 bottom-0 h-2 bg-emerald-500 shadow-[0_-2px_8px_rgba(16,185,129,.22)]"></span>
         <span class="pointer-events-none absolute inset-0 grid place-items-center font-display text-3xl font-black text-emerald-50 transition group-hover:text-emerald-100">English</span>
         <span class="relative block text-lg font-black text-emerald-600">英語</span>
-        <span class="relative mt-0.5 block text-xs font-black text-slate-400">English</span>
+        <span class="relative mt-0.5 block text-xs font-black text-slate-500">English</span>
       </a>
       <a href="SCR-10-01.html" class="group relative min-h-[78px] overflow-hidden rounded-xl border border-slate-100 bg-white px-5 py-4 text-center shadow-card transition hover:-translate-y-0.5 hover:shadow-lg">
         <span class="pointer-events-none absolute inset-x-0 bottom-0 h-2 bg-emerald-500 shadow-[0_-2px_8px_rgba(16,185,129,.22)]"></span>
         <span class="pointer-events-none absolute inset-0 grid place-items-center font-display text-3xl font-black text-emerald-50 transition group-hover:text-emerald-100">Science</span>
         <span class="relative block text-lg font-black text-emerald-600">理科</span>
-        <span class="relative mt-0.5 block text-xs font-black text-slate-400">Science</span>
+        <span class="relative mt-0.5 block text-xs font-black text-slate-500">Science</span>
       </a>
       <a href="SCR-11-01.html" class="group relative min-h-[78px] overflow-hidden rounded-xl border border-slate-100 bg-white px-5 py-4 text-center shadow-card transition hover:-translate-y-0.5 hover:shadow-lg">
         <span class="pointer-events-none absolute inset-x-0 bottom-0 h-2 bg-emerald-500 shadow-[0_-2px_8px_rgba(16,185,129,.22)]"></span>
         <span class="pointer-events-none absolute inset-0 grid place-items-center font-display text-3xl font-black text-emerald-50 transition group-hover:text-emerald-100">Social</span>
         <span class="relative block text-lg font-black text-emerald-600">社会</span>
-        <span class="relative mt-0.5 block text-xs font-black text-slate-400">Social Studies</span>
+        <span class="relative mt-0.5 block text-xs font-black text-slate-500">Social Studies</span>
       </a>
     </section>
 
