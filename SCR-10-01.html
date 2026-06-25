@@ -70,7 +70,7 @@
 	    @media (orientation: landscape) and (min-width: 900px) {
 	      .result-landscape {
 	        display:grid;
-	        grid-template-columns:minmax(0, 0.95fr) minmax(0, 1.05fr);
+	        grid-template-columns:minmax(0, 1fr) minmax(360px, 0.72fr);
 	        gap:1.25rem;
 	        align-items:start;
 	      }
@@ -82,12 +82,12 @@
 	        grid-row:1;
 	      }
 	      .result-answer {
-	        grid-column:1;
-	        grid-row:2;
+	        grid-column:2;
+	        grid-row:1;
 	      }
 	      .result-explanation {
-	        grid-column:2;
-	        grid-row:1 / span 2;
+	        grid-column:1 / -1;
+	        grid-row:2;
 	      }
 	    }
 
@@ -106,14 +106,14 @@
   color: #334155;
   filter: blur(0.2px);
 }
-    .maru-mark{
-      border: 8px solid #ef4444;
-      border-radius: 50%;
-      width: 180px;
-      height: 180px;
-      opacity: 0.8;
-      transform: rotate(-10deg);
-    }
+	    .maru-mark{
+	      border: 5px solid #ef4444;
+	      border-radius: 50%;
+	      width: 112px;
+	      height: 112px;
+	      opacity: 0.68;
+	      transform: rotate(-10deg);
+	    }
   </style>
 
   <style>
@@ -124,7 +124,7 @@
 <body class="bg-background-light dark:bg-background-dark font-display text-[#0d131b] dark:text-slate-100 flex flex-col min-h-screen">
 
   <!-- Header: SCR-09-01.html と同じ構造 -->
-  <header class="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+	  <header class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
     <div class="flex items-center justify-between px-6 py-3 max-w-6xl mx-auto w-full">
       <button type="button" class="flex items-center justify-center size-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" aria-label="back">
         <span class="material-symbols-outlined">arrow_back</span>
@@ -145,10 +145,10 @@
     </div>
   </header>
 
-  <main class="result-landscape flex-1 w-full max-w-6xl mx-auto p-5 md:p-6 pt-24 pb-32 overflow-y-auto no-scrollbar">
+  <main class="result-landscape flex-1 w-full max-w-6xl mx-auto p-5 md:p-6 pt-24 pb-28">
 
     <!-- 問題カード(見た目は SCR-09-01.html に準拠) -->
-    <section class="result-problem bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-8 shadow-sm relative overflow-hidden">
+    <section class="result-problem bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-7 shadow-sm relative overflow-hidden">
       <div class="flex justify-between items-start mb-5 gap-4">
         <div>
           <p class="text-xs font-bold text-gray-400 mb-2">問題</p>
@@ -181,7 +181,7 @@
         </div>
       </div>
 
-      <div class="w-full h-48 md:h-56 bg-white dark:bg-gray-900 rounded-xl border-2 border-primary/30 dark:border-primary/50 relative overflow-hidden shadow-inner">
+      <div class="w-full h-28 md:h-32 bg-white dark:bg-gray-900 rounded-xl border-2 border-primary/30 dark:border-primary/50 relative overflow-hidden shadow-inner">
         <div class="absolute inset-0 canvas-grid opacity-30 dark:opacity-10"></div>
 
         <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -194,9 +194,7 @@
           <div class="maru-mark"></div>
         </div>
 
-        <div class="absolute bottom-3 right-3 opacity-10 dark:opacity-20">
-          <span class="material-symbols-outlined text-4xl text-slate-400">gesture</span>
-        </div>
+        <div class="absolute bottom-2 right-3 rounded-full bg-red-50 px-3 py-1 text-xs font-bold text-red-500 border border-red-100">正解</div>
       </div>
     </section>
 
@@ -233,16 +231,15 @@
       </div>
     </section>
 
-    <!-- 余白（固定フッター分） -->
-    <div class="h-24"></div>
+    <div class="h-16"></div>
   </main>
 
   <!-- Footer: SCR-09-01.と同じ固定フッター -->
-  <footer class="fixed bottom-0 left-0 right-0 p-6 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 z-30">
-    <div class="max-w-5xl mx-auto">
-      <a href="SCR-09-02.html" class="w-full py-4 bg-primary text-white rounded-xl font-bold text-lg shadow-lg shadow-primary/30 hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+  <footer class="fixed bottom-0 left-0 right-0 p-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 z-30">
+    <div class="max-w-6xl mx-auto flex justify-end">
+      <a href="SCR-09-02.html" class="w-full sm:w-auto min-w-44 px-8 py-3 bg-primary text-white rounded-lg font-bold text-sm shadow-md shadow-primary/25 hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
         次の問題へ
-        <span class="material-symbols-outlined text-2xl">arrow_forward</span>
+        <span class="material-symbols-outlined text-xl">arrow_forward</span>
       </a>
     </div>
   </footer>
