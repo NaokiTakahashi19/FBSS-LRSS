@@ -39,14 +39,57 @@
     font-style: italic;
   }
 
-  .canvas-area {
-    background-image: radial-gradient(#d1d5db 1px, transparent 1px);
-    background-size: 20px 20px;
-  }
-  .dark .canvas-area {
-    background-image: radial-gradient(#374151 1px, transparent 1px);
-  }
-</style>
+	  .canvas-area {
+	    background-image: radial-gradient(#d1d5db 1px, transparent 1px);
+	    background-size: 20px 20px;
+	  }
+	  .dark .canvas-area {
+	    background-image: radial-gradient(#374151 1px, transparent 1px);
+	  }
+
+	  .math-var {
+	    font-style: italic;
+	  }
+
+	  .lesson-landscape > section + section {
+	    margin-top: 1.5rem;
+	  }
+
+	  @media (orientation: landscape) and (min-width: 900px) {
+	    .lesson-landscape {
+	      display: grid;
+	      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+	      gap: 1.25rem;
+	      align-items: start;
+	    }
+	    .lesson-landscape > section + section {
+	      margin-top: 0;
+	    }
+	    .problem-panel {
+	      grid-column: 1;
+	      grid-row: 1;
+	    }
+	    .calc-panel {
+	      grid-column: 2;
+	      grid-row: 1 / span 2;
+	    }
+	    .answer-panel {
+	      grid-column: 1;
+	      grid-row: 2;
+	    }
+	    .ocr-panel {
+	      grid-column: 1 / -1;
+	    }
+	    .calc-canvas {
+	      height: min(38vh, 300px);
+	      min-height: 220px;
+	    }
+	    .answer-canvas {
+	      height: min(18vh, 132px);
+	      min-height: 104px;
+	    }
+	  }
+	</style>
 <style>
 /* handwrite-tools */
 .tool-active{
@@ -77,35 +120,35 @@
 <span class="material-symbols-outlined">arrow_back</span>
 </button>
 <div class="text-center">
-<h1 class="text-base font-bold">因数分解</h1>
-<p class="text-[11px] text-gray-500 font-medium">第 2 問 / 全 10 問</p>
+	<h1 class="text-base font-bold">因数分解</h1>
+	<p class="text-[11px] text-gray-500 font-medium">第 1 問 / 全 10 問</p>
 </div>
 <button id="closeBtn" type="button" class="flex items-center justify-center size-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
 <span class="material-symbols-outlined">close</span>
 </button>
 </div>
 <div class="w-full h-1.5 bg-gray-100 dark:bg-gray-800">
-<div class="bg-primary h-full w-[20%] transition-all duration-500"></div>
-</div>
-</header>
-<main class="flex-1 w-full max-w-5xl mx-auto p-6 space-y-6 pt-24">
-<section class="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-8 shadow-sm relative overflow-hidden">
-<div class="flex justify-between items-start mb-6 gap-4">
-<div>
-<p class="text-xs font-bold text-gray-400 mb-2">問題</p>
-<p class="text-gray-500 dark:text-gray-400 text-lg text-left">次の式を因数分解しなさい。</p>
+	<div class="bg-primary h-full w-[10%] transition-all duration-500"></div>
+	</div>
+	</header>
+	<main class="lesson-landscape flex-1 w-full max-w-6xl mx-auto p-5 md:p-6 pt-24 pb-32">
+	<section class="problem-panel bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-8 shadow-sm relative overflow-hidden">
+	<div class="flex justify-between items-start mb-6 gap-4">
+	<div>
+	<p class="text-xs font-bold text-gray-400 mb-2">問題</p>
+	<p class="text-gray-500 dark:text-gray-400 text-lg text-left">次の式を因数分解しなさい。</p>
 </div>
 <div class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-6 py-3 rounded-xl text-xl md:text-2xl font-bold tracking-tight border border-gray-200 dark:border-gray-700 shadow-sm whitespace-nowrap">
                     難易度 67PT
                 </div>
-</div>
-<div class="text-center py-6">
-<span class="text-5xl md:text-6xl font-bold tracking-tighter text-gray-800 dark:text-white math-text">
-  ab + bc
-</span>
-</div>
-</section>
-<section class="space-y-3">
+	</div>
+	<div class="text-center py-6">
+	<span class="text-5xl md:text-6xl font-bold tracking-tighter text-gray-800 dark:text-white math-text">
+	  25<span class="math-var">a</span><sup>2</sup> - 36<span class="math-var">b</span><sup>2</sup>
+	</span>
+	</div>
+	</section>
+	<section class="calc-panel space-y-3">
 <div class="flex items-center justify-between">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-gray-400">edit_note</span>
@@ -123,12 +166,12 @@
 </button>
 </div>
 </div>
-<div class="w-full h-48 md:h-56 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 canvas-area relative overflow-hidden">
+	<div class="calc-canvas w-full h-48 md:h-56 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 canvas-area relative overflow-hidden">
 <canvas id="calcCanvas" class="absolute inset-0 w-full h-full touch-none"></canvas>
 <p id="calcPlaceholder" class="absolute inset-0 flex items-center justify-center text-gray-300 dark:text-gray-700 text-sm pointer-events-none font-medium">計算はここに書いてください</p>
 </div>
 </section>
-<section class="space-y-3">
+	<section class="answer-panel space-y-3">
 <div class="flex items-center justify-between">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-primary">edit</span>
@@ -150,12 +193,12 @@
 </button>
 </div>
 </div>
-<div class="w-full h-24 bg-white dark:bg-gray-900 rounded-xl border-2 border-primary/30 dark:border-primary/50 canvas-area relative overflow-hidden">
+	<div class="answer-canvas w-full h-24 bg-white dark:bg-gray-900 rounded-xl border-2 border-primary/30 dark:border-primary/50 canvas-area relative overflow-hidden">
 <canvas id="answerCanvas" class="absolute inset-0 w-full h-full touch-none"></canvas>
 <p id="answerPlaceholder" class="absolute inset-0 flex items-center justify-center text-gray-300 dark:text-gray-700 text-sm pointer-events-none font-medium">答えはここに書いてください</p>
 </div>
 </section>
-<section class="space-y-2 pb-24">
+	<section class="ocr-panel space-y-2">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-gray-400 text-sm">visibility</span>
 <h3 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">認識結果</h3>
@@ -384,7 +427,7 @@
   const ocrResultText = document.getElementById('ocrResultText');
   if(ocrBtn && ocrResultText){
     ocrBtn.addEventListener('click', () => {
-      ocrResultText.textContent = 'ab+bc';
+	      ocrResultText.textContent = '(5a+6b)(5a-6b)';
     });
   }
 })();

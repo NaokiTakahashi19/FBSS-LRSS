@@ -40,9 +40,52 @@
   font-family: "Times New Roman", Times, serif;
   font-style: normal;   /* ★ 全体は斜体にしない */
 }
-.math-text .var{
-  font-style: italic;  /* ★ 変数だけ斜体 */
-}
+	.math-text .var{
+	  font-style: italic;  /* ★ 変数だけ斜体 */
+	}
+
+	    .hlblue{
+	      color:#1366ec;
+	      background:#eaf2ff;
+	      border-radius:0.35rem;
+	      padding:0.05rem 0.25rem;
+	    }
+	    .hlpink{
+	      color:#db2777;
+	      background:#fdf2f8;
+	      border-radius:0.35rem;
+	      padding:0.05rem 0.25rem;
+	    }
+	    .formula-line{
+	      font-size:clamp(1.4rem, 3vw, 2.5rem);
+	      line-height:1.35;
+	    }
+	    .result-landscape > section + section {
+	      margin-top: 1.5rem;
+	    }
+	    @media (orientation: landscape) and (min-width: 900px) {
+	      .result-landscape {
+	        display:grid;
+	        grid-template-columns:minmax(0, 0.95fr) minmax(0, 1.05fr);
+	        gap:1.25rem;
+	        align-items:start;
+	      }
+	      .result-landscape > section + section {
+	        margin-top:0;
+	      }
+	      .result-problem {
+	        grid-column:1;
+	        grid-row:1;
+	      }
+	      .result-answer {
+	        grid-column:1;
+	        grid-row:2;
+	      }
+	      .result-explanation {
+	        grid-column:2;
+	        grid-row:1 / span 2;
+	      }
+	    }
 
     /* 手書きっぽい表示(デモ) */
     .canvas-grid{
@@ -85,7 +128,7 @@
 
       <div class="text-center">
         <h1 class="text-base font-bold">因数分解</h1>
-        <p class="text-[11px] text-gray-500 font-medium">第 2 問 / 全 10 問</p>
+        <p class="text-[11px] text-gray-500 font-medium">第 1 問 / 全 10 問</p>
       </div>
 
       <button id="closeBtn" type="button" class="flex items-center justify-center size-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" aria-label="close">
@@ -94,14 +137,14 @@
     </div>
 
     <div class="w-full h-1.5 bg-gray-100 dark:bg-gray-800">
-      <div class="bg-primary h-full w-[20%] transition-all duration-500"></div>
+      <div class="bg-primary h-full w-[10%] transition-all duration-500"></div>
     </div>
   </header>
 
-  <main class="flex-1 w-full max-w-5xl mx-auto p-6 space-y-6 pt-24 overflow-y-auto no-scrollbar">
+  <main class="result-landscape flex-1 w-full max-w-6xl mx-auto p-5 md:p-6 pt-24 pb-32 overflow-y-auto no-scrollbar">
 
     <!-- 問題カード(見た目は SCR-09-01.html に準拠) -->
-    <section class="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-8 shadow-sm relative overflow-hidden">
+    <section class="result-problem bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-8 shadow-sm relative overflow-hidden">
       <div class="flex justify-between items-start mb-6 gap-4">
         <div>
           <p class="text-xs font-bold text-gray-400 mb-2">問題</p>
@@ -114,13 +157,13 @@
 
       <div class="text-center py-6">
         <span class="text-5xl md:text-6xl font-bold tracking-tighter text-gray-800 dark:text-white math-text">
-  <span class="var">a</span><span class="var">b</span> + <span class="var">b</span><span class="var">c</span>
-</span>
+          25<span class="var">a</span><sup>2</sup> - 36<span class="var">b</span><sup>2</sup>
+        </span>
       </div>
     </section>
 
     <!-- 採点結果(雰囲気は SCR-09-01.html のカード/余白に合わせる) -->
-    <section class="space-y-3">
+    <section class="result-answer space-y-3">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
           <span class="material-symbols-outlined text-gray-400">edit_note</span>
@@ -137,10 +180,9 @@
         <div class="absolute inset-0 canvas-grid opacity-30 dark:opacity-10"></div>
 
         <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div class="handwritten-answer text-6xl tracking-tighter select-none math-text">
-  <span class="var">b</span>(
-  <span class="var">a</span> + <span class="var">c</span>)
-</div>
+          <div class="handwritten-answer text-3xl md:text-5xl tracking-tighter select-none math-text px-4 text-center">
+            (5<span class="var">a</span> + 6<span class="var">b</span>)(5<span class="var">a</span> - 6<span class="var">b</span>)
+          </div>
         </div>
 
         <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -154,22 +196,34 @@
     </section>
 
     <!-- 解答/解説カード -->
-    <section class="bg-blue-50/60 dark:bg-gray-800/40 rounded-2xl p-6 border border-blue-100 dark:border-gray-800">
+    <section class="result-explanation bg-blue-50/60 dark:bg-gray-800/40 rounded-2xl p-6 border border-blue-100 dark:border-gray-800">
       <div class="flex items-center gap-2 mb-4">
         <span class="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded">解答</span>
-        <span class="text-lg font-bold math-text text-gray-800 dark:text-white">b(a + c)</span>
+        <span class="text-lg font-bold math-text text-gray-800 dark:text-white">(5<span class="var">a</span> + 6<span class="var">b</span>)(5<span class="var">a</span> - 6<span class="var">b</span>)</span>
       </div>
 
-      <div class="space-y-4 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-        <div>
-          <p class="font-bold text-gray-800 dark:text-gray-100 mb-1">ステップ1：因数にわける</p>
-          <p class="math-text pl-4 border-l-2 border-gray-200 dark:border-gray-700">= <span class="italic">a × b + b × c</span></p>
+      <div class="space-y-5 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+        <div class="rounded-xl bg-white/75 dark:bg-gray-900/50 border border-blue-100 dark:border-gray-700 p-4">
+          <p class="font-bold text-gray-800 dark:text-gray-100 mb-2">ステップ1：平方の形を確認する</p>
+          <p class="formula-line math-text text-gray-800 dark:text-white">
+            25<span class="var">a</span><sup>2</sup> - 36<span class="var">b</span><sup>2</sup>
+            = <span class="hlblue">(5<span class="var">a</span>)<sup>2</sup></span>
+            - <span class="hlpink">(6<span class="var">b</span>)<sup>2</sup></span>
+          </p>
         </div>
-        <div>
-          <p class="font-bold text-gray-800 dark:text-gray-100 mb-1">ステップ2：共通な因数をくくり出す</p>
-          <p class="math-text pl-4 ...">
-  = <span class="var">a</span> × <span class="var">b</span> + <span class="var">b</span> × <span class="var">c</span>
-</p>
+        <div class="rounded-xl bg-white/75 dark:bg-gray-900/50 border border-blue-100 dark:border-gray-700 p-4">
+          <p class="font-bold text-gray-800 dark:text-gray-100 mb-2">ステップ2：2つの平方の差の公式を使う</p>
+          <p class="formula-line math-text text-gray-800 dark:text-white">
+            <span class="var">A</span><sup>2</sup> - <span class="var">B</span><sup>2</sup>
+            = (<span class="var">A</span> + <span class="var">B</span>)(<span class="var">A</span> - <span class="var">B</span>)
+          </p>
+          <p class="mt-2">ここで、<span class="math-text"><span class="var">A</span> = 5<span class="var">a</span></span>、<span class="math-text"><span class="var">B</span> = 6<span class="var">b</span></span> と見ます。</p>
+        </div>
+        <div class="rounded-xl bg-white/75 dark:bg-gray-900/50 border border-blue-100 dark:border-gray-700 p-4">
+          <p class="font-bold text-gray-800 dark:text-gray-100 mb-2">ステップ3：公式にあてはめて因数分解する</p>
+          <p class="formula-line math-text text-gray-800 dark:text-white">
+            = (5<span class="var">a</span> + 6<span class="var">b</span>)(5<span class="var">a</span> - 6<span class="var">b</span>)
+          </p>
         </div>
       </div>
     </section>
