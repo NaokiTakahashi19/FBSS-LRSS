@@ -166,11 +166,7 @@
 <h3 class="text-sm font-bold text-gray-600 dark:text-gray-300">回答欄</h3>
 </div>
 <div class="flex gap-1">
-<button type="button" class="ocr-trigger flex items-center gap-1.5 h-9 px-4 rounded-l-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" aria-label="回答欄を文字認識">
-<span class="material-symbols-outlined text-[18px]">spellcheck</span>
-<span class="text-[11px] font-bold">文字認識</span>
-</button>
-<button type="button" data-target="answer" data-tool="pen" class="tool-active flex items-center justify-center h-9 w-10 border-y border-x-0 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-400 hover:text-gray-600" aria-label="回答欄にペンで書く">
+<button type="button" data-target="answer" data-tool="pen" class="tool-active flex items-center justify-center h-9 w-10 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-400 hover:text-gray-600 rounded-l-md" aria-label="回答欄にペンで書く">
 <span class="material-symbols-outlined text-[20px] fill-icon">edit</span>
 </button>
 <button type="button" data-target="answer" data-tool="eraser" class="flex items-center justify-center h-9 w-10 border-y border-x border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-400 hover:text-gray-600" aria-label="回答欄の文字を消す">
@@ -180,9 +176,13 @@
 クリア
 </button>
 </div>
-	</div>
-		<div class="answer-canvas w-full h-28 md:h-32 bg-white dark:bg-gray-900 rounded-xl border-2 border-primary/30 dark:border-primary/50 canvas-area relative overflow-hidden">
+		</div>
+			<div class="answer-canvas w-full h-28 md:h-32 bg-white dark:bg-gray-900 rounded-xl border-2 border-primary/30 dark:border-primary/50 canvas-area relative overflow-hidden">
 <div class="absolute top-2 left-3 z-10 rounded-md bg-white/85 dark:bg-gray-900/85 px-2 py-1 text-[11px] font-bold text-primary border border-primary/15 pointer-events-none">回答欄</div>
+<button type="button" class="ocr-trigger absolute top-2 right-3 z-20 flex items-center gap-1.5 h-8 px-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-800/95 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-[11px] font-bold" aria-label="回答欄を文字認識">
+<span class="material-symbols-outlined text-[17px]">spellcheck</span>
+文字認識
+</button>
 <canvas id="answerCanvas" class="absolute inset-0 w-full h-full touch-none"></canvas>
 <p id="answerPlaceholder" class="absolute inset-0 flex items-center justify-center text-gray-300 dark:text-gray-700 text-sm pointer-events-none font-medium">答えはここに書いてください</p>
 </div>
@@ -193,13 +193,9 @@
 <span class="material-symbols-outlined text-gray-400 text-sm">visibility</span>
 <h3 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">認識結果</h3>
 </div>
-<button type="button" class="ocr-trigger flex items-center gap-1.5 h-9 px-4 rounded-lg bg-primary text-white shadow-sm shadow-primary/20 hover:brightness-110 active:scale-[0.98] transition-all text-xs font-bold whitespace-nowrap">
-<span class="material-symbols-outlined text-[18px]">spellcheck</span>
-認識する
-</button>
 </div>
 <div class="w-full min-h-[48px] bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-800 px-4 py-3 flex items-center">
-<span id="ocrResultText" class="text-sm font-medium text-gray-400 dark:text-gray-500 tracking-tight">認識するボタンを押してください</span>
+<span id="ocrResultText" class="text-sm font-medium text-gray-400 dark:text-gray-500 tracking-tight">回答欄内の文字認識ボタンを押してください</span>
 </div>
 </section>
 	<section class="calc-panel space-y-3">
