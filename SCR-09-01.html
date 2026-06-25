@@ -192,7 +192,7 @@
 </button>
 </div>
 <div class="w-full min-h-[48px] bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-800 px-4 py-3 flex items-center">
-<span id="ocrResultText" class="text-base font-bold text-gray-800 dark:text-white tracking-tight"></span>
+<span id="ocrResultText" class="text-sm font-medium text-gray-400 dark:text-gray-500 tracking-tight">認識するボタンを押してください</span>
 </div>
 </section>
 	<section class="calc-panel space-y-3">
@@ -438,7 +438,8 @@
   const ocrResultText = document.getElementById('ocrResultText');
   if(ocrBtn && ocrResultText){
     ocrBtn.addEventListener('click', () => {
-	      ocrResultText.textContent = '(5a+6b)(5a-6b)';
+      ocrResultText.className = 'text-base font-bold text-gray-800 dark:text-white tracking-tight math-text';
+      ocrResultText.innerHTML = '(5<span class="math-var">a</span> + 6<span class="math-var">b</span>)(5<span class="math-var">a</span> - 6<span class="math-var">b</span>)';
     });
   }
 })();
