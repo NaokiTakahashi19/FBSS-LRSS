@@ -75,7 +75,7 @@
             <span class="rounded-md bg-blue-50 px-3 py-1 text-xs font-black text-slate-600">第一志望</span>
             <span class="text-sm font-black text-slate-600">県立朝日高等学校</span>
           </div>
-          <h2 class="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-2xl font-black tracking-tight text-slate-900">目標到達度 <span class="text-sm font-black text-slate-500">合格目標学力値 <b class="text-xl text-slate-800">90</b></span></h2>
+          <h2 class="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-2xl font-black tracking-tight text-slate-900">全科目の進捗度 <span class="text-sm font-black text-slate-500">目標学力値 <b class="text-xl text-slate-800">90</b></span></h2>
         </div>
         <div class="grid w-full max-w-[360px] grid-cols-[76px_76px_minmax(150px,1fr)] divide-x divide-slate-200 rounded-2xl border border-slate-100 bg-white px-5 py-3 shadow-card">
           <div>
@@ -126,23 +126,32 @@
       <article class="min-h-[270px] rounded-2xl border border-slate-100 bg-white p-5 shadow-card lg:col-span-4">
         <div class="flex items-start justify-between">
           <div>
-            <p class="text-xs font-bold text-slate-500">生徒のPT値（IRTによる学力値）</p>
-            <p class="mt-1 text-xs text-slate-400">数学の推定学力値</p>
+            <p class="text-xs font-bold text-slate-500">数学の目標学力値に対する進捗度</p>
+            <p class="mt-1 text-sm font-black text-slate-900">数と式</p>
           </div>
-          <span class="rounded-lg bg-blue-50 p-2 text-blue-600 material-symbols-outlined">psychology</span>
+          <span class="rounded-lg bg-emerald-50 p-2 text-emerald-600 material-symbols-outlined">trending_up</span>
         </div>
-        <div class="mt-4 flex items-center gap-4">
-          <div class="relative grid size-28 place-items-center">
-            <svg class="absolute size-full" viewBox="0 0 42 42" aria-label="目標到達率 92%">
-              <circle cx="21" cy="21" r="16" fill="none" stroke="#e2e8f0" stroke-width="3.5" />
-              <circle class="progress-ring" cx="21" cy="21" r="16" fill="none" stroke="#2563eb" stroke-linecap="round" stroke-width="3.5" stroke-dasharray="92 100" />
-            </svg>
-            <div class="relative text-center"><b class="font-display text-2xl font-black">435</b><span class="text-[10px] font-bold">pt</span><span class="block text-xs font-black text-blue-600">B</span></div>
+        <div class="mt-8">
+          <div class="flex items-end justify-between">
+            <div>
+              <p class="text-xs font-black uppercase tracking-wide text-slate-400">Current</p>
+              <p class="font-display text-4xl font-black text-blue-600">76</p>
+            </div>
+            <div class="text-right">
+              <p class="text-xs font-black uppercase tracking-wide text-slate-400">Target</p>
+              <p class="font-display text-3xl font-black text-slate-800">90</p>
+            </div>
           </div>
-          <div class="space-y-2 text-sm">
-            <p><span class="font-bold text-slate-500">前回比</span> <b class="ml-1 text-emerald-600">+12pt</b></p>
-            <p><span class="font-bold text-slate-500">目標</span> <b class="ml-1">450pt</b></p>
-            <p class="rounded-lg bg-blue-50 px-3 py-2 text-xs font-bold text-blue-700">目標まであと 15pt</p>
+          <div class="mt-5">
+            <div class="mb-2 flex justify-between text-xs font-black text-slate-500">
+              <span>現在 76</span>
+              <span>目標 90</span>
+            </div>
+            <div class="relative h-4 rounded-full bg-slate-100">
+              <div class="h-4 w-[76%] rounded-full bg-gradient-to-r from-blue-500 to-cyan-400"></div>
+              <div class="absolute left-[90%] top-1/2 h-7 w-0.5 -translate-y-1/2 rounded-full bg-orange-400"></div>
+            </div>
+            <p class="mt-4 inline-flex rounded-lg bg-blue-50 px-3 py-2 text-xs font-bold text-blue-700">目標まであと 14pt</p>
           </div>
         </div>
       </article>
