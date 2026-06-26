@@ -14,7 +14,7 @@
                     colors: {
 		                        "primary": "#3f8f76",
 		                        "accent-green": "#3f8f76",
-		                        "background-light": "#dcebea",
+		                        "background-light": "#edf2df",
                         "card-bg": "#ffffff",
                         "text-main": "#2d3748"
                     },
@@ -49,7 +49,7 @@
 	            min-height: max(884px, 100dvh);
 	        }
 		        body.result-textbook {
-		            background: linear-gradient(180deg, #dcebea 0 50%, #edf2df 50% 100%);
+		            background: #edf2df;
 		            color: #24332f;
 		        }
 	        .result-textbook header,
@@ -123,38 +123,60 @@
 </div>
 </header>
 <main class="max-w-6xl mx-auto p-6 overflow-y-auto h-[calc(100vh-64px)] no-scrollbar">
-<div class="grid grid-cols-1 lg:grid-cols-[300px_minmax(320px,1fr)_300px] gap-6 mb-6 items-stretch">
+<div class="grid grid-cols-1 lg:grid-cols-[360px_minmax(360px,1fr)] gap-6 mb-6 items-stretch">
 <section class="space-y-4">
-<h3 class="text-sm font-bold text-slate-500 ml-1">教科の進捗度</h3>
-	<div class="report-card p-6 flex h-full flex-col justify-between gap-6">
-	<div class="flex items-center gap-6">
-<div class="relative flex items-center justify-center">
-<svg class="w-24 h-24">
-<circle class="text-slate-100" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
-<circle class="text-accent-green gauge-ring" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="10" stroke-linecap="round" stroke-width="8"></circle>
-</svg>
-<span class="absolute text-sm font-bold">96%</span>
-</div>
-<div class="flex-1">
-<p class="text-xs text-slate-500 font-bold mb-1 uppercase tracking-wider">教科の進捗度</p>
-<p class="text-lg font-bold">現在 435 pt</p>
-<p class="text-xs text-slate-400">目標 450 pt まで あと 15 pt</p>
-</div>
+<h3 class="text-sm font-bold text-slate-500 ml-1">実施サマリー</h3>
+	<div class="report-card p-6 space-y-5 h-full">
+	<div class="grid grid-cols-2 gap-3">
+	<div class="rounded-xl border border-emerald-100 bg-white/85 p-4 shadow-sm">
+	<p class="text-xs font-bold text-slate-500">推定学力値</p>
+	<p class="mt-1 text-2xl font-bold text-primary">435<span class="ml-1 text-sm">pt</span></p>
 	</div>
-	<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
 	<div class="rounded-xl border border-emerald-100 bg-white/85 p-4 shadow-sm">
 	<p class="text-xs font-bold text-slate-500">前回との差</p>
-	<p class="mt-1 text-2xl font-bold text-primary">+12 pt</p>
-	<p class="text-xs font-bold text-slate-400">423 pt → 435 pt</p>
-	</div>
-	<div class="rounded-xl border border-orange-100 bg-white/85 p-4 shadow-sm">
-	<p class="text-xs font-bold text-slate-500">正解数</p>
-	<p class="mt-1 text-2xl font-bold text-[#d39a3a]">+1問</p>
-	<p class="text-xs font-bold text-slate-400">7問 → 8問</p>
+	<p class="mt-1 text-2xl font-bold text-primary">+12<span class="ml-1 text-sm">pt</span></p>
 	</div>
 	</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">history</span>
+<span class="text-slate-600">実施回数</span>
 </div>
-</section>
+<span class="font-bold">第5回</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+<span class="text-slate-600">実施日</span>
+</div>
+<span class="font-bold">2023年10月25日</span>
+</div>
+	<div class="flex items-center justify-between">
+	<div class="flex items-center gap-3">
+	<span class="material-symbols-outlined text-primary">timer</span>
+	<span class="text-slate-600">実施時間</span>
+	</div>
+	<span class="font-bold">15分20秒</span>
+	</div>
+	<div class="flex items-center justify-between">
+	<div class="flex items-center gap-3">
+	<span class="material-symbols-outlined text-primary">calculate</span>
+	<span class="text-slate-600">数学の累積問題回答数</span>
+	</div>
+	<span class="font-bold">1,284問</span>
+	</div>
+	<div class="flex items-center justify-between p-4 bg-primary/5 rounded-xl border border-primary/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary font-bold">check_circle</span>
+<span class="font-bold text-primary">正解数</span>
+</div>
+<div class="text-right">
+<span class="text-3xl font-bold text-primary">8</span>
+<span class="text-slate-400 font-bold ml-1">/ 10問</span>
+</div>
+</div>
+	</div>
+	</section>
 <section class="space-y-4">
 <h3 class="text-sm font-bold text-slate-500 ml-1">各領域の評価</h3>
 	<div class="report-card p-6 h-full">
@@ -195,49 +217,6 @@
 	</svg>
 	</div>
 	</div>
-</div>
-</section>
-<section class="space-y-4">
-<h3 class="text-sm font-bold text-slate-500 ml-1">実施サマリー</h3>
-	<div class="report-card p-6 space-y-5 h-full">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary">history</span>
-<span class="text-slate-600">実施回数</span>
-</div>
-<span class="font-bold">第5回</span>
-</div>
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary">calendar_today</span>
-<span class="text-slate-600">実施日</span>
-</div>
-<span class="font-bold">2023年10月25日</span>
-</div>
-	<div class="flex items-center justify-between">
-	<div class="flex items-center gap-3">
-	<span class="material-symbols-outlined text-primary">timer</span>
-	<span class="text-slate-600">実施時間</span>
-	</div>
-	<span class="font-bold">15分20秒</span>
-	</div>
-	<div class="flex items-center justify-between">
-	<div class="flex items-center gap-3">
-	<span class="material-symbols-outlined text-primary">calculate</span>
-	<span class="text-slate-600">数学の累積問題回答数</span>
-	</div>
-	<span class="font-bold">1,284問</span>
-	</div>
-	<div class="flex items-center justify-between p-4 bg-primary/5 rounded-xl border border-primary/10">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary font-bold">check_circle</span>
-<span class="font-bold text-primary">正解数</span>
-</div>
-<div class="text-right">
-<span class="text-3xl font-bold text-primary">8</span>
-<span class="text-slate-400 font-bold ml-1">/ 10問</span>
-</div>
-</div>
 </div>
 </section>
 </div>
