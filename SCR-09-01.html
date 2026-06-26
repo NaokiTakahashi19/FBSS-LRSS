@@ -129,14 +129,12 @@
     }
 	  </style>
 	<style>
-	body.lesson-textbook {
-	  --lesson-upper: #dcebea;
-	  --lesson-lower: #edf2df;
-	  background:
-	    radial-gradient(circle at 18% 12%, rgba(67, 112, 104, .10) 0 1px, transparent 1px),
-	    linear-gradient(135deg, #dcebea 0%, #edf2df 48%, #dcecee 100%);
-	  background-size: 26px 26px, auto;
-	}
+		body.lesson-textbook {
+		  --lesson-upper: #dcebea;
+		  --lesson-lower: #edf2df;
+		  background: var(--lesson-upper);
+		  overflow-x: hidden;
+		}
 	body.lesson-textbook header,
 	body.lesson-textbook footer {
 	  background: rgba(252, 255, 246, .94);
@@ -153,9 +151,31 @@
 	body.lesson-textbook .upper-canvas {
 	  background-color: color-mix(in srgb, var(--lesson-upper) 62%, white 38%);
 	}
-	body.lesson-textbook .lower-canvas {
-	  background-color: color-mix(in srgb, var(--lesson-lower) 64%, white 36%);
-	}
+		body.lesson-textbook .lower-canvas {
+		  background-color: color-mix(in srgb, var(--lesson-lower) 64%, white 36%);
+		}
+		body.lesson-textbook .lesson-zone {
+		  position: relative;
+		  isolation: isolate;
+		}
+		body.lesson-textbook .lesson-zone::before {
+		  content: "";
+		  position: absolute;
+		  z-index: -1;
+		  left: 50%;
+		  width: 100vw;
+		  transform: translateX(-50%);
+		}
+		body.lesson-textbook .upper-zone::before {
+		  top: -2rem;
+		  bottom: -.75rem;
+		  background: var(--lesson-upper);
+		}
+		body.lesson-textbook .calc-zone::before {
+		  top: -.75rem;
+		  bottom: -8rem;
+		  background: var(--lesson-lower);
+		}
 	body.lesson-textbook .soft-label {
 	  border-color: rgba(63, 143, 118, .18);
 	  background: rgba(241, 250, 243, .86);
@@ -163,7 +183,7 @@
 	}
 	</style>
 	  </head>
-	<body class="lesson-textbook bg-background-light dark:bg-background-dark font-display text-[#24332f] dark:text-slate-100 flex flex-col min-h-screen">
+		<body class="lesson-textbook bg-background-light dark:bg-background-dark font-display text-[#24332f] dark:text-slate-100 flex flex-col min-h-screen">
 <header class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
 <div class="flex items-center justify-between px-6 py-3 max-w-6xl mx-auto w-full">
 <button class="flex items-center justify-center size-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
@@ -182,7 +202,7 @@
 	</div>
 	</header>
 		<main class="lesson-landscape flex-1 w-full max-w-6xl mx-auto px-5 md:px-6 pt-32 pb-28">
-		<section class="problem-panel lesson-card upper-panel bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-7 shadow-sm relative overflow-hidden min-h-[300px] md:min-h-[340px]">
+			<section class="problem-panel lesson-zone upper-zone lesson-card upper-panel bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-7 shadow-sm relative overflow-hidden min-h-[300px] md:min-h-[340px]">
 	<div class="flex justify-between items-start mb-5 gap-4">
 	<p class="text-xs font-bold text-gray-400">問題</p>
 		<div class="soft-label mt-1 bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg text-sm font-bold tracking-tight border border-gray-200 dark:border-gray-700 shadow-sm whitespace-nowrap">
@@ -197,7 +217,7 @@
 	</div>
 	<div class="absolute bottom-4 right-5 text-xs font-bold text-gray-400 dark:text-gray-500">問題番号：3-A-02-06ｰ01</div>
 	</section>
-	<section class="answer-panel space-y-3">
+	<section class="answer-panel lesson-zone upper-zone space-y-3">
 <div class="flex items-center justify-between">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-primary">edit</span>
@@ -225,7 +245,7 @@
 <p id="answerPlaceholder" class="absolute inset-0 flex items-center justify-center text-gray-300 dark:text-gray-700 text-sm pointer-events-none font-medium">答えはここに書いてください</p>
 </div>
 </section>
-		<section class="ocr-panel space-y-2">
+		<section class="ocr-panel lesson-zone upper-zone space-y-2">
 <div class="flex items-center justify-between gap-3">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-gray-400 text-sm">visibility</span>
@@ -236,7 +256,7 @@
 <span id="ocrResultText" class="text-sm font-medium text-gray-400 dark:text-gray-500 tracking-tight">回答欄内の文字認識ボタンを押してください</span>
 </div>
 </section>
-	<section class="calc-panel space-y-3">
+	<section class="calc-panel lesson-zone calc-zone space-y-3">
 <div class="flex items-center justify-between">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-gray-400">edit_note</span>
