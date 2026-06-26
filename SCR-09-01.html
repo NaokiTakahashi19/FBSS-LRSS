@@ -66,16 +66,14 @@
 
 	  .problem-panel .test-question {
 	    min-height: 170px;
-	    padding: 1.5rem 1.75rem;
-	    background: #ffffff;
-	    border: 1px solid rgba(63, 143, 118, .12);
-	    border-radius: 1.25rem;
+	    padding: 1.25rem 1.5rem;
 	  }
 
 	  .test-question p {
 	    max-width: 100%;
 	    white-space: normal;
-	    word-break: keep-all;
+	    word-break: normal;
+	    overflow-wrap: anywhere;
 	  }
 
 	  .test-formula {
@@ -184,8 +182,14 @@
 	  background: rgba(255, 255, 253, .96);
 	  box-shadow: 0 12px 22px rgba(72, 92, 82, .08);
 	}
+	body.lesson-textbook .problem-panel {
+	  background: #ffffff;
+	}
 	body.lesson-textbook .upper-panel {
 	  background: color-mix(in srgb, var(--lesson-bg) 58%, white 42%);
+	}
+	body.lesson-textbook .problem-panel.upper-panel {
+	  background: #ffffff;
 	}
 	body.lesson-textbook .upper-canvas {
 	  background-color: #ffffff;
@@ -241,7 +245,7 @@
 	</div>
 	</header>
 		<main class="lesson-landscape flex-1 w-full max-w-6xl mx-auto px-5 md:px-6 pt-32 pb-28">
-			<section class="problem-panel lesson-zone upper-zone lesson-card upper-panel bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-7 shadow-sm relative overflow-hidden min-h-[300px] md:min-h-[340px]">
+			<section class="problem-panel lesson-zone upper-zone lesson-card upper-panel bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-7 shadow-sm relative overflow-visible min-h-[300px] md:min-h-[340px]">
 	<div class="flex justify-between items-start mb-5 gap-4">
 	<p class="text-xs font-bold text-gray-400">問題</p>
 		<div class="soft-label mt-1 bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg text-sm font-bold tracking-tight border border-gray-200 dark:border-gray-700 shadow-sm whitespace-nowrap">
