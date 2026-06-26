@@ -62,12 +62,12 @@
 	    }
 	    .test-formula{
 	      font-family:"Cambria Math", "Times New Roman", Times, serif;
-	      font-size:clamp(1.55rem, 2.15vw, 1.95rem);
+	      font-size:clamp(1.5rem, 2vw, 1.85rem);
 	      font-style:normal;
 	      font-weight:400;
-	      line-height:1.55;
+	      line-height:1.7;
 	      letter-spacing:0;
-	      word-spacing:0.08em;
+	      word-spacing:0.02em;
 	    }
 	    .test-formula .var{
 	      font-family:"Cambria Math", "Times New Roman", Times, serif;
@@ -146,6 +146,10 @@
 	    body.result-textbook .upper-panel {
 	      background: color-mix(in srgb, var(--lesson-bg) 58%, white 42%);
 	    }
+	    body.result-textbook .result-problem,
+	    body.result-textbook .result-problem.upper-panel {
+	      background: #ffffff;
+	    }
 	    body.result-textbook .upper-canvas {
 	      background-color: #ffffff;
 	    }
@@ -191,7 +195,7 @@
   <main class="result-landscape flex-1 w-full max-w-6xl mx-auto px-5 md:px-6 pt-32 pb-28">
 
     <!-- 問題カード(見た目は SCR-09-01.html に準拠) -->
-    <section class="result-problem result-card upper-panel bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-7 shadow-sm relative overflow-hidden">
+    <section class="result-problem result-card upper-panel bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-7 shadow-sm relative overflow-visible">
       <div class="flex justify-between items-start mb-5 gap-4">
         <div>
           <p class="text-xs font-bold text-gray-400 mb-2">問題</p>
@@ -202,8 +206,8 @@
         </div>
       </div>
 
-      <div class="py-3 text-center">
-        <span class="test-formula tracking-tight text-gray-900 dark:text-white">
+      <div class="py-4 text-center">
+        <span class="test-formula text-gray-900 dark:text-white">
           25<span class="var">a</span><sup>2</sup> - 36<span class="var">b</span><sup>2</sup>
         </span>
       </div>
