@@ -108,35 +108,34 @@
 	  @media (orientation: landscape) and (min-width: 900px) {
 	    .lesson-landscape {
 	      display: grid;
-		      grid-template-columns: minmax(0, 1fr) minmax(420px, 0.7fr);
-	      column-gap: 1.25rem;
-	      row-gap: 0.75rem;
+		      grid-template-columns: minmax(0, 1fr) minmax(380px, 0.62fr);
+	      gap: 1.25rem;
 	      align-items: start;
 	    }
 	    .lesson-landscape > section + section {
 	      margin-top: 0;
 	    }
 		    .problem-panel {
-		      grid-column: 1 / -1;
-		      grid-row: 1;
-		      min-height: 260px;
+		      grid-column: 1;
+		      grid-row: 1 / span 2;
+		      min-height: 320px;
 		    }
 	    .answer-panel {
-	      grid-column: 1;
-	      grid-row: 2;
+	      grid-column: 2;
+	      grid-row: 1;
 	    }
 		    .ocr-panel {
 		      grid-column: 2;
 		      grid-row: 2;
-		      align-self: end;
+		      align-self: start;
 		    }
 		    .calc-panel {
 		      grid-column: 1 / -1;
 		      grid-row: 3;
 	    }
 	    .calc-canvas {
-	      height: min(52vh, 480px);
-	      min-height: 380px;
+	      height: min(44vh, 440px);
+	      min-height: 320px;
 	    }
 			    .answer-canvas {
 			      height: 188px;
@@ -199,15 +198,9 @@
 		}
 		body.lesson-textbook .lesson-zone {
 		  position: relative;
-		  isolation: isolate;
 		}
 		body.lesson-textbook .lesson-zone::before {
-		  content: "";
-		  position: absolute;
-		  z-index: -1;
-		  left: 50%;
-		  width: 100vw;
-		  transform: translateX(-50%);
+		  display: none;
 		}
 		body.lesson-textbook .upper-zone::before {
 		  top: -2rem;
@@ -245,7 +238,7 @@
 	</div>
 	</header>
 		<main class="lesson-landscape flex-1 w-full max-w-6xl mx-auto px-5 md:px-6 pt-32 pb-28">
-			<section class="problem-panel lesson-zone upper-zone lesson-card upper-panel bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-7 shadow-sm relative overflow-visible min-h-[240px] md:min-h-[260px]" style="background:#ffffff !important; overflow:visible;">
+			<section class="problem-panel lesson-zone upper-zone lesson-card upper-panel bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-7 shadow-sm relative overflow-visible min-h-[300px] md:min-h-[320px]" style="background:#ffffff !important; overflow:visible;">
 	<div class="flex justify-between items-start mb-5 gap-4">
 	<div class="min-w-0 flex-1">
 	<p class="text-xs font-bold text-gray-400 mb-2">問題</p>
@@ -266,7 +259,7 @@
 <div class="flex items-center justify-between">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-primary">edit</span>
-<h3 class="text-sm font-bold text-gray-600 dark:text-gray-300">回答欄</h3>
+<h3 class="text-sm font-bold text-gray-600 dark:text-gray-300">あなたの解答</h3>
 </div>
 <div class="flex gap-1">
 <button type="button" data-target="answer" data-tool="pen" class="tool-active flex items-center justify-center h-9 w-10 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-400 hover:text-gray-600 rounded-l-md" aria-label="回答欄にペンで書く">
@@ -281,7 +274,7 @@
 </div>
 		</div>
 					<div class="answer-canvas upper-canvas w-full h-40 md:h-44 bg-white dark:bg-gray-900 rounded-xl border-2 border-primary/30 dark:border-primary/50 canvas-area relative overflow-hidden">
-	<div class="absolute top-2 left-3 z-10 rounded-md bg-white/85 dark:bg-gray-900/85 px-2 py-1 text-[11px] font-bold text-primary border border-primary/15 pointer-events-none">回答欄</div>
+	<div class="absolute top-2 left-3 z-10 rounded-md bg-white/85 dark:bg-gray-900/85 px-2 py-1 text-[11px] font-bold text-primary border border-primary/15 pointer-events-none">あなたの解答</div>
 	<button type="button" class="ocr-trigger absolute bottom-3 right-3 z-20 flex items-center gap-1.5 h-10 px-4 rounded-lg border border-primary bg-primary text-white shadow-md shadow-primary/20 hover:brightness-105 active:scale-[0.98] transition-all text-xs font-bold" aria-label="回答欄を文字認識">
 	<span class="material-symbols-outlined text-[18px]">spellcheck</span>
 	文字認識
