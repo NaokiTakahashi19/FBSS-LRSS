@@ -12,9 +12,9 @@
             theme: {
                 extend: {
                     colors: {
-	                        "primary": "#2f6f5d",
-	                        "accent-green": "#2f6f5d",
-	                        "background-light": "#eef6ef",
+		                        "primary": "#3f8f76",
+		                        "accent-green": "#3f8f76",
+		                        "background-light": "#dcebea",
                         "card-bg": "#ffffff",
                         "text-main": "#2d3748"
                     },
@@ -50,60 +50,60 @@
 	        }
 	        body.result-textbook {
 	            background:
-	              radial-gradient(circle at 18% 12%, rgba(53, 112, 91, .10) 0 1px, transparent 1px),
-	              linear-gradient(135deg, #eef6ef 0%, #f7f3dc 48%, #edf4f7 100%);
+		              radial-gradient(circle at 18% 12%, rgba(67, 112, 104, .10) 0 1px, transparent 1px),
+		              linear-gradient(135deg, #dcebea 0%, #edf2df 48%, #dcecee 100%);
 	            background-size: 26px 26px, auto;
 	            color: #24332f;
 	        }
 	        .result-textbook header,
 	        .result-textbook footer {
-	            background: rgba(247, 250, 242, .94);
-	            border-color: rgba(47, 111, 93, .18);
+		            background: rgba(252, 255, 246, .94);
+		            border-color: rgba(63, 143, 118, .16);
 	        }
 	        .result-textbook .report-card {
-	            border: 1px solid rgba(47, 111, 93, .20);
-	            border-radius: 22px;
-	            background: rgba(255, 255, 250, .94);
-	            box-shadow: 0 12px 22px rgba(72, 92, 82, .10);
+		            border: 1px solid rgba(63, 143, 118, .18);
+		            border-radius: 22px;
+		            background: rgba(255, 255, 253, .96);
+		            box-shadow: 0 12px 22px rgba(72, 92, 82, .08);
 	        }
 	        .result-textbook .book-pill {
 	            border-radius: 4px;
-	            background: #245a4b;
+		            background: #2f745f;
 	            color: #fff;
-	            box-shadow: 0 2px 0 rgba(36, 90, 75, .22);
+		            box-shadow: 0 2px 0 rgba(47, 116, 95, .18);
 	        }
 	        .result-textbook .blue-pill {
-	            background: #355f86;
+		            background: #4c7da8;
 	        }
 	        .result-textbook .red-pill {
-	            background: #7b2f2f;
+		            background: #9a4b45;
 	        }
 	        .result-textbook .ochre-pill {
-	            background: #b37a2b;
+		            background: #d39a3a;
 	        }
 	        .result-textbook .soft-panel {
-	            background: rgba(255, 248, 223, .72);
-	            border: 1px solid rgba(179, 122, 43, .22);
+		            background: rgba(255, 248, 232, .72);
+		            border: 1px solid rgba(211, 154, 58, .22);
 	        }
 	        .result-textbook .session-line {
 	            fill: none;
-	            stroke: #2f6f5d;
+		            stroke: #3f8f76;
 	            stroke-width: 4;
 	            stroke-linecap: round;
 	            stroke-linejoin: round;
 	        }
 	        .result-textbook .session-area {
-	            fill: rgba(47, 111, 93, .12);
+		            fill: rgba(63, 143, 118, .12);
 	        }
 	        .result-textbook .answer-ok {
-	            border-color: rgba(47, 111, 93, .32);
-	            background: #edf6ef;
-	            color: #2f6f5d;
+		            border-color: rgba(63, 143, 118, .32);
+		            background: #f1faf3;
+		            color: #3f8f76;
 	        }
 	        .result-textbook .answer-ng {
-	            border-color: rgba(123, 47, 47, .28);
-	            background: #fff2ef;
-	            color: #7b2f2f;
+		            border-color: rgba(154, 75, 69, .28);
+		            background: #fff2ef;
+		            color: #9a4b45;
 	        }
 	    </style>
 <style>
@@ -144,14 +144,21 @@
 </div>
 <span class="font-bold">2023年10月25日</span>
 </div>
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-3">
-<span class="material-symbols-outlined text-primary">timer</span>
-<span class="text-slate-600">実施時間</span>
-</div>
-<span class="font-bold">15分20秒</span>
-</div>
-<div class="flex items-center justify-between p-4 bg-primary/5 rounded-xl border border-primary/10">
+	<div class="flex items-center justify-between">
+	<div class="flex items-center gap-3">
+	<span class="material-symbols-outlined text-primary">timer</span>
+	<span class="text-slate-600">実施時間</span>
+	</div>
+	<span class="font-bold">15分20秒</span>
+	</div>
+	<div class="flex items-center justify-between">
+	<div class="flex items-center gap-3">
+	<span class="material-symbols-outlined text-primary">calculate</span>
+	<span class="text-slate-600">数学の累積問題回答数</span>
+	</div>
+	<span class="font-bold">1,284問</span>
+	</div>
+	<div class="flex items-center justify-between p-4 bg-primary/5 rounded-xl border border-primary/10">
 <div class="flex items-center gap-3">
 <span class="material-symbols-outlined text-primary font-bold">check_circle</span>
 <span class="font-bold text-primary">正解数</span>
@@ -176,7 +183,7 @@
 </div>
 <span class="rounded-full bg-white px-3 py-1 text-xs font-bold text-primary border border-primary/10">合格圏まであと少し</span>
 </div>
-<div class="flex items-center gap-6">
+	<div class="flex items-center gap-6">
 <div class="relative flex items-center justify-center">
 <svg class="w-24 h-24">
 <circle class="text-slate-100" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
@@ -189,63 +196,65 @@
 <p class="text-lg font-bold">現在 435 pt</p>
 <p class="text-xs text-slate-400">目標 450 pt まで あと 15 pt</p>
 </div>
-</div>
-<div class="space-y-3">
-<div class="flex items-center justify-between">
-<p class="text-xs text-slate-500 font-bold uppercase tracking-wider">各領域の段階評価</p>
-<p class="text-[11px] font-bold text-slate-400">5段階評価</p>
-</div>
-<div class="flex items-center justify-between text-sm py-2 border-b border-slate-50">
-<span class="text-slate-600 w-24">数と式</span>
-<div class="flex gap-1 flex-1 px-4">
-<div class="h-1.5 w-6 rounded-full bg-accent-green"></div>
-<div class="h-1.5 w-6 rounded-full bg-accent-green"></div>
-<div class="h-1.5 w-6 rounded-full bg-accent-green"></div>
-<div class="h-1.5 w-6 rounded-full bg-accent-green"></div>
-<div class="h-1.5 w-6 rounded-full bg-slate-200"></div>
-</div>
-<span class="text-xs font-bold text-accent-green flex items-center gap-1">
-<b>A</b>
-<span class="material-symbols-outlined text-xs">trending_up</span> UP
-                            </span>
-</div>
-<div class="flex items-center justify-between text-sm py-2 border-b border-slate-50">
-<span class="text-slate-600 w-24">関数</span>
-<div class="flex gap-1 flex-1 px-4">
-<div class="h-1.5 w-6 rounded-full bg-accent-green"></div>
-<div class="h-1.5 w-6 rounded-full bg-accent-green"></div>
-<div class="h-1.5 w-6 rounded-full bg-accent-green"></div>
-<div class="h-1.5 w-6 rounded-full bg-slate-200"></div>
-<div class="h-1.5 w-6 rounded-full bg-slate-200"></div>
-</div>
-<span class="text-xs font-bold text-slate-400">B KEEP</span>
-</div>
-<div class="flex items-center justify-between text-sm py-2 border-b border-slate-50">
-<span class="text-slate-600 w-24">図形</span>
-<div class="flex gap-1 flex-1 px-4">
-<div class="h-1.5 w-6 rounded-full bg-accent-green"></div>
-<div class="h-1.5 w-6 rounded-full bg-accent-green"></div>
-<div class="h-1.5 w-6 rounded-full bg-accent-green"></div>
-<div class="h-1.5 w-6 rounded-full bg-accent-green"></div>
-<div class="h-1.5 w-6 rounded-full bg-accent-green"></div>
-</div>
-<span class="text-xs font-bold text-accent-green flex items-center gap-1">
-<b>A+</b>
-<span class="material-symbols-outlined text-xs">trending_up</span> UP
-                            </span>
-</div>
-<div class="flex items-center justify-between text-sm py-2">
-<span class="text-slate-600 w-24">資料の活用</span>
-<div class="flex gap-1 flex-1 px-4">
-<div class="h-1.5 w-6 rounded-full bg-accent-green"></div>
-<div class="h-1.5 w-6 rounded-full bg-accent-green"></div>
-<div class="h-1.5 w-6 rounded-full bg-slate-200"></div>
-<div class="h-1.5 w-6 rounded-full bg-slate-200"></div>
-<div class="h-1.5 w-6 rounded-full bg-slate-200"></div>
-</div>
-<span class="text-xs font-bold text-slate-400">C KEEP</span>
-</div>
-</div>
+	</div>
+	<div class="grid gap-3 sm:grid-cols-3">
+	<div class="rounded-xl border border-emerald-100 bg-white/85 p-4 shadow-sm">
+	<p class="text-xs font-bold text-slate-500">前回との差</p>
+	<p class="mt-1 text-2xl font-bold text-primary">+12 pt</p>
+	<p class="text-xs font-bold text-slate-400">423 pt → 435 pt</p>
+	</div>
+	<div class="rounded-xl border border-orange-100 bg-white/85 p-4 shadow-sm">
+	<p class="text-xs font-bold text-slate-500">正解数</p>
+	<p class="mt-1 text-2xl font-bold text-[#d39a3a]">+1問</p>
+	<p class="text-xs font-bold text-slate-400">7問 → 8問</p>
+	</div>
+	<div class="rounded-xl border border-emerald-100 bg-white/85 p-4 shadow-sm">
+	<p class="text-xs font-bold text-slate-500">段階評価</p>
+	<p class="mt-1 text-2xl font-bold text-primary">B → B+</p>
+	<p class="text-xs font-bold text-slate-400">1段階アップ</p>
+	</div>
+	</div>
+	<div class="space-y-3">
+	<div class="flex items-center justify-between">
+	<p class="text-xs text-slate-500 font-bold uppercase tracking-wider">各領域の評価</p>
+	<p class="text-[11px] font-bold text-slate-400">前回と今回の比較</p>
+	</div>
+	<div class="soft-panel rounded-2xl p-4">
+	<svg class="h-auto w-full" viewBox="0 0 360 280" role="img" aria-label="各領域の前回と今回のバランスグラフ">
+	<g transform="translate(180 132)">
+	<g fill="none" stroke="#d8e4dd" stroke-width="1.3">
+	<circle r="96"></circle>
+	<circle r="72"></circle>
+	<circle r="48"></circle>
+	<circle r="24"></circle>
+	<line x1="0" y1="-108" x2="0" y2="108"></line>
+	<line x1="-108" y1="0" x2="108" y2="0"></line>
+	<polygon points="0,-108 108,0 0,108 -108,0"></polygon>
+	</g>
+	<polygon points="0,-80 70,0 0,88 -90,0" fill="#4c7da8" fill-opacity=".10" stroke="#4c7da8" stroke-dasharray="5 5" stroke-width="3"></polygon>
+	<polygon points="0,-90 77,0 0,98 -96,0" fill="#3f8f76" fill-opacity=".20" stroke="#3f8f76" stroke-width="4"></polygon>
+	<circle cx="0" cy="-80" r="4" fill="#4c7da8"></circle>
+	<circle cx="70" cy="0" r="4" fill="#4c7da8"></circle>
+	<circle cx="0" cy="88" r="4" fill="#4c7da8"></circle>
+	<circle cx="-90" cy="0" r="4" fill="#4c7da8"></circle>
+	<circle cx="0" cy="-90" r="5" fill="#3f8f76"></circle>
+	<circle cx="77" cy="0" r="5" fill="#3f8f76"></circle>
+	<circle cx="0" cy="98" r="5" fill="#3f8f76"></circle>
+	<circle cx="-96" cy="0" r="5" fill="#3f8f76"></circle>
+	</g>
+	<g font-family="Noto Sans JP, sans-serif" font-size="13" font-weight="700" fill="#5d6762">
+	<text x="180" y="18" text-anchor="middle">数と式 A</text>
+	<text x="342" y="137" text-anchor="end">関数 B</text>
+	<text x="180" y="266" text-anchor="middle">図形 A+</text>
+	<text x="18" y="137">資料活用 C</text>
+	</g>
+	<g font-family="Noto Sans JP, sans-serif" font-size="11" font-weight="700">
+	<circle cx="124" cy="246" r="4" fill="#4c7da8"></circle><text x="132" y="250" fill="#5d6762">前回</text>
+	<circle cx="184" cy="246" r="4" fill="#3f8f76"></circle><text x="192" y="250" fill="#5d6762">今回</text>
+	</g>
+	</svg>
+	</div>
+	</div>
 </div>
 </section>
 </div>
@@ -263,8 +272,8 @@
 	<svg class="h-auto w-full" viewBox="0 0 760 250" role="img" aria-label="過去7セッションの推定学力値推移">
 	<defs>
 	<linearGradient id="sessionFill" x1="0" x2="0" y1="0" y2="1">
-	<stop offset="0%" stop-color="#2f6f5d" stop-opacity=".22"></stop>
-	<stop offset="100%" stop-color="#2f6f5d" stop-opacity=".02"></stop>
+	<stop offset="0%" stop-color="#3f8f76" stop-opacity=".22"></stop>
+	<stop offset="100%" stop-color="#3f8f76" stop-opacity=".02"></stop>
 	</linearGradient>
 	</defs>
 	<g font-family="Noto Sans JP, sans-serif" font-size="12" font-weight="700" fill="#6b756f">
@@ -281,7 +290,7 @@
 	</g>
 	<path d="M96 183 L200 148 L304 125 L408 106 L512 84 L616 76 L720 68 L720 228 L96 228 Z" fill="url(#sessionFill)"></path>
 	<polyline class="session-line" points="96,183 200,148 304,125 408,106 512,84 616,76 720,68"></polyline>
-	<g fill="#fff" stroke="#2f6f5d" stroke-width="4">
+	<g fill="#fff" stroke="#3f8f76" stroke-width="4">
 	<circle cx="96" cy="183" r="6"></circle>
 	<circle cx="200" cy="148" r="6"></circle>
 	<circle cx="304" cy="125" r="6"></circle>
@@ -290,7 +299,7 @@
 	<circle cx="616" cy="76" r="6"></circle>
 	<circle cx="720" cy="68" r="6"></circle>
 	</g>
-	<g font-family="Lexend, Noto Sans JP, sans-serif" font-size="12" font-weight="800" fill="#2f6f5d">
+	<g font-family="Lexend, Noto Sans JP, sans-serif" font-size="12" font-weight="800" fill="#3f8f76">
 	<text x="82" y="171">392</text>
 	<text x="186" y="136">405</text>
 	<text x="290" y="113">414</text>
@@ -324,7 +333,7 @@
 	</div>
 	</section>
 <section class="mb-6">
-	<div class="bg-gradient-to-r from-primary to-[#355f86] p-1 rounded-2xl shadow-lg shadow-primary/20">
+	<div class="bg-gradient-to-r from-primary to-[#4c7da8] p-1 rounded-2xl shadow-lg shadow-primary/20">
 <div class="bg-white rounded-[calc(1rem-2px)] p-6 flex items-start gap-5">
 <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
 <span class="material-symbols-outlined text-primary text-3xl">auto_awesome</span>
