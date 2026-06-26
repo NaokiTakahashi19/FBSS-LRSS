@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>数学学習状況 可視化プロトタイプ</title>
+  <style>
+    :root {
+      --ink: #202124;
+      --muted: #5f6368;
+      --line: #d9dee5;
+      --bg: #f5f7fa;
+      --panel: #ffffff;
+      --blue: #2f80ed;
+      --green: #2e9d65;
+      --amber: #c88719;
+      --red: #d94b4b;
+      --violet: #7357ff;
+      --shadow: 0 12px 28px rgba(32, 33, 36, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
+      line-height: 1.65;
+    }
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 34px 20px 52px;
+    }
+
+    header {
+      margin-bottom: 24px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(26px, 4vw, 38px);
+      line-height: 1.25;
+    }
+
+    .lead {
+      max-width: 850px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      min-height: 230px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .num {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      font-weight: 800;
+      background: var(--blue);
+    }
+
+    .card:nth-child(2) .num { background: var(--green); }
+    .card:nth-child(3) .num { background: var(--violet); }
+    .card:nth-child(4) .num { background: var(--amber); }
+    .card:nth-child(5) .num { background: var(--red); }
+    .card:nth-child(6) .num { background: #3f6f77; }
+
+    h2 {
+      margin: 0;
+      font-size: 19px;
+      line-height: 1.35;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .desc {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .actions {
+      margin-top: auto;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    a.button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 12px;
+      border-radius: 7px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: #fff;
+      font-size: 14px;
+      font-weight: 760;
+      text-decoration: none;
+    }
+
+    a.button.primary {
+      color: #fff;
+      border-color: #202124;
+      background: #202124;
+    }
+
+    .note {
+      margin-top: 22px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        min-height: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>数学学習状況 可視化プロトタイプ</h1>
+      <p class="lead">
+        「数と式」の学習項目のつながりと、各項目の習得状況をWebアプリ内で表現するための6案です。
+        それぞれ独立したHTMLとして確認できます。
+      </p>
+    </header>
+
+    <section class="grid" aria-label="可視化案一覧">
+      <article class="card">
+        <span class="num">1</span>
+        <h2>学習マップ型</h2>
+        <p class="desc">学習項目をノード、前提関係を線でつなぐ全体マップです。フィルタ、ズーム、検索で探索できます。</p>
+        <div class="actions">
+          <a class="button primary" href="learning_map_idea1.html">案1を開く</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="num">2</span>
+        <h2>単元ロードマップ型</h2>
+        <p class="desc">学年・単元ごとにアコーディオンで整理し、現在地と次の学習を見やすくします。</p>
+        <div class="actions">
+          <a class="button primary" href="learning_roadmap_idea2.html">案2を開く</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="num">3</span>
+        <h2>前提チェック型</h2>
+        <p class="desc">選択した項目の前提を、最重要前提と関連前提に分けて表示します。</p>
+        <div class="actions">
+          <a class="button primary" href="prerequisite_check_idea3.html">案3を開く</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="num">4</span>
+        <h2>次にやるべき項目リスト</h2>
+        <p class="desc">依存関係を裏側で使い、今すぐ取り組める項目・復習項目・少し先の目標を提示します。</p>
+        <div class="actions">
+          <a class="button primary" href="next_learning_idea4.html">案4を開く</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="num">5</span>
+        <h2>習得状況ヒートマップ</h2>
+        <p class="desc">先生向けに、生徒・単元ごとの習得状況を色と数値で俯瞰します。</p>
+        <div class="actions">
+          <a class="button primary" href="mastery_heatmap_idea5.html">案5を開く</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="num">6</span>
+        <h2>誤答パターン診断</h2>
+        <p class="desc">誤答パターンと項目依存を組み合わせ、原因候補と復習順を提案します。</p>
+        <div class="actions">
+          <a class="button primary" href="mistake_diagnosis_idea6.html">案6を開く</a>
+        </div>
+      </article>
+    </section>
+
+    <p class="note">
+      GitHub Pagesで公開する場合の入口URLは <code>https://naokitakahashi19.github.io/FBSS-LRSS/graph_index.html</code> です。
+      各カードのリンクは同じディレクトリ内のHTMLへ相対リンクしています。
+    </p>
+  </main>
+</body>
+</html>
