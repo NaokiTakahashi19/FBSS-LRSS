@@ -56,11 +56,24 @@
 	  }
 
 	  .test-formula {
-	    font-family: 'Times New Roman', Times, serif;
-	    font-size: clamp(1.45rem, 2.2vw, 1.9rem);
+	    font-family: "Cambria Math", "Times New Roman", Times, serif;
+	    font-size: clamp(1.55rem, 2.15vw, 1.95rem);
 	    font-style: normal;
-	    font-weight: 500;
-	    line-height: 1.45;
+	    font-weight: 400;
+	    line-height: 1.55;
+	    letter-spacing: 0;
+	    word-spacing: 0.08em;
+	  }
+
+	  .test-formula .math-var {
+	    font-family: "Cambria Math", "Times New Roman", Times, serif;
+	    font-style: italic;
+	    font-weight: 400;
+	  }
+
+	  .test-formula sup {
+	    font-size: 0.62em;
+	    line-height: 0;
 	  }
 
 	  .lesson-landscape > section + section {
@@ -149,10 +162,10 @@
 	  background: color-mix(in srgb, var(--lesson-upper) 58%, white 42%);
 	}
 	body.lesson-textbook .upper-canvas {
-	  background-color: color-mix(in srgb, var(--lesson-upper) 62%, white 38%);
+	  background-color: #ffffff;
 	}
 		body.lesson-textbook .lower-canvas {
-		  background-color: color-mix(in srgb, var(--lesson-lower) 64%, white 36%);
+		  background-color: #ffffff;
 		}
 		body.lesson-textbook .lesson-zone {
 		  position: relative;

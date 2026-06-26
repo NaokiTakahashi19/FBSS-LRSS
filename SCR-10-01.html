@@ -15,8 +15,8 @@
       theme: {
         extend: {
           colors: {
-            primary: "#1366ec",
-            "background-light": "#f2f5f9",
+            primary: "#3f8f76",
+            "background-light": "#dcebea",
             "background-dark": "#101923",
           },
           fontFamily: {
@@ -45,8 +45,8 @@
 	}
 
 	    .hlblue{
-	      color:#1366ec;
-	      background:#eaf2ff;
+	      color:#3f8f76;
+	      background:#f1faf3;
 	      border-radius:0.35rem;
 	      padding:0.05rem 0.25rem;
 	    }
@@ -61,11 +61,22 @@
 	      line-height:1.75;
 	    }
 	    .test-formula{
-	      font-family:"Times New Roman", Times, serif;
-	      font-size:clamp(1.45rem, 2.2vw, 1.9rem);
+	      font-family:"Cambria Math", "Times New Roman", Times, serif;
+	      font-size:clamp(1.55rem, 2.15vw, 1.95rem);
+	      font-style:normal;
+	      font-weight:400;
+	      line-height:1.55;
+	      letter-spacing:0;
+	      word-spacing:0.08em;
+	    }
+	    .test-formula .var{
+	      font-family:"Cambria Math", "Times New Roman", Times, serif;
 	      font-style:italic;
-	      font-weight:500;
-	      line-height:1.45;
+	      font-weight:400;
+	    }
+	    .test-formula sup{
+	      font-size:0.62em;
+	      line-height:0;
 	    }
 	    .result-landscape > section + section {
 	      margin-top: 1.5rem;
@@ -102,10 +113,10 @@
     .dark .canvas-grid{
       background-image: linear-gradient(#1e293b 1px, transparent 1px), linear-gradient(90deg, #1e293b 1px, transparent 1px);
     }
-    .handwritten-answer{
+.handwritten-answer{
   /* font-family: 'Lexend', cursive; ← これを削除 or コメントアウト */
   font-style: normal;   /* 斜体は var に任せる */
-  font-weight: 700; 
+  font-weight: 400;
   color: #334155;
   filter: blur(0.2px);
 }
@@ -117,14 +128,44 @@
 	      opacity: 0.68;
 	      transform: rotate(-10deg);
 	    }
-  </style>
+	    body.result-textbook {
+	      --lesson-upper: #dcebea;
+	      --lesson-lower: #edf2df;
+	      background: var(--lesson-upper);
+	      overflow-x: hidden;
+	    }
+	    body.result-textbook header,
+	    body.result-textbook footer {
+	      background: rgba(252, 255, 246, .94);
+	      border-color: rgba(63, 143, 118, .16);
+	    }
+	    body.result-textbook .result-card {
+	      border-color: rgba(63, 143, 118, .18);
+	      background: rgba(255, 255, 253, .96);
+	      box-shadow: 0 12px 22px rgba(72, 92, 82, .08);
+	    }
+	    body.result-textbook .upper-panel {
+	      background: color-mix(in srgb, var(--lesson-upper) 58%, white 42%);
+	    }
+	    body.result-textbook .upper-canvas {
+	      background-color: #ffffff;
+	    }
+	    body.result-textbook .lower-panel {
+	      background: color-mix(in srgb, var(--lesson-lower) 64%, white 36%);
+	    }
+	    body.result-textbook .soft-label {
+	      border-color: rgba(63, 143, 118, .18);
+	      background: rgba(241, 250, 243, .86);
+	      color: #5d6762;
+	    }
+	  </style>
 
   <style>
     body{min-height:max(884px, 100dvh);}
   </style>
 </head>
 
-<body class="bg-background-light dark:bg-background-dark font-display text-[#0d131b] dark:text-slate-100 flex flex-col min-h-screen">
+	<body class="result-textbook bg-background-light dark:bg-background-dark font-display text-[#24332f] dark:text-slate-100 flex flex-col min-h-screen">
 
   <!-- Header: SCR-09-01.html と同じ構造 -->
 	  <header class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
@@ -151,13 +192,13 @@
   <main class="result-landscape flex-1 w-full max-w-6xl mx-auto px-5 md:px-6 pt-32 pb-28">
 
     <!-- 問題カード(見た目は SCR-09-01.html に準拠) -->
-    <section class="result-problem bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-7 shadow-sm relative overflow-hidden">
+    <section class="result-problem result-card upper-panel bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-7 shadow-sm relative overflow-hidden">
       <div class="flex justify-between items-start mb-5 gap-4">
         <div>
           <p class="text-xs font-bold text-gray-400 mb-2">問題</p>
           <p class="text-gray-900 dark:text-gray-100 text-base md:text-lg text-left leading-8"><span class="font-bold">【問題1】</span> 次の式を因数分解しなさい。</p>
         </div>
-        <div class="mt-1 bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg text-sm font-bold tracking-tight border border-gray-200 dark:border-gray-700 shadow-sm whitespace-nowrap">
+        <div class="soft-label mt-1 bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg text-sm font-bold tracking-tight border border-gray-200 dark:border-gray-700 shadow-sm whitespace-nowrap">
           難易度 180 / 300
         </div>
       </div>
@@ -184,7 +225,7 @@
         </div>
       </div>
 
-	      <div class="w-full h-28 md:h-32 bg-white dark:bg-gray-900 rounded-xl border-2 border-primary/30 dark:border-primary/50 relative overflow-hidden shadow-inner">
+	      <div class="upper-canvas w-full h-32 md:h-36 bg-white dark:bg-gray-900 rounded-xl border-2 border-primary/30 dark:border-primary/50 relative overflow-hidden shadow-inner">
 	        <div class="absolute top-2 left-3 z-10 rounded-md bg-white/85 dark:bg-gray-900/85 px-2 py-1 text-[11px] font-bold text-primary border border-primary/15 pointer-events-none">あなたの解答</div>
 	        <div class="absolute inset-0 canvas-grid opacity-30 dark:opacity-10"></div>
 
@@ -203,14 +244,14 @@
     </section>
 
     <!-- 解答/解説カード -->
-    <section class="result-explanation bg-blue-50/60 dark:bg-gray-800/40 rounded-2xl p-6 border border-blue-100 dark:border-gray-800">
+    <section class="result-explanation lower-panel rounded-2xl p-6 border border-primary/15 dark:border-gray-800">
       <div class="flex items-center gap-2 mb-4">
         <span class="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded">解答</span>
         <span class="text-base font-bold math-text text-gray-800 dark:text-white">(5<span class="var">a</span> + 6<span class="var">b</span>)(5<span class="var">a</span> - 6<span class="var">b</span>)</span>
       </div>
 
       <div class="space-y-5 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-        <div class="rounded-xl bg-white/75 dark:bg-gray-900/50 border border-blue-100 dark:border-gray-700 p-4">
+        <div class="rounded-xl bg-white/75 dark:bg-gray-900/50 border border-primary/15 dark:border-gray-700 p-4">
           <p class="font-bold text-gray-800 dark:text-gray-100 mb-2">ステップ1：平方の形を確認する</p>
           <p class="formula-line math-text text-gray-800 dark:text-white">
             25<span class="var">a</span><sup>2</sup> - 36<span class="var">b</span><sup>2</sup>
@@ -218,7 +259,7 @@
             - <span class="hlpink">(6<span class="var">b</span>)<sup>2</sup></span>
           </p>
         </div>
-        <div class="rounded-xl bg-white/75 dark:bg-gray-900/50 border border-blue-100 dark:border-gray-700 p-4">
+        <div class="rounded-xl bg-white/75 dark:bg-gray-900/50 border border-primary/15 dark:border-gray-700 p-4">
           <p class="font-bold text-gray-800 dark:text-gray-100 mb-2">ステップ2：2つの平方の差の公式を使う</p>
           <p class="formula-line math-text text-gray-800 dark:text-white">
             <span class="var">A</span><sup>2</sup> - <span class="var">B</span><sup>2</sup>
@@ -226,7 +267,7 @@
           </p>
           <p class="mt-2">ここで、<span class="math-text"><span class="var">A</span> = 5<span class="var">a</span></span>、<span class="math-text"><span class="var">B</span> = 6<span class="var">b</span></span> と見ます。</p>
         </div>
-        <div class="rounded-xl bg-white/75 dark:bg-gray-900/50 border border-blue-100 dark:border-gray-700 p-4">
+        <div class="rounded-xl bg-white/75 dark:bg-gray-900/50 border border-primary/15 dark:border-gray-700 p-4">
           <p class="font-bold text-gray-800 dark:text-gray-100 mb-2">ステップ3：公式にあてはめて因数分解する</p>
           <p class="formula-line math-text text-gray-800 dark:text-white">
             = (5<span class="var">a</span> + 6<span class="var">b</span>)(5<span class="var">a</span> - 6<span class="var">b</span>)
