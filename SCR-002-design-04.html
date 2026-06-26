@@ -64,11 +64,11 @@
       background: #fff !important;
       box-shadow: 0 14px 28px rgba(8, 92, 72, .08) !important;
     }
-    .design-report h2 {
-      color: var(--report-gray) !important;
-      font-weight: 600 !important;
-      line-height: 1.35;
-    }
+	    .design-report h2 {
+	      color: var(--report-gray) !important;
+	      font-weight: 500 !important;
+	      line-height: 1.35;
+	    }
     .design-report .font-black {
       font-weight: 500 !important;
     }
@@ -164,8 +164,8 @@
 	    }
 	    body.design-textbook {
 	      background:
-	        radial-gradient(circle at 18% 12%, rgba(54, 139, 113, .08) 0 1px, transparent 1px),
-	        linear-gradient(135deg, #f5fbf4 0%, #fff9df 48%, #f4fbff 100%);
+	        radial-gradient(circle at 18% 12%, rgba(67, 112, 104, .10) 0 1px, transparent 1px),
+	        linear-gradient(135deg, #dcebea 0%, #edf2df 48%, #dcecee 100%);
 	      background-size: 26px 26px, auto;
 	      color: #24332f;
 	      --report-green: #3f8f76;
@@ -211,8 +211,8 @@
 	      color: var(--textbook-red);
 	    }
 	    .design-textbook .math-context {
-	      border: 2px solid rgba(211, 154, 58, .22);
-	      background: linear-gradient(90deg, #fff8e8 0%, #f6fbef 100%);
+	      border-bottom: 1px solid rgba(63, 143, 118, .14);
+	      background: linear-gradient(90deg, rgba(241, 250, 243, .95) 0%, rgba(255, 248, 232, .72) 100%);
 	    }
 	  </style>
 	</head>
@@ -247,16 +247,16 @@
 	            <span class="textbook-pill px-3 py-1 text-xs font-black">第一志望</span>
 	            <span class="text-sm font-black text-slate-600">県立朝日高等学校</span>
           </div>
-          <h2 class="text-xl font-black leading-tight tracking-tight text-slate-900 sm:text-2xl">全教科の目標学力値に対する進捗度 <span class="mt-2 block text-sm font-black text-slate-500">4教科合計 IRT <b class="text-xl text-slate-800">0〜1200</b></span></h2>
+	          <h2 class="text-lg font-medium leading-tight tracking-tight text-slate-800 sm:text-xl">全教科の目標学力値に対する進捗度 <span class="mt-2 block text-xs font-medium text-slate-500">4教科合計 IRT <b class="text-base font-semibold text-slate-700">0〜1200</b></span></h2>
         </div>
 	        <div class="grid w-full grid-cols-2 rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-card sm:max-w-[520px] sm:grid-cols-[82px_82px_112px_minmax(140px,1fr)] sm:divide-x sm:divide-slate-200 sm:px-5">
 	          <div>
 	            <p class="text-[10px] font-black uppercase tracking-wide text-slate-500">Current</p>
-	            <p class="mt-1 font-display text-2xl font-black text-blue-600">1032</p>
+		            <p class="mt-1 font-display text-2xl font-black text-blue-600">1002</p>
 	          </div>
           <div class="pl-4 sm:px-6">
 	            <p class="text-[10px] font-black uppercase tracking-wide text-slate-500">Gap</p>
-	            <p class="mt-1 font-display text-2xl font-black text-rose-500">-48</p>
+		            <p class="mt-1 font-display text-2xl font-black text-rose-500">-78</p>
 	          </div>
 	          <div class="pl-4 sm:px-6">
 	            <p class="text-[10px] font-black tracking-wide text-slate-500">累積解答数</p>
@@ -274,21 +274,21 @@
           <span>0</span><span>300</span><span>600</span><span>900</span><span class="text-right">1200</span>
         </div>
 	        <div class="relative h-6 overflow-hidden rounded-full bg-emerald-50 ring-1 ring-slate-200">
-	          <div class="flex h-6 w-[86%] overflow-hidden rounded-full">
-		            <div class="stack-segment h-full w-[21.5%] bg-[#d39a3a]" title="数学 258"></div>
-		            <div class="stack-segment h-full w-[19.5%] bg-[#4c7da8]" title="英語 234"></div>
-		            <div class="stack-segment h-full w-[20.5%] bg-[#3f8f76]" title="理科 246"></div>
-		            <div class="stack-segment h-full w-[24.5%] bg-[#9a4b45]" title="社会 294"></div>
-	          </div>
-	          <div class="absolute left-[86%] top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-[5px] border-emerald-600 bg-white"></div>
-	          <div class="absolute left-[86%] top-8 -translate-x-1/2 rounded-md bg-emerald-600 px-2 py-1 text-[10px] font-black text-white">現在 1032</div>
+		          <div class="flex h-6 w-[83.5%] overflow-hidden rounded-full">
+			            <div class="stack-segment h-full w-[22.8%] bg-[#3f8f76]" title="数学 228"></div>
+			            <div class="stack-segment h-full w-[23.4%] bg-[#4c7da8]" title="英語 234"></div>
+			            <div class="stack-segment h-full w-[24.5%] bg-[#d39a3a]" title="理科 246"></div>
+			            <div class="stack-segment h-full w-[29.3%] bg-[#9a4b45]" title="社会 294"></div>
+		          </div>
+		          <div class="absolute left-[83.5%] top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-[5px] border-emerald-600 bg-white"></div>
+		          <div class="absolute left-[83.5%] top-8 -translate-x-1/2 rounded-md bg-emerald-600 px-2 py-1 text-[10px] font-black text-white">現在 1002</div>
 	          <div class="absolute left-[90%] top-0 -translate-x-1/2 -translate-y-7 text-orange-500" aria-label="目標位置"><span class="target-flag"></span></div>
 	          <div class="absolute left-[90%] top-8 -translate-x-1/2 rounded-md bg-orange-50 px-2 py-1 text-[10px] font-black text-orange-600 ring-1 ring-orange-200">目標 1080</div>
 	        </div>
 	        <div class="mt-10 flex flex-wrap gap-x-4 gap-y-2 text-[11px] font-black text-slate-500">
-		          <span class="inline-flex items-center gap-1"><i class="size-3 rounded-sm bg-[#d39a3a]"></i>数学 258</span>
+		          <span class="inline-flex items-center gap-1"><i class="size-3 rounded-sm bg-[#3f8f76]"></i>数学 228</span>
 		          <span class="inline-flex items-center gap-1"><i class="size-3 rounded-sm bg-[#4c7da8]"></i>英語 234</span>
-		          <span class="inline-flex items-center gap-1"><i class="size-3 rounded-sm bg-[#3f8f76]"></i>理科 246</span>
+		          <span class="inline-flex items-center gap-1"><i class="size-3 rounded-sm bg-[#d39a3a]"></i>理科 246</span>
 		          <span class="inline-flex items-center gap-1"><i class="size-3 rounded-sm bg-[#9a4b45]"></i>社会 294</span>
 	        </div>
 	      </div>
@@ -299,7 +299,7 @@
           <span class="grid size-8 place-items-center rounded-xl bg-violet-50 text-violet-600">
             <span class="material-symbols-outlined text-[22px]">radar</span>
           </span>
-          <h2 class="text-lg font-black">教科バランス</h2>
+	          <h2 class="text-base font-medium">教科バランス</h2>
         </div>
         <div class="mx-auto mt-4 max-w-[290px]">
           <svg class="h-auto w-full" viewBox="0 0 300 250" aria-label="4教科のIRT値バランス">
@@ -314,13 +314,13 @@
                 <polygon points="0,-110 110,0 0,110 -110,0"></polygon>
               </g>
               <polygon points="0,-99 99,0 0,99 -99,0" fill="none" stroke="#f59e0b" stroke-width="2.5"></polygon>
-              <polygon points="0,-95 86,0 0,81 -90,0" fill="#00906c" fill-opacity=".18" stroke="#00906c" stroke-width="3"></polygon>
+	              <polygon points="0,-84 86,0 0,81 -90,0" fill="#00906c" fill-opacity=".18" stroke="#00906c" stroke-width="3"></polygon>
               <polygon points="0,-88 84,0 0,86 -83,0" fill="none" stroke="#10b981" stroke-dasharray="4 5" stroke-width="2.5"></polygon>
               <circle cx="0" cy="-99" r="4" fill="#f59e0b"></circle>
               <circle cx="99" cy="0" r="4" fill="#f59e0b"></circle>
               <circle cx="0" cy="99" r="4" fill="#f59e0b"></circle>
               <circle cx="-99" cy="0" r="4" fill="#f59e0b"></circle>
-              <circle cx="0" cy="-95" r="5" fill="#00906c"></circle>
+	              <circle cx="0" cy="-84" r="5" fill="#00906c"></circle>
               <circle cx="86" cy="0" r="5" fill="#00906c"></circle>
               <circle cx="0" cy="81" r="5" fill="#00906c"></circle>
               <circle cx="-90" cy="0" r="5" fill="#00906c"></circle>
@@ -330,7 +330,7 @@
               <circle cx="-83" cy="0" r="4" fill="#10b981"></circle>
             </g>
             <g font-family="Noto Sans JP, sans-serif" font-weight="900" font-size="13" fill="#808080">
-              <text x="150" y="18" text-anchor="middle">数学 258</text>
+	              <text x="150" y="18" text-anchor="middle">数学 228</text>
               <text x="284" y="127" text-anchor="end">英語 234</text>
               <text x="150" y="242" text-anchor="middle">社会 222</text>
               <text x="16" y="127">理科 246</text>
@@ -345,7 +345,7 @@
         <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <p class="text-xs font-bold text-slate-500">数学</p>
-            <h2 class="mt-1 text-xl font-black leading-tight tracking-tight text-slate-900 sm:text-2xl">数学の目標学力値に対する進捗度 <span class="mt-2 block text-sm font-black text-slate-500">IRT <b class="text-xl text-slate-800">0〜300</b></span></h2>
+            <h2 class="mt-1 text-lg font-medium leading-tight tracking-tight text-slate-800 sm:text-xl">数学の目標学力値に対する進捗度 <span class="mt-2 block text-xs font-medium text-slate-500">IRT <b class="text-base font-semibold text-slate-700">0〜300</b></span></h2>
           </div>
           <div class="grid w-full grid-cols-2 rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-card sm:max-w-[390px] sm:grid-cols-[92px_92px_minmax(150px,1fr)] sm:divide-x sm:divide-slate-200 sm:px-5">
             <div>
@@ -381,7 +381,7 @@
         <span class="grid size-8 place-items-center rounded-xl bg-violet-50 text-violet-600">
           <span class="material-symbols-outlined text-[22px]">pentagon</span>
         </span>
-        <h2 class="text-lg font-black">領域別バランス</h2>
+        <h2 class="text-base font-medium">領域別バランス</h2>
       </div>
       <div class="mx-auto mt-4 max-w-[290px]">
         <svg class="h-auto w-full" viewBox="0 0 300 250" aria-label="数学の領域別バランス">
@@ -419,35 +419,25 @@
     </article>
     </section>
 
-    <section class="math-context rounded-2xl px-5 py-4 shadow-card">
-      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <section class="rounded-2xl border border-slate-100 bg-white p-5 shadow-card">
+      <div class="math-context -mx-5 -mt-5 mb-5 rounded-t-2xl px-5 py-4">
         <div class="flex items-center gap-3">
-          <span class="grid size-10 place-items-center rounded-lg bg-[#d39a3a] text-white">
+          <span class="grid size-10 place-items-center rounded-lg bg-[#3f8f76] text-white">
             <span class="material-symbols-outlined">calculate</span>
           </span>
-          <div>
-            <p class="text-xs font-black text-slate-500">現在の学習教科</p>
-            <h2 class="text-xl font-black text-slate-800">数学 <span class="text-sm font-bold text-slate-500">Math</span></h2>
-          </div>
-        </div>
-        <div class="flex flex-wrap gap-2 text-xs font-black">
-          <span class="rounded-full bg-white/80 px-3 py-1 text-slate-600 ring-1 ring-orange-100">単元：数と式</span>
-          <span class="rounded-full bg-white/80 px-3 py-1 text-slate-600 ring-1 ring-orange-100">現在 228 / 目標 270</span>
+          <h2 class="text-xl font-semibold text-slate-800">数学 <span class="text-sm font-medium text-slate-500">Math</span></h2>
         </div>
       </div>
-    </section>
-
-    <section class="rounded-2xl border border-slate-100 bg-white p-5 shadow-card">
-      <div><p class="text-xs font-bold text-slate-500">学習メニュー</p><h2 class="mt-1 text-lg font-black">目標到達までの学習を進める</h2><p class="mt-1 text-sm text-slate-500">基本／標準問題を進めると、修了判定と過去問挑戦が利用できるようになります。</p></div>
+      <div><p class="text-xs font-medium text-slate-500">学習メニュー</p><h2 class="mt-1 text-lg font-medium">目標到達までの学習を進める</h2><p class="mt-1 text-sm text-slate-500">基本／標準問題を進めると、修了判定と過去問挑戦が利用できるようになります。</p></div>
       <div class="mt-5 grid gap-3 md:grid-cols-3">
         <a href="SCR-09-01.html" class="group rounded-xl border-2 border-blue-600 bg-blue-600 p-4 text-white shadow-lg shadow-blue-100 hover:bg-blue-700">
-          <div class="flex items-center justify-between"><span class="material-symbols-outlined">play_circle</span><span class="text-xs font-bold">利用可能</span></div><h3 class="mt-4 font-black">基本／標準問題を開始する</h3><p class="mt-1 text-xs text-blue-100">数と式から学習を始めます</p>
+	          <div class="flex items-center justify-between"><span class="material-symbols-outlined">play_circle</span><span class="text-xs font-medium">利用可能</span></div><h3 class="mt-4 font-semibold">基本／標準問題を開始する</h3><p class="mt-1 text-xs text-blue-100">数と式から学習を始めます</p>
         </a>
         <div class="disabled-button rounded-xl border border-slate-200 bg-slate-50 p-4 text-slate-500" aria-disabled="true">
-          <div class="flex items-center justify-between"><span class="material-symbols-outlined">task_alt</span><span class="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-bold">目標到達後に有効</span></div><h3 class="mt-4 font-black">修了判定</h3><p class="mt-1 text-xs">最も難易度の高い問題に挑戦</p>
+	          <div class="flex items-center justify-between"><span class="material-symbols-outlined">task_alt</span><span class="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-medium">目標到達後に有効</span></div><h3 class="mt-4 font-semibold">修了判定</h3><p class="mt-1 text-xs">最も難易度の高い問題に挑戦</p>
         </div>
         <div class="disabled-button rounded-xl border border-slate-200 bg-slate-50 p-4 text-slate-500" aria-disabled="true">
-          <div class="flex items-center justify-between"><span class="material-symbols-outlined">history_edu</span><span class="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-bold">目標到達後に有効</span></div><h3 class="mt-4 font-black">過去問に挑戦</h3><p class="mt-1 text-xs">過去問ドリルを繰り返し学習</p>
+	          <div class="flex items-center justify-between"><span class="material-symbols-outlined">history_edu</span><span class="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-medium">目標到達後に有効</span></div><h3 class="mt-4 font-semibold">過去問に挑戦</h3><p class="mt-1 text-xs">過去問ドリルを繰り返し学習</p>
         </div>
       </div>
     </section>
