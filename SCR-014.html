@@ -123,10 +123,83 @@
 </div>
 </header>
 <main class="max-w-6xl mx-auto p-6 overflow-y-auto h-[calc(100vh-64px)] no-scrollbar">
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+<div class="grid grid-cols-1 lg:grid-cols-[300px_minmax(320px,1fr)_300px] gap-6 mb-6 items-stretch">
+<section class="space-y-4">
+<h3 class="text-sm font-bold text-slate-500 ml-1">教科の進捗度</h3>
+	<div class="report-card p-6 flex h-full flex-col justify-between gap-6">
+	<div class="flex items-center gap-6">
+<div class="relative flex items-center justify-center">
+<svg class="w-24 h-24">
+<circle class="text-slate-100" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-accent-green gauge-ring" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="10" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<span class="absolute text-sm font-bold">96%</span>
+</div>
+<div class="flex-1">
+<p class="text-xs text-slate-500 font-bold mb-1 uppercase tracking-wider">教科の進捗度</p>
+<p class="text-lg font-bold">現在 435 pt</p>
+<p class="text-xs text-slate-400">目標 450 pt まで あと 15 pt</p>
+</div>
+	</div>
+	<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+	<div class="rounded-xl border border-emerald-100 bg-white/85 p-4 shadow-sm">
+	<p class="text-xs font-bold text-slate-500">前回との差</p>
+	<p class="mt-1 text-2xl font-bold text-primary">+12 pt</p>
+	<p class="text-xs font-bold text-slate-400">423 pt → 435 pt</p>
+	</div>
+	<div class="rounded-xl border border-orange-100 bg-white/85 p-4 shadow-sm">
+	<p class="text-xs font-bold text-slate-500">正解数</p>
+	<p class="mt-1 text-2xl font-bold text-[#d39a3a]">+1問</p>
+	<p class="text-xs font-bold text-slate-400">7問 → 8問</p>
+	</div>
+	</div>
+</div>
+</section>
+<section class="space-y-4">
+<h3 class="text-sm font-bold text-slate-500 ml-1">各領域の評価</h3>
+	<div class="report-card p-6 h-full">
+	<div class="flex items-center justify-between mb-4">
+	<p class="text-xs text-slate-500 font-bold uppercase tracking-wider">領域別バランス</p>
+	<p class="text-[11px] font-bold text-slate-400">現在・前回</p>
+	</div>
+	<div class="soft-panel rounded-2xl p-4">
+	<div class="mx-auto max-w-[360px]">
+	<svg class="h-auto w-full" viewBox="0 0 300 250" role="img" aria-label="数学の領域別バランス 現在と前回の比較">
+	<g transform="translate(150 122)">
+	<g fill="none" stroke="#dbe4f0" stroke-width="1.4">
+	<circle r="88"></circle>
+	<circle r="66"></circle>
+	<circle r="44"></circle>
+	<circle r="22"></circle>
+	<line x1="0" y1="-110" x2="0" y2="110"></line>
+	<line x1="-110" y1="0" x2="110" y2="0"></line>
+	<polygon points="0,-110 110,0 0,110 -110,0"></polygon>
+	</g>
+	<polygon points="0,-66 80,0 0,76 -88,0" fill="none" stroke="#d39a3a" stroke-width="2.4" stroke-dasharray="5 5"></polygon>
+	<polygon points="0,-75 88,0 0,84 -99,0" fill="#00906c" fill-opacity=".18" stroke="#00906c" stroke-width="3"></polygon>
+	<circle cx="0" cy="-75" r="5" fill="#00906c"></circle>
+	<circle cx="88" cy="0" r="5" fill="#00906c"></circle>
+	<circle cx="0" cy="84" r="5" fill="#00906c"></circle>
+	<circle cx="-99" cy="0" r="5" fill="#00906c"></circle>
+	</g>
+	<g font-family="Noto Sans JP, sans-serif" font-weight="900" font-size="13" fill="#808080">
+	<text x="150" y="18" text-anchor="middle">数と式</text>
+	<text x="284" y="127" text-anchor="end">関数</text>
+	<text x="150" y="242" text-anchor="middle">図形</text>
+	<text x="16" y="127">資料活用</text>
+	</g>
+	<g font-family="Noto Sans JP, sans-serif" font-size="10" font-weight="800">
+	<circle cx="106" cy="220" r="4" fill="#00906c"></circle><text x="114" y="224" fill="#808080">現在</text>
+	<circle cx="160" cy="220" r="4" fill="#d39a3a"></circle><text x="168" y="224" fill="#808080">前回</text>
+	</g>
+	</svg>
+	</div>
+	</div>
+</div>
+</section>
 <section class="space-y-4">
 <h3 class="text-sm font-bold text-slate-500 ml-1">実施サマリー</h3>
-	<div class="report-card p-6 space-y-5">
+	<div class="report-card p-6 space-y-5 h-full">
 <div class="flex items-center justify-between">
 <div class="flex items-center gap-3">
 <span class="material-symbols-outlined text-primary">history</span>
@@ -167,78 +240,6 @@
 </div>
 </div>
 </section>
-<section class="space-y-4">
-<h3 class="text-sm font-bold text-slate-500 ml-1">学習成果分析</h3>
-	<div class="report-card p-6 flex flex-col gap-6">
-	<div class="flex items-center gap-6">
-<div class="relative flex items-center justify-center">
-<svg class="w-24 h-24">
-<circle class="text-slate-100" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-width="8"></circle>
-<circle class="text-accent-green gauge-ring" cx="48" cy="48" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="10" stroke-linecap="round" stroke-width="8"></circle>
-</svg>
-<span class="absolute text-sm font-bold">96%</span>
-</div>
-<div class="flex-1">
-<p class="text-xs text-slate-500 font-bold mb-1 uppercase tracking-wider">教科の進捗度</p>
-<p class="text-lg font-bold">現在 435 pt</p>
-<p class="text-xs text-slate-400">目標 450 pt まで あと 15 pt</p>
-</div>
-	</div>
-	<div class="grid gap-3 sm:grid-cols-2">
-	<div class="rounded-xl border border-emerald-100 bg-white/85 p-4 shadow-sm">
-	<p class="text-xs font-bold text-slate-500">前回との差</p>
-	<p class="mt-1 text-2xl font-bold text-primary">+12 pt</p>
-	<p class="text-xs font-bold text-slate-400">423 pt → 435 pt</p>
-	</div>
-	<div class="rounded-xl border border-orange-100 bg-white/85 p-4 shadow-sm">
-	<p class="text-xs font-bold text-slate-500">正解数</p>
-	<p class="mt-1 text-2xl font-bold text-[#d39a3a]">+1問</p>
-	<p class="text-xs font-bold text-slate-400">7問 → 8問</p>
-	</div>
-	</div>
-	<div class="space-y-3">
-	<div class="flex items-center justify-between">
-	<p class="text-xs text-slate-500 font-bold uppercase tracking-wider">各領域の評価</p>
-	<p class="text-[11px] font-bold text-slate-400">現在・目標・中3平均</p>
-	</div>
-	<div class="soft-panel rounded-2xl p-4">
-	<div class="mx-auto max-w-[320px]">
-	<svg class="h-auto w-full" viewBox="0 0 300 250" role="img" aria-label="数学の領域別バランス">
-	<g transform="translate(150 122)">
-	<g fill="none" stroke="#dbe4f0" stroke-width="1.4">
-	<circle r="88"></circle>
-	<circle r="66"></circle>
-	<circle r="44"></circle>
-	<circle r="22"></circle>
-	<line x1="0" y1="-110" x2="0" y2="110"></line>
-	<line x1="-110" y1="0" x2="110" y2="0"></line>
-	<polygon points="0,-110 110,0 0,110 -110,0"></polygon>
-	</g>
-	<polygon points="0,-99 99,0 0,99 -99,0" fill="none" stroke="#f59e0b" stroke-width="2"></polygon>
-	<polygon points="0,-75 88,0 0,84 -99,0" fill="#00906c" fill-opacity=".18" stroke="#00906c" stroke-width="3"></polygon>
-	<polygon points="0,-80 83,0 0,80 -93,0" fill="none" stroke="#10b981" stroke-dasharray="4 5" stroke-width="2"></polygon>
-	<circle cx="0" cy="-75" r="5" fill="#00906c"></circle>
-	<circle cx="88" cy="0" r="5" fill="#00906c"></circle>
-	<circle cx="0" cy="84" r="5" fill="#00906c"></circle>
-	<circle cx="-99" cy="0" r="5" fill="#00906c"></circle>
-	</g>
-	<g font-family="Noto Sans JP, sans-serif" font-weight="900" font-size="13" fill="#808080">
-	<text x="150" y="18" text-anchor="middle">数と式</text>
-	<text x="284" y="127" text-anchor="end">関数</text>
-	<text x="150" y="242" text-anchor="middle">図形</text>
-	<text x="16" y="127">資料活用</text>
-	</g>
-	<g font-family="Noto Sans JP, sans-serif" font-size="10" font-weight="800">
-	<circle cx="91" cy="220" r="4" fill="#00906c"></circle><text x="99" y="224" fill="#808080">現在</text>
-	<circle cx="141" cy="220" r="4" fill="#f59e0b"></circle><text x="149" y="224" fill="#808080">目標</text>
-	<circle cx="184" cy="220" r="4" fill="#10b981"></circle><text x="192" y="224" fill="#808080">中3平均</text>
-	</g>
-	</svg>
-	</div>
-	</div>
-	</div>
-</div>
-</section>
 </div>
 <section class="mb-6">
 	<div class="report-card p-6">
@@ -251,7 +252,7 @@
 	</div>
 	<div class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_220px]">
 	<div class="soft-panel rounded-2xl p-4">
-	<svg class="h-auto w-full" viewBox="0 0 760 250" role="img" aria-label="過去7セッションの推定学力値推移">
+	<svg class="h-auto w-full" viewBox="0 0 760 268" role="img" aria-label="過去7セッションの推定学力値推移">
 	<defs>
 	<linearGradient id="sessionFill" x1="0" x2="0" y1="0" y2="1">
 	<stop offset="0%" stop-color="#3f8f76" stop-opacity=".22"></stop>
@@ -290,14 +291,25 @@
 	<text x="602" y="64">432</text>
 	<text x="706" y="56">435</text>
 	</g>
-	<g font-family="Noto Sans JP, sans-serif" font-size="11" font-weight="700" fill="#6b756f">
-	<text x="76" y="246">10/21 S1</text>
-	<text x="180" y="246">10/22 S2</text>
-	<text x="284" y="246">10/23 S3</text>
-	<text x="388" y="246">10/24 S4</text>
-	<text x="492" y="246">10/24 S5</text>
-	<text x="596" y="246">10/25 S6</text>
-	<text x="700" y="246">10/25 S7</text>
+	<g font-family="Noto Sans JP, sans-serif" text-anchor="middle">
+	<g font-size="12" font-weight="900" fill="#3f8f76">
+	<text x="96" y="246">S1</text>
+	<text x="200" y="246">S2</text>
+	<text x="304" y="246">S3</text>
+	<text x="408" y="246">S4</text>
+	<text x="512" y="246">S5</text>
+	<text x="616" y="246">S6</text>
+	<text x="720" y="246">S7</text>
+	</g>
+	<g font-size="10" font-weight="700" fill="#6b756f">
+	<text x="96" y="262">10/21</text>
+	<text x="200" y="262">10/22</text>
+	<text x="304" y="262">10/23</text>
+	<text x="408" y="262">10/24</text>
+	<text x="512" y="262">10/24</text>
+	<text x="616" y="262">10/25</text>
+	<text x="720" y="262">10/25</text>
+	</g>
 	</g>
 	</svg>
 	</div>
