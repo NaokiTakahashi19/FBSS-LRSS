@@ -7,6 +7,7 @@
 
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;600;700&display=swap" rel="stylesheet" />
 
   <script>
@@ -61,22 +62,25 @@
 	      line-height:1.75;
 	    }
 	    .test-formula{
-	      font-family:"Cambria Math", "Times New Roman", Times, serif;
-	      font-size:clamp(1.5rem, 2vw, 1.85rem);
+	      font-family:"STIX Two Text", "Cambria Math", "Times New Roman", serif;
+	      font-size:clamp(1.75rem, 2.45vw, 2.25rem);
 	      font-style:normal;
-	      font-weight:400;
-	      line-height:1.7;
+	      font-weight:500;
+	      line-height:1.55;
 	      letter-spacing:0;
-	      word-spacing:0.02em;
+	      word-spacing:0.12em;
+	      font-variant-numeric:lining-nums;
+	      text-rendering:geometricPrecision;
 	    }
 	    .test-formula .var{
-	      font-family:"Cambria Math", "Times New Roman", Times, serif;
+	      font-family:"STIX Two Text", "Cambria Math", "Times New Roman", serif;
 	      font-style:italic;
-	      font-weight:400;
+	      font-weight:500;
 	    }
 	    .test-formula sup{
-	      font-size:0.62em;
+	      font-size:0.58em;
 	      line-height:0;
+	      margin-left:0.02em;
 	    }
 	    .result-landscape > section + section {
 	      margin-top: 1.5rem;
@@ -208,7 +212,7 @@
 
       <div class="py-4 text-center">
         <span class="test-formula text-gray-900 dark:text-white">
-          25<span class="var">a</span><sup>2</sup> - 36<span class="var">b</span><sup>2</sup>
+          25<span class="var">a</span><sup>2</sup> &minus; 36<span class="var">b</span><sup>2</sup>
         </span>
       </div>
       <div class="absolute bottom-4 right-5 text-xs font-bold text-gray-400 dark:text-gray-500">問題番号：3-A-02-06ｰ01</div>
