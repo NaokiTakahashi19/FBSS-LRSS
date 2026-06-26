@@ -48,13 +48,10 @@
 	        body {
 	            min-height: max(884px, 100dvh);
 	        }
-	        body.result-textbook {
-	            background:
-		              radial-gradient(circle at 18% 12%, rgba(67, 112, 104, .10) 0 1px, transparent 1px),
-		              linear-gradient(135deg, #dcebea 0%, #edf2df 48%, #dcecee 100%);
-	            background-size: 26px 26px, auto;
-	            color: #24332f;
-	        }
+		        body.result-textbook {
+		            background: linear-gradient(180deg, #dcebea 0 50%, #edf2df 50% 100%);
+		            color: #24332f;
+		        }
 	        .result-textbook header,
 	        .result-textbook footer {
 		            background: rgba(252, 255, 246, .94);
@@ -217,42 +214,42 @@
 	<div class="space-y-3">
 	<div class="flex items-center justify-between">
 	<p class="text-xs text-slate-500 font-bold uppercase tracking-wider">各領域の評価</p>
-	<p class="text-[11px] font-bold text-slate-400">前回と今回の比較</p>
+	<p class="text-[11px] font-bold text-slate-400">現在・目標・中3平均</p>
 	</div>
 	<div class="soft-panel rounded-2xl p-4">
-	<svg class="h-auto w-full" viewBox="0 0 360 280" role="img" aria-label="各領域の前回と今回のバランスグラフ">
-	<g transform="translate(180 132)">
-	<g fill="none" stroke="#d8e4dd" stroke-width="1.3">
-	<circle r="96"></circle>
-	<circle r="72"></circle>
-	<circle r="48"></circle>
-	<circle r="24"></circle>
-	<line x1="0" y1="-108" x2="0" y2="108"></line>
-	<line x1="-108" y1="0" x2="108" y2="0"></line>
-	<polygon points="0,-108 108,0 0,108 -108,0"></polygon>
+	<div class="mx-auto max-w-[320px]">
+	<svg class="h-auto w-full" viewBox="0 0 300 250" role="img" aria-label="数学の領域別バランス">
+	<g transform="translate(150 122)">
+	<g fill="none" stroke="#dbe4f0" stroke-width="1.4">
+	<circle r="88"></circle>
+	<circle r="66"></circle>
+	<circle r="44"></circle>
+	<circle r="22"></circle>
+	<line x1="0" y1="-110" x2="0" y2="110"></line>
+	<line x1="-110" y1="0" x2="110" y2="0"></line>
+	<polygon points="0,-110 110,0 0,110 -110,0"></polygon>
 	</g>
-	<polygon points="0,-80 70,0 0,88 -90,0" fill="#4c7da8" fill-opacity=".10" stroke="#4c7da8" stroke-dasharray="5 5" stroke-width="3"></polygon>
-	<polygon points="0,-90 77,0 0,98 -96,0" fill="#3f8f76" fill-opacity=".20" stroke="#3f8f76" stroke-width="4"></polygon>
-	<circle cx="0" cy="-80" r="4" fill="#4c7da8"></circle>
-	<circle cx="70" cy="0" r="4" fill="#4c7da8"></circle>
-	<circle cx="0" cy="88" r="4" fill="#4c7da8"></circle>
-	<circle cx="-90" cy="0" r="4" fill="#4c7da8"></circle>
-	<circle cx="0" cy="-90" r="5" fill="#3f8f76"></circle>
-	<circle cx="77" cy="0" r="5" fill="#3f8f76"></circle>
-	<circle cx="0" cy="98" r="5" fill="#3f8f76"></circle>
-	<circle cx="-96" cy="0" r="5" fill="#3f8f76"></circle>
+	<polygon points="0,-99 99,0 0,99 -99,0" fill="none" stroke="#f59e0b" stroke-width="2"></polygon>
+	<polygon points="0,-75 88,0 0,84 -99,0" fill="#00906c" fill-opacity=".18" stroke="#00906c" stroke-width="3"></polygon>
+	<polygon points="0,-80 83,0 0,80 -93,0" fill="none" stroke="#10b981" stroke-dasharray="4 5" stroke-width="2"></polygon>
+	<circle cx="0" cy="-75" r="5" fill="#00906c"></circle>
+	<circle cx="88" cy="0" r="5" fill="#00906c"></circle>
+	<circle cx="0" cy="84" r="5" fill="#00906c"></circle>
+	<circle cx="-99" cy="0" r="5" fill="#00906c"></circle>
 	</g>
-	<g font-family="Noto Sans JP, sans-serif" font-size="13" font-weight="700" fill="#5d6762">
-	<text x="180" y="18" text-anchor="middle">数と式 A</text>
-	<text x="342" y="137" text-anchor="end">関数 B</text>
-	<text x="180" y="266" text-anchor="middle">図形 A+</text>
-	<text x="18" y="137">資料活用 C</text>
+	<g font-family="Noto Sans JP, sans-serif" font-weight="900" font-size="13" fill="#808080">
+	<text x="150" y="18" text-anchor="middle">数と式</text>
+	<text x="284" y="127" text-anchor="end">関数</text>
+	<text x="150" y="242" text-anchor="middle">図形</text>
+	<text x="16" y="127">資料活用</text>
 	</g>
-	<g font-family="Noto Sans JP, sans-serif" font-size="11" font-weight="700">
-	<circle cx="124" cy="246" r="4" fill="#4c7da8"></circle><text x="132" y="250" fill="#5d6762">前回</text>
-	<circle cx="184" cy="246" r="4" fill="#3f8f76"></circle><text x="192" y="250" fill="#5d6762">今回</text>
+	<g font-family="Noto Sans JP, sans-serif" font-size="10" font-weight="800">
+	<circle cx="91" cy="220" r="4" fill="#00906c"></circle><text x="99" y="224" fill="#808080">現在</text>
+	<circle cx="141" cy="220" r="4" fill="#f59e0b"></circle><text x="149" y="224" fill="#808080">目標</text>
+	<circle cx="184" cy="220" r="4" fill="#10b981"></circle><text x="192" y="224" fill="#808080">中3平均</text>
 	</g>
 	</svg>
+	</div>
 	</div>
 	</div>
 </div>

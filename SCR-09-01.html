@@ -87,22 +87,23 @@
 	      grid-column: 2;
 	      grid-row: 1;
 	    }
-	    .ocr-panel {
-	      grid-column: 2;
-	      grid-row: 2;
-	    }
-	    .calc-panel {
-	      grid-column: 1 / -1;
-	      grid-row: 3;
+		    .ocr-panel {
+		      grid-column: 2;
+		      grid-row: 1;
+		      align-self: end;
+		    }
+		    .calc-panel {
+		      grid-column: 1 / -1;
+		      grid-row: 2;
 	    }
 	    .calc-canvas {
 	      height: min(52vh, 480px);
 	      min-height: 380px;
 	    }
-		    .answer-canvas {
-		      height: 150px;
-		      min-height: 132px;
-		    }
+			    .answer-canvas {
+			      height: 188px;
+			      min-height: 165px;
+			    }
 	  }
 	</style>
 <style>
@@ -129,6 +130,8 @@
 	  </style>
 	<style>
 	body.lesson-textbook {
+	  --lesson-upper: #dcebea;
+	  --lesson-lower: #edf2df;
 	  background:
 	    radial-gradient(circle at 18% 12%, rgba(67, 112, 104, .10) 0 1px, transparent 1px),
 	    linear-gradient(135deg, #dcebea 0%, #edf2df 48%, #dcecee 100%);
@@ -143,6 +146,15 @@
 	  border-color: rgba(63, 143, 118, .18);
 	  background: rgba(255, 255, 253, .96);
 	  box-shadow: 0 12px 22px rgba(72, 92, 82, .08);
+	}
+	body.lesson-textbook .upper-panel {
+	  background: color-mix(in srgb, var(--lesson-upper) 58%, white 42%);
+	}
+	body.lesson-textbook .upper-canvas {
+	  background-color: color-mix(in srgb, var(--lesson-upper) 62%, white 38%);
+	}
+	body.lesson-textbook .lower-canvas {
+	  background-color: color-mix(in srgb, var(--lesson-lower) 64%, white 36%);
 	}
 	body.lesson-textbook .soft-label {
 	  border-color: rgba(63, 143, 118, .18);
@@ -170,7 +182,7 @@
 	</div>
 	</header>
 		<main class="lesson-landscape flex-1 w-full max-w-6xl mx-auto px-5 md:px-6 pt-32 pb-28">
-		<section class="problem-panel lesson-card bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-7 shadow-sm relative overflow-hidden min-h-[300px] md:min-h-[340px]">
+		<section class="problem-panel lesson-card upper-panel bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-7 shadow-sm relative overflow-hidden min-h-[300px] md:min-h-[340px]">
 	<div class="flex justify-between items-start mb-5 gap-4">
 	<p class="text-xs font-bold text-gray-400">問題</p>
 		<div class="soft-label mt-1 bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg text-sm font-bold tracking-tight border border-gray-200 dark:border-gray-700 shadow-sm whitespace-nowrap">
@@ -203,7 +215,7 @@
 </button>
 </div>
 		</div>
-				<div class="answer-canvas w-full h-32 md:h-36 bg-white dark:bg-gray-900 rounded-xl border-2 border-primary/30 dark:border-primary/50 canvas-area relative overflow-hidden">
+					<div class="answer-canvas upper-canvas w-full h-40 md:h-44 bg-white dark:bg-gray-900 rounded-xl border-2 border-primary/30 dark:border-primary/50 canvas-area relative overflow-hidden">
 	<div class="absolute top-2 left-3 z-10 rounded-md bg-white/85 dark:bg-gray-900/85 px-2 py-1 text-[11px] font-bold text-primary border border-primary/15 pointer-events-none">回答欄</div>
 	<button type="button" class="ocr-trigger absolute bottom-3 right-3 z-20 flex items-center gap-1.5 h-10 px-4 rounded-lg border border-primary bg-primary text-white shadow-md shadow-primary/20 hover:brightness-105 active:scale-[0.98] transition-all text-xs font-bold" aria-label="回答欄を文字認識">
 	<span class="material-symbols-outlined text-[18px]">spellcheck</span>
@@ -220,7 +232,7 @@
 <h3 class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">認識結果</h3>
 </div>
 </div>
-	<div class="w-full min-h-[48px] bg-white/80 dark:bg-gray-800/50 rounded-xl border border-primary/15 dark:border-gray-800 px-4 py-3 flex items-center">
+		<div class="upper-canvas w-full min-h-[48px] bg-white/80 dark:bg-gray-800/50 rounded-xl border border-primary/15 dark:border-gray-800 px-4 py-3 flex items-center">
 <span id="ocrResultText" class="text-sm font-medium text-gray-400 dark:text-gray-500 tracking-tight">回答欄内の文字認識ボタンを押してください</span>
 </div>
 </section>
@@ -242,7 +254,7 @@
 </button>
 </div>
 </div>
-		<div class="calc-canvas w-full h-96 md:h-[28rem] bg-white dark:bg-gray-900 rounded-xl border-2 border-dashed border-primary/25 dark:border-primary/35 canvas-area relative overflow-hidden">
+		<div class="calc-canvas lower-canvas w-full h-96 md:h-[28rem] bg-white dark:bg-gray-900 rounded-xl border-2 border-dashed border-primary/25 dark:border-primary/35 canvas-area relative overflow-hidden">
 <div class="absolute top-3 left-3 z-10 rounded-md bg-white/85 dark:bg-gray-900/85 px-2.5 py-1 text-[11px] font-bold text-primary border border-primary/15 pointer-events-none">計算欄</div>
 	<div class="absolute top-3 right-3 z-10 rounded-md bg-emerald-50/90 dark:bg-gray-800/90 px-2.5 py-1 text-[11px] font-bold text-gray-500 dark:text-gray-400 border border-emerald-100 dark:border-gray-700 pointer-events-none">途中式・メモ用</div>
 <canvas id="calcCanvas" class="absolute inset-0 w-full h-full touch-none"></canvas>
