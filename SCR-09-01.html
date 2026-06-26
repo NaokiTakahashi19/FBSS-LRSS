@@ -53,9 +53,29 @@
 
 	  .test-question {
 	    font-family: 'Noto Sans JP', serif;
+	    display: block;
 	    position: relative;
 	    z-index: 2;
+	    width: 100%;
+	    max-width: 100%;
+	    min-width: 0;
+	    box-sizing: border-box;
+	    overflow: visible;
 	    color: #111827;
+	  }
+
+	  .problem-panel .test-question {
+	    min-height: 170px;
+	    padding: 1.5rem 1.75rem;
+	    background: #ffffff;
+	    border: 1px solid rgba(63, 143, 118, .12);
+	    border-radius: 1.25rem;
+	  }
+
+	  .test-question p {
+	    max-width: 100%;
+	    white-space: normal;
+	    word-break: keep-all;
 	  }
 
 	  .test-formula {
@@ -229,7 +249,7 @@
                     難易度 180 / 300
                 </div>
 	</div>
-	<div class="test-question rounded-xl bg-white/90 border border-primary/10 px-6 py-5 text-gray-900 dark:text-gray-100">
+	<div class="test-question text-gray-900 dark:text-gray-100">
 	<p class="text-base md:text-lg leading-8 text-gray-900"><span class="font-bold">【問題1】</span> 次の式を因数分解しなさい。</p>
 	<div class="mt-7 text-center test-formula text-gray-900 dark:text-white" aria-label="25aの2乗 マイナス 36bの2乗">
 	  25<span class="math-var">a</span><sup>2</sup> - 36<span class="math-var">b</span><sup>2</sup>
