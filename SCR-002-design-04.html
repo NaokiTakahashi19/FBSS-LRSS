@@ -163,8 +163,9 @@
 	      height: 6px;
 	    }
 	    body.design-textbook {
-	      background: linear-gradient(180deg, #dcebea 0 50%, #edf2df 50% 100%);
+	      background: #edf2df;
 	      color: #24332f;
+	      overflow-x: hidden;
 	      --report-green: #3f8f76;
 	      --report-green-dark: #2f745f;
 	      --report-gray: #5d6762;
@@ -207,9 +208,29 @@
 	      background: #fff8f4;
 	      color: var(--textbook-red);
 	    }
+	    .design-textbook .subject-zone {
+	      position: relative;
+	      isolation: isolate;
+	    }
+	    .design-textbook .subject-zone::before {
+	      content: "";
+	      position: absolute;
+	      z-index: -1;
+	      top: -1.5rem;
+	      bottom: -1.5rem;
+	      left: 50%;
+	      width: 100vw;
+	      transform: translateX(-50%);
+	    }
+	    .design-textbook .all-subject-zone::before {
+	      background: #dcebea;
+	    }
+	    .design-textbook .math-subject-zone::before {
+	      background: #edf2df;
+	    }
 	    .design-textbook .math-context {
 	      border-bottom: 1px solid rgba(63, 143, 118, .14);
-	      background: linear-gradient(90deg, rgba(241, 250, 243, .95) 0%, rgba(255, 248, 232, .72) 100%);
+	      background: #f1faf3;
 	    }
 	  </style>
 	</head>
@@ -239,8 +260,9 @@
     </div>
   </header>
 
-  <main class="mx-auto max-w-6xl space-y-6 px-4 py-6 pb-12 sm:px-6">
-    <section class="grid gap-5 lg:grid-cols-12">
+	  <main class="mx-auto max-w-6xl space-y-6 px-4 py-6 pb-12 sm:px-6">
+	    <div class="subject-zone all-subject-zone">
+	    <section class="grid gap-5 lg:grid-cols-12">
     <article class="min-h-[270px] rounded-3xl border border-slate-100 bg-white px-6 py-6 shadow-card lg:col-span-8">
       <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div>
@@ -333,11 +355,23 @@
             </g>
           </svg>
         </div>
-      </article>
-    </section>
+	      </article>
+	    </section>
+	    </div>
 
-    <section class="grid gap-5 lg:grid-cols-12">
-      <article class="min-h-[270px] rounded-3xl border border-slate-100 bg-white px-6 py-6 shadow-card lg:col-span-8">
+	    <div class="subject-zone math-subject-zone">
+	    <section class="rounded-2xl border border-slate-100 bg-white p-5 shadow-card">
+	      <div class="math-context -mx-5 -mt-5 mb-5 rounded-t-2xl px-5 py-4">
+	        <div class="flex items-center gap-3">
+	          <span class="grid size-10 place-items-center rounded-lg bg-[#3f8f76] text-white">
+	            <span class="material-symbols-outlined">calculate</span>
+	          </span>
+	          <h2 class="text-xl font-semibold text-slate-800">数学 <span class="text-sm font-medium text-slate-500">Math</span></h2>
+	        </div>
+	      </div>
+
+	      <div class="grid gap-5 lg:grid-cols-12">
+	      <article class="min-h-[270px] rounded-3xl border border-slate-100 bg-white px-6 py-6 shadow-card lg:col-span-8">
         <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <p class="text-xs font-bold text-slate-500">数学</p>
@@ -412,20 +446,11 @@
           </g>
         </svg>
       </div>
-    </article>
-    </section>
+	    </article>
+	    </div>
 
-    <section class="rounded-2xl border border-slate-100 bg-white p-5 shadow-card">
-      <div class="math-context -mx-5 -mt-5 mb-5 rounded-t-2xl px-5 py-4">
-        <div class="flex items-center gap-3">
-          <span class="grid size-10 place-items-center rounded-lg bg-[#3f8f76] text-white">
-            <span class="material-symbols-outlined">calculate</span>
-          </span>
-          <h2 class="text-xl font-semibold text-slate-800">数学 <span class="text-sm font-medium text-slate-500">Math</span></h2>
-        </div>
-      </div>
-      <div><p class="text-xs font-medium text-slate-500">学習メニュー</p><h2 class="mt-1 text-lg font-medium">目標到達までの学習を進める</h2><p class="mt-1 text-sm text-slate-500">基本／標準問題を進めると、修了判定と過去問挑戦が利用できるようになります。</p></div>
-      <div class="mt-5 grid gap-3 md:grid-cols-3">
+	      <div class="mt-6"><p class="text-xs font-medium text-slate-500">学習メニュー</p><h2 class="mt-1 text-lg font-medium">目標到達までの学習を進める</h2><p class="mt-1 text-sm text-slate-500">基本／標準問題を進めると、修了判定と過去問挑戦が利用できるようになります。</p></div>
+	      <div class="mt-5 grid gap-3 md:grid-cols-3">
         <a href="SCR-09-01.html" class="group rounded-xl border-2 border-blue-600 bg-blue-600 p-4 text-white shadow-lg shadow-blue-100 hover:bg-blue-700">
 	          <div class="flex items-center justify-between"><span class="material-symbols-outlined">play_circle</span><span class="text-xs font-medium">利用可能</span></div><h3 class="mt-4 font-semibold">基本／標準問題を開始する</h3><p class="mt-1 text-xs text-blue-100">数と式から学習を始めます</p>
         </a>
@@ -434,9 +459,10 @@
         </div>
         <div class="disabled-button rounded-xl border border-slate-200 bg-slate-50 p-4 text-slate-500" aria-disabled="true">
 	          <div class="flex items-center justify-between"><span class="material-symbols-outlined">history_edu</span><span class="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-medium">目標到達後に有効</span></div><h3 class="mt-4 font-semibold">過去問に挑戦</h3><p class="mt-1 text-xs">過去問ドリルを繰り返し学習</p>
-        </div>
-      </div>
-    </section>
-  </main>
+	        </div>
+	      </div>
+	    </section>
+	    </div>
+	  </main>
 </body>
 </html>
