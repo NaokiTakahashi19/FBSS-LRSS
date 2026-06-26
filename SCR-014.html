@@ -12,9 +12,9 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#006b9b",
-                        "accent-green": "#009b4d",
-                        "background-light": "#f4f7f9",
+	                        "primary": "#2f6f5d",
+	                        "accent-green": "#2f6f5d",
+	                        "background-light": "#eef6ef",
                         "card-bg": "#ffffff",
                         "text-main": "#2d3748"
                     },
@@ -45,17 +45,74 @@
         }
     </style>
 <style>
-        body {
-            min-height: max(884px, 100dvh);
-        }
-    </style>
+	        body {
+	            min-height: max(884px, 100dvh);
+	        }
+	        body.result-textbook {
+	            background:
+	              radial-gradient(circle at 18% 12%, rgba(53, 112, 91, .10) 0 1px, transparent 1px),
+	              linear-gradient(135deg, #eef6ef 0%, #f7f3dc 48%, #edf4f7 100%);
+	            background-size: 26px 26px, auto;
+	            color: #24332f;
+	        }
+	        .result-textbook header,
+	        .result-textbook footer {
+	            background: rgba(247, 250, 242, .94);
+	            border-color: rgba(47, 111, 93, .18);
+	        }
+	        .result-textbook .report-card {
+	            border: 1px solid rgba(47, 111, 93, .20);
+	            border-radius: 22px;
+	            background: rgba(255, 255, 250, .94);
+	            box-shadow: 0 12px 22px rgba(72, 92, 82, .10);
+	        }
+	        .result-textbook .book-pill {
+	            border-radius: 4px;
+	            background: #245a4b;
+	            color: #fff;
+	            box-shadow: 0 2px 0 rgba(36, 90, 75, .22);
+	        }
+	        .result-textbook .blue-pill {
+	            background: #355f86;
+	        }
+	        .result-textbook .red-pill {
+	            background: #7b2f2f;
+	        }
+	        .result-textbook .ochre-pill {
+	            background: #b37a2b;
+	        }
+	        .result-textbook .soft-panel {
+	            background: rgba(255, 248, 223, .72);
+	            border: 1px solid rgba(179, 122, 43, .22);
+	        }
+	        .result-textbook .session-line {
+	            fill: none;
+	            stroke: #2f6f5d;
+	            stroke-width: 4;
+	            stroke-linecap: round;
+	            stroke-linejoin: round;
+	        }
+	        .result-textbook .session-area {
+	            fill: rgba(47, 111, 93, .12);
+	        }
+	        .result-textbook .answer-ok {
+	            border-color: rgba(47, 111, 93, .32);
+	            background: #edf6ef;
+	            color: #2f6f5d;
+	        }
+	        .result-textbook .answer-ng {
+	            border-color: rgba(123, 47, 47, .28);
+	            background: #fff2ef;
+	            color: #7b2f2f;
+	        }
+	    </style>
 <style>
     body {
       min-height: max(884px, 100dvh);
     }
   </style>
   </head>
-<body class="bg-background-light font-body text-text-main antialiased h-screen overflow-hidden">
+	<body class="result-textbook bg-background-light font-body text-text-main antialiased h-screen overflow-hidden">
 <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
 <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
 <div class="flex items-center gap-2">
@@ -72,7 +129,7 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 <section class="space-y-4">
 <h3 class="text-sm font-bold text-slate-500 ml-1">実施サマリー</h3>
-<div class="bg-card-bg p-6 rounded-2xl shadow-sm border border-slate-100 space-y-5">
+	<div class="report-card p-6 space-y-5">
 <div class="flex items-center justify-between">
 <div class="flex items-center gap-3">
 <span class="material-symbols-outlined text-primary">history</span>
@@ -108,8 +165,8 @@
 </section>
 <section class="space-y-4">
 <h3 class="text-sm font-bold text-slate-500 ml-1">学習成果分析</h3>
-<div class="bg-card-bg p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col gap-6">
-<div class="flex items-center justify-between rounded-xl bg-primary/5 border border-primary/10 p-4">
+	<div class="report-card p-6 flex flex-col gap-6">
+	<div class="soft-panel flex items-center justify-between rounded-xl p-4">
 <div class="flex items-center gap-3">
 <span class="material-symbols-outlined text-primary">military_tech</span>
 <div>
@@ -193,32 +250,81 @@
 </section>
 </div>
 <section class="mb-6">
-<div class="bg-card-bg p-6 rounded-2xl shadow-sm border border-slate-100">
-<div class="flex items-center justify-between mb-5">
-<h3 class="text-sm font-bold text-slate-500">前回との比較</h3>
-<span class="rounded-full bg-accent-green/10 px-3 py-1 text-xs font-bold text-accent-green">改善傾向</span>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-<div class="rounded-xl bg-slate-50 p-4">
-<p class="text-xs font-bold text-slate-500">正解数</p>
-<p class="mt-2 text-lg font-bold">7問 → <span class="text-primary">8問</span></p>
-<p class="mt-1 text-xs font-bold text-accent-green">+1問</p>
-</div>
-<div class="rounded-xl bg-slate-50 p-4">
-<p class="text-xs font-bold text-slate-500">教科の段階評価</p>
-<p class="mt-2 text-lg font-bold">B → <span class="text-primary">B+</span></p>
-<p class="mt-1 text-xs font-bold text-accent-green">1段階アップ</p>
-</div>
-<div class="rounded-xl bg-slate-50 p-4">
-<p class="text-xs font-bold text-slate-500">教科の進捗度</p>
-<p class="mt-2 text-lg font-bold">92% → <span class="text-primary">96%</span></p>
-<p class="mt-1 text-xs font-bold text-accent-green">+4pt</p>
-</div>
-</div>
-</div>
-</section>
+	<div class="report-card p-6">
+	<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mb-5">
+	<div>
+	<h3 class="text-sm font-bold text-slate-500">過去7セッションの推定学力値の変化</h3>
+	<p class="mt-1 text-xs font-bold text-slate-400">学習修了画面が表示されるたびに1セッションとして記録します。</p>
+	</div>
+	<span class="book-pill px-3 py-1 text-xs font-bold">最新 435 pt</span>
+	</div>
+	<div class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_220px]">
+	<div class="soft-panel rounded-2xl p-4">
+	<svg class="h-auto w-full" viewBox="0 0 760 250" role="img" aria-label="過去7セッションの推定学力値推移">
+	<defs>
+	<linearGradient id="sessionFill" x1="0" x2="0" y1="0" y2="1">
+	<stop offset="0%" stop-color="#2f6f5d" stop-opacity=".22"></stop>
+	<stop offset="100%" stop-color="#2f6f5d" stop-opacity=".02"></stop>
+	</linearGradient>
+	</defs>
+	<g font-family="Noto Sans JP, sans-serif" font-size="12" font-weight="700" fill="#6b756f">
+	<text x="36" y="36">450</text>
+	<text x="36" y="104">425</text>
+	<text x="36" y="172">400</text>
+	<text x="36" y="232">375</text>
+	</g>
+	<g stroke="#d8e4dd" stroke-width="1">
+	<line x1="78" y1="32" x2="724" y2="32"></line>
+	<line x1="78" y1="100" x2="724" y2="100"></line>
+	<line x1="78" y1="168" x2="724" y2="168"></line>
+	<line x1="78" y1="228" x2="724" y2="228"></line>
+	</g>
+	<path d="M96 183 L200 148 L304 125 L408 106 L512 84 L616 76 L720 68 L720 228 L96 228 Z" fill="url(#sessionFill)"></path>
+	<polyline class="session-line" points="96,183 200,148 304,125 408,106 512,84 616,76 720,68"></polyline>
+	<g fill="#fff" stroke="#2f6f5d" stroke-width="4">
+	<circle cx="96" cy="183" r="6"></circle>
+	<circle cx="200" cy="148" r="6"></circle>
+	<circle cx="304" cy="125" r="6"></circle>
+	<circle cx="408" cy="106" r="6"></circle>
+	<circle cx="512" cy="84" r="6"></circle>
+	<circle cx="616" cy="76" r="6"></circle>
+	<circle cx="720" cy="68" r="6"></circle>
+	</g>
+	<g font-family="Lexend, Noto Sans JP, sans-serif" font-size="12" font-weight="800" fill="#2f6f5d">
+	<text x="82" y="171">392</text>
+	<text x="186" y="136">405</text>
+	<text x="290" y="113">414</text>
+	<text x="394" y="94">421</text>
+	<text x="498" y="72">429</text>
+	<text x="602" y="64">432</text>
+	<text x="706" y="56">435</text>
+	</g>
+	<g font-family="Noto Sans JP, sans-serif" font-size="11" font-weight="700" fill="#6b756f">
+	<text x="76" y="246">10/21 S1</text>
+	<text x="180" y="246">10/22 S2</text>
+	<text x="284" y="246">10/23 S3</text>
+	<text x="388" y="246">10/24 S4</text>
+	<text x="492" y="246">10/24 S5</text>
+	<text x="596" y="246">10/25 S6</text>
+	<text x="700" y="246">10/25 S7</text>
+	</g>
+	</svg>
+	</div>
+	<div class="grid gap-3">
+	<div class="rounded-xl border border-emerald-100 bg-white/80 p-4">
+	<p class="text-xs font-bold text-slate-500">7セッション差分</p>
+	<p class="mt-1 text-2xl font-bold text-primary">+43 pt</p>
+	</div>
+	<div class="rounded-xl border border-amber-100 bg-white/80 p-4">
+	<p class="text-xs font-bold text-slate-500">同日内セッション</p>
+	<p class="mt-1 text-lg font-bold text-slate-700">10/24・10/25 に複数回</p>
+	</div>
+	</div>
+	</div>
+	</div>
+	</section>
 <section class="mb-6">
-<div class="bg-gradient-to-r from-primary to-blue-600 p-1 rounded-2xl shadow-lg shadow-primary/20">
+	<div class="bg-gradient-to-r from-primary to-[#355f86] p-1 rounded-2xl shadow-lg shadow-primary/20">
 <div class="bg-white rounded-[calc(1rem-2px)] p-6 flex items-start gap-5">
 <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
 <span class="material-symbols-outlined text-primary text-3xl">auto_awesome</span>
@@ -233,71 +339,26 @@
 </div>
 </div>
 </section>
-<section class="pb-24">
-<h3 class="text-sm font-bold text-slate-500 ml-1 mb-4 text-center">問題別正誤一覧</h3>
-<div class="flex justify-center gap-3 overflow-x-auto py-2 px-4 no-scrollbar">
-<div class="flex flex-col items-center gap-2 flex-shrink-0">
-<span class="text-[10px] font-bold text-slate-400">1</span>
-<div class="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center">
-<span class="text-primary font-bold text-lg leading-none">○</span>
-</div>
-</div>
-<div class="flex flex-col items-center gap-2 flex-shrink-0">
-<span class="text-[10px] font-bold text-slate-400">2</span>
-<div class="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center">
-<span class="text-primary font-bold text-lg leading-none">○</span>
-</div>
-</div>
-<div class="flex flex-col items-center gap-2 flex-shrink-0">
-<span class="text-[10px] font-bold text-slate-400">3</span>
-<div class="w-10 h-10 rounded-full bg-rose-50 border-2 border-rose-500 flex items-center justify-center">
-<span class="text-rose-500 font-bold text-lg leading-none">×</span>
-</div>
-</div>
-<div class="flex flex-col items-center gap-2 flex-shrink-0">
-<span class="text-[10px] font-bold text-slate-400">4</span>
-<div class="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center">
-<span class="text-primary font-bold text-lg leading-none">○</span>
-</div>
-</div>
-<div class="flex flex-col items-center gap-2 flex-shrink-0">
-<span class="text-[10px] font-bold text-slate-400">5</span>
-<div class="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center">
-<span class="text-primary font-bold text-lg leading-none">○</span>
-</div>
-</div>
-<div class="flex flex-col items-center gap-2 flex-shrink-0">
-<span class="text-[10px] font-bold text-slate-400">6</span>
-<div class="w-10 h-10 rounded-full bg-rose-50 border-2 border-rose-500 flex items-center justify-center">
-<span class="text-rose-500 font-bold text-lg leading-none">×</span>
-</div>
-</div>
-<div class="flex flex-col items-center gap-2 flex-shrink-0">
-<span class="text-[10px] font-bold text-slate-400">7</span>
-<div class="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center">
-<span class="text-primary font-bold text-lg leading-none">○</span>
-</div>
-</div>
-<div class="flex flex-col items-center gap-2 flex-shrink-0">
-<span class="text-[10px] font-bold text-slate-400">8</span>
-<div class="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center">
-<span class="text-primary font-bold text-lg leading-none">○</span>
-</div>
-</div>
-<div class="flex flex-col items-center gap-2 flex-shrink-0">
-<span class="text-[10px] font-bold text-slate-400">9</span>
-<div class="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center">
-<span class="text-primary font-bold text-lg leading-none">○</span>
-</div>
-</div>
-<div class="flex flex-col items-center gap-2 flex-shrink-0">
-<span class="text-[10px] font-bold text-slate-400">10</span>
-<div class="w-10 h-10 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center">
-<span class="text-primary font-bold text-lg leading-none">○</span>
-</div>
-</div>
-</div>
-</section>
+	<section class="pb-24">
+	<div class="report-card p-6">
+	<div class="mb-4 flex flex-col gap-1 text-center">
+	<h3 class="text-sm font-bold text-slate-500">問題別正誤一覧</h3>
+	<p class="text-xs font-bold text-slate-400">各問題で扱った学習項目と正誤を確認できます。</p>
+	</div>
+	<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+	<div class="answer-ok rounded-xl border p-3"><div class="flex items-center justify-between"><span class="book-pill px-2 py-0.5 text-[10px] font-bold">1</span><b>○</b></div><p class="mt-2 text-sm font-bold text-slate-700">平方の差</p><p class="mt-1 text-[11px] font-bold text-slate-400">公式の適用</p></div>
+	<div class="answer-ok rounded-xl border p-3"><div class="flex items-center justify-between"><span class="book-pill px-2 py-0.5 text-[10px] font-bold">2</span><b>○</b></div><p class="mt-2 text-sm font-bold text-slate-700">共通因数</p><p class="mt-1 text-[11px] font-bold text-slate-400">くくり出し</p></div>
+	<div class="answer-ng rounded-xl border p-3"><div class="flex items-center justify-between"><span class="red-pill px-2 py-0.5 text-[10px] font-bold text-white">3</span><b>×</b></div><p class="mt-2 text-sm font-bold text-slate-700">置き換え</p><p class="mt-1 text-[11px] font-bold text-slate-400">式の見通し</p></div>
+	<div class="answer-ok rounded-xl border p-3"><div class="flex items-center justify-between"><span class="book-pill px-2 py-0.5 text-[10px] font-bold">4</span><b>○</b></div><p class="mt-2 text-sm font-bold text-slate-700">展開公式</p><p class="mt-1 text-[11px] font-bold text-slate-400">逆向き利用</p></div>
+	<div class="answer-ok rounded-xl border p-3"><div class="flex items-center justify-between"><span class="book-pill px-2 py-0.5 text-[10px] font-bold">5</span><b>○</b></div><p class="mt-2 text-sm font-bold text-slate-700">式の整理</p><p class="mt-1 text-[11px] font-bold text-slate-400">同類項</p></div>
+	<div class="answer-ng rounded-xl border p-3"><div class="flex items-center justify-between"><span class="red-pill px-2 py-0.5 text-[10px] font-bold text-white">6</span><b>×</b></div><p class="mt-2 text-sm font-bold text-slate-700">符号処理</p><p class="mt-1 text-[11px] font-bold text-slate-400">マイナスの扱い</p></div>
+	<div class="answer-ok rounded-xl border p-3"><div class="flex items-center justify-between"><span class="book-pill px-2 py-0.5 text-[10px] font-bold">7</span><b>○</b></div><p class="mt-2 text-sm font-bold text-slate-700">因数分解の確認</p><p class="mt-1 text-[11px] font-bold text-slate-400">検算</p></div>
+	<div class="answer-ok rounded-xl border p-3"><div class="flex items-center justify-between"><span class="book-pill px-2 py-0.5 text-[10px] font-bold">8</span><b>○</b></div><p class="mt-2 text-sm font-bold text-slate-700">計算過程</p><p class="mt-1 text-[11px] font-bold text-slate-400">途中式</p></div>
+	<div class="answer-ok rounded-xl border p-3"><div class="flex items-center justify-between"><span class="book-pill px-2 py-0.5 text-[10px] font-bold">9</span><b>○</b></div><p class="mt-2 text-sm font-bold text-slate-700">応用問題</p><p class="mt-1 text-[11px] font-bold text-slate-400">複合式</p></div>
+	<div class="answer-ok rounded-xl border p-3"><div class="flex items-center justify-between"><span class="book-pill px-2 py-0.5 text-[10px] font-bold">10</span><b>○</b></div><p class="mt-2 text-sm font-bold text-slate-700">まとめ</p><p class="mt-1 text-[11px] font-bold text-slate-400">総合確認</p></div>
+	</div>
+	</div>
+	</section>
 </main>
 <footer class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md p-4 border-t border-slate-200">
 <div class="max-w-6xl mx-auto flex justify-center">
