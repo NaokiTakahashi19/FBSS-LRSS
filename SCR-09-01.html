@@ -11,7 +11,7 @@
                 extend: {
                     colors: {
 	                        "primary": "#3f8f76",
-	                        "background-light": "#dcebea",
+	                        "background-light": "#edf2df",
                         "background-dark": "#101923",
                     },
                     fontFamily: {
@@ -170,9 +170,8 @@
 	  </style>
 	<style>
 		body.lesson-textbook {
-		  --lesson-upper: #dcebea;
-		  --lesson-lower: #edf2df;
-		  background: var(--lesson-upper);
+		  --lesson-bg: #edf2df;
+		  background: var(--lesson-bg);
 		  overflow-x: hidden;
 		}
 	body.lesson-textbook header,
@@ -186,7 +185,7 @@
 	  box-shadow: 0 12px 22px rgba(72, 92, 82, .08);
 	}
 	body.lesson-textbook .upper-panel {
-	  background: color-mix(in srgb, var(--lesson-upper) 58%, white 42%);
+	  background: color-mix(in srgb, var(--lesson-bg) 58%, white 42%);
 	}
 	body.lesson-textbook .upper-canvas {
 	  background-color: #ffffff;
@@ -209,12 +208,12 @@
 		body.lesson-textbook .upper-zone::before {
 		  top: -2rem;
 		  bottom: -.75rem;
-		  background: var(--lesson-upper);
+		  background: var(--lesson-bg);
 		}
 		body.lesson-textbook .calc-zone::before {
 		  top: -.75rem;
 		  bottom: -8rem;
-		  background: var(--lesson-lower);
+		  background: var(--lesson-bg);
 		}
 	body.lesson-textbook .soft-label {
 	  border-color: rgba(63, 143, 118, .18);

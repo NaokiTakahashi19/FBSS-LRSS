@@ -16,7 +16,7 @@
         extend: {
           colors: {
             primary: "#3f8f76",
-            "background-light": "#dcebea",
+            "background-light": "#edf2df",
             "background-dark": "#101923",
           },
           fontFamily: {
@@ -129,9 +129,8 @@
 	      transform: rotate(-10deg);
 	    }
 	    body.result-textbook {
-	      --lesson-upper: #dcebea;
-	      --lesson-lower: #edf2df;
-	      background: var(--lesson-upper);
+	      --lesson-bg: #edf2df;
+	      background: var(--lesson-bg);
 	      overflow-x: hidden;
 	    }
 	    body.result-textbook header,
@@ -145,13 +144,13 @@
 	      box-shadow: 0 12px 22px rgba(72, 92, 82, .08);
 	    }
 	    body.result-textbook .upper-panel {
-	      background: color-mix(in srgb, var(--lesson-upper) 58%, white 42%);
+	      background: color-mix(in srgb, var(--lesson-bg) 58%, white 42%);
 	    }
 	    body.result-textbook .upper-canvas {
 	      background-color: #ffffff;
 	    }
 	    body.result-textbook .lower-panel {
-	      background: color-mix(in srgb, var(--lesson-lower) 64%, white 36%);
+	      background: color-mix(in srgb, var(--lesson-bg) 64%, white 36%);
 	    }
 	    body.result-textbook .soft-label {
 	      border-color: rgba(63, 143, 118, .18);
