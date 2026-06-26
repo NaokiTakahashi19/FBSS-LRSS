@@ -108,7 +108,7 @@
 	  @media (orientation: landscape) and (min-width: 900px) {
 	    .lesson-landscape {
 	      display: grid;
-		      grid-template-columns: minmax(0, 1fr) minmax(380px, 0.78fr);
+		      grid-template-columns: minmax(0, 1fr) minmax(420px, 0.7fr);
 	      column-gap: 1.25rem;
 	      row-gap: 0.75rem;
 	      align-items: start;
@@ -117,22 +117,22 @@
 	      margin-top: 0;
 	    }
 		    .problem-panel {
-		      grid-column: 1;
+		      grid-column: 1 / -1;
 		      grid-row: 1;
-		      min-height: 330px;
+		      min-height: 260px;
 		    }
 	    .answer-panel {
-	      grid-column: 2;
-	      grid-row: 1;
+	      grid-column: 1;
+	      grid-row: 2;
 	    }
 		    .ocr-panel {
 		      grid-column: 2;
-		      grid-row: 1;
+		      grid-row: 2;
 		      align-self: end;
 		    }
 		    .calc-panel {
 		      grid-column: 1 / -1;
-		      grid-row: 2;
+		      grid-row: 3;
 	    }
 	    .calc-canvas {
 	      height: min(52vh, 480px);
@@ -245,7 +245,7 @@
 	</div>
 	</header>
 		<main class="lesson-landscape flex-1 w-full max-w-6xl mx-auto px-5 md:px-6 pt-32 pb-28">
-			<section class="problem-panel lesson-zone upper-zone lesson-card upper-panel bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-7 shadow-sm relative overflow-visible min-h-[300px] md:min-h-[340px]" style="background:#ffffff !important; overflow:visible;">
+			<section class="problem-panel lesson-zone upper-zone lesson-card upper-panel bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-7 shadow-sm relative overflow-visible min-h-[240px] md:min-h-[260px]" style="background:#ffffff !important; overflow:visible;">
 	<div class="flex justify-between items-start mb-5 gap-4">
 	<div class="min-w-0 flex-1">
 	<p class="text-xs font-bold text-gray-400 mb-2">問題</p>
@@ -255,7 +255,7 @@
                     難易度 180 / 300
                 </div>
 	</div>
-	<div class="py-4 text-center">
+	<div class="py-6 text-center">
 	<span class="test-formula text-gray-900 dark:text-white" aria-label="25aの2乗 マイナス 36bの2乗">
 	  25<span class="math-var">a</span><sup>2</sup> - 36<span class="math-var">b</span><sup>2</sup>
 	</span>
