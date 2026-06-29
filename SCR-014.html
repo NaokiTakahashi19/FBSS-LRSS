@@ -102,6 +102,127 @@
 		            background: #fff2ef;
 		            color: #9a4b45;
 	        }
+	        .result-textbook .growth-hero {
+		            position: relative;
+		            overflow: hidden;
+	        }
+	        .result-textbook .growth-hero::before {
+		            content: "";
+		            position: absolute;
+		            inset: 0 auto 0 0;
+		            width: 8px;
+		            background: #3f8f76;
+	        }
+	        .result-textbook .growth-medal {
+		            display: inline-flex;
+		            align-items: center;
+		            justify-content: center;
+		            width: 48px;
+		            height: 48px;
+		            border-radius: 999px;
+		            background: #f1faf3;
+		            color: #3f8f76;
+		            box-shadow: inset 0 0 0 1px rgba(63, 143, 118, .18);
+	        }
+	        .result-textbook .growth-badge {
+		            border: 1px solid rgba(63, 143, 118, .2);
+		            border-radius: 16px;
+		            background: rgba(255, 255, 253, .92);
+		            box-shadow: 0 8px 16px rgba(72, 92, 82, .06);
+		            opacity: 0;
+		            transform: translateY(10px) scale(.98);
+		            animation: growthBadgeIn .55s cubic-bezier(.2, .82, .2, 1) forwards;
+		            animation-delay: var(--delay, 0s);
+	        }
+	        .result-textbook .growth-badge.is-main {
+		            background: #f1faf3;
+	        }
+	        .result-textbook .growth-badge.is-warm {
+		            border-color: rgba(211, 154, 58, .28);
+		            background: #fff8e8;
+	        }
+	        .result-textbook .session-area-path {
+		            opacity: 0;
+		            animation: sessionAreaIn .7s ease forwards .45s;
+	        }
+	        .result-textbook .session-line {
+		            stroke-dasharray: 900;
+		            stroke-dashoffset: 900;
+		            animation: sessionLineDraw 1.15s cubic-bezier(.35, .72, .2, 1) forwards .18s;
+	        }
+	        .result-textbook .session-point {
+		            opacity: 0;
+		            transform-box: fill-box;
+		            transform-origin: center;
+		            transform: scale(.45);
+		            animation: sessionPointIn .34s cubic-bezier(.2, .86, .2, 1.22) forwards;
+		            animation-delay: var(--delay, .55s);
+	        }
+	        .result-textbook .session-value-label {
+		            opacity: 0;
+		            transform: translateY(8px);
+		            animation: sessionLabelIn .34s ease forwards;
+		            animation-delay: var(--delay, .68s);
+	        }
+	        .result-textbook .radar-current {
+		            opacity: 0;
+		            transform-box: fill-box;
+		            transform-origin: center;
+		            transform: scale(.88);
+		            animation: radarIn .55s ease forwards .2s;
+	        }
+	        .result-textbook .radar-previous {
+		            opacity: 0;
+		            animation: sessionAreaIn .45s ease forwards .08s;
+	        }
+	        @keyframes growthBadgeIn {
+		            to {
+		                opacity: 1;
+		                transform: none;
+		            }
+	        }
+	        @keyframes sessionLineDraw {
+		            to {
+		                stroke-dashoffset: 0;
+		            }
+	        }
+	        @keyframes sessionAreaIn {
+		            to {
+		                opacity: 1;
+		            }
+	        }
+	        @keyframes sessionPointIn {
+		            to {
+		                opacity: 1;
+		                transform: scale(1);
+		            }
+	        }
+	        @keyframes sessionLabelIn {
+		            to {
+		                opacity: 1;
+		                transform: none;
+		            }
+	        }
+	        @keyframes radarIn {
+		            to {
+		                opacity: 1;
+		                transform: scale(1);
+		            }
+	        }
+	        @media (prefers-reduced-motion: reduce) {
+		            .result-textbook .growth-badge,
+		            .result-textbook .session-area-path,
+		            .result-textbook .session-line,
+		            .result-textbook .session-point,
+		            .result-textbook .session-value-label,
+		            .result-textbook .radar-current,
+		            .result-textbook .radar-previous {
+		                animation: none !important;
+		                opacity: 1 !important;
+		                transform: none !important;
+		                stroke-dashoffset: 0 !important;
+		            }
+	        }
 	    </style>
 <style>
     body {
@@ -123,6 +244,34 @@
 </div>
 </header>
 <main class="max-w-6xl mx-auto p-6 overflow-y-auto h-[calc(100vh-64px)] no-scrollbar">
+<section class="growth-hero report-card p-5 mb-6" aria-label="今回の成長">
+<div class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(420px,.9fr)] lg:items-center">
+<div class="flex items-center gap-4 pl-2">
+<div class="growth-medal">
+<span class="material-symbols-outlined text-3xl">workspace_premium</span>
+</div>
+<div>
+<p class="text-xs font-bold text-slate-500">今回の成長</p>
+<h2 class="mt-1 text-2xl font-bold text-primary">前回より +12pt アップ</h2>
+<p class="mt-1 text-sm font-bold text-slate-500">423 pt から 435 pt へ。学習の積み上げが見えています。</p>
+</div>
+</div>
+<div class="grid gap-3 sm:grid-cols-3">
+<div class="growth-badge is-main p-4" style="--delay:.04s">
+<p class="text-[11px] font-bold text-slate-500">推定学力値</p>
+<p class="mt-1 text-2xl font-bold text-primary">435<span class="ml-1 text-sm">pt</span></p>
+</div>
+<div class="growth-badge is-warm p-4" style="--delay:.12s">
+<p class="text-[11px] font-bold text-slate-500">正解数</p>
+<p class="mt-1 text-2xl font-bold text-[#d39a3a]">+1<span class="ml-1 text-sm">問</span></p>
+</div>
+<div class="growth-badge p-4" style="--delay:.2s">
+<p class="text-[11px] font-bold text-slate-500">7セッション</p>
+<p class="mt-1 text-2xl font-bold text-primary">+43<span class="ml-1 text-sm">pt</span></p>
+</div>
+</div>
+</div>
+</section>
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12 items-stretch">
 <section class="space-y-4">
 <h3 class="text-sm font-bold text-slate-500 ml-1">実施サマリー</h3>
@@ -197,12 +346,12 @@
 	<line x1="-110" y1="0" x2="110" y2="0"></line>
 	<polygon points="0,-110 110,0 0,110 -110,0"></polygon>
 	</g>
-	<polygon points="0,-66 80,0 0,76 -88,0" fill="none" stroke="#d39a3a" stroke-width="2.4" stroke-dasharray="5 5"></polygon>
-	<polygon points="0,-75 88,0 0,84 -99,0" fill="#00906c" fill-opacity=".18" stroke="#00906c" stroke-width="3"></polygon>
-	<circle cx="0" cy="-75" r="5" fill="#00906c"></circle>
-	<circle cx="88" cy="0" r="5" fill="#00906c"></circle>
-	<circle cx="0" cy="84" r="5" fill="#00906c"></circle>
-	<circle cx="-99" cy="0" r="5" fill="#00906c"></circle>
+	<polygon class="radar-previous" points="0,-66 80,0 0,76 -88,0" fill="none" stroke="#d39a3a" stroke-width="2.4" stroke-dasharray="5 5"></polygon>
+	<polygon class="radar-current" points="0,-75 88,0 0,84 -99,0" fill="#00906c" fill-opacity=".18" stroke="#00906c" stroke-width="3"></polygon>
+	<circle class="session-point" style="--delay:.44s" cx="0" cy="-75" r="5" fill="#00906c"></circle>
+	<circle class="session-point" style="--delay:.5s" cx="88" cy="0" r="5" fill="#00906c"></circle>
+	<circle class="session-point" style="--delay:.56s" cx="0" cy="84" r="5" fill="#00906c"></circle>
+	<circle class="session-point" style="--delay:.62s" cx="-99" cy="0" r="5" fill="#00906c"></circle>
 	</g>
 	<g font-family="Noto Sans JP, sans-serif" font-weight="900" font-size="13" fill="#808080">
 	<text x="150" y="18" text-anchor="middle">数と式</text>
@@ -250,25 +399,25 @@
 	<line x1="78" y1="168" x2="724" y2="168"></line>
 	<line x1="78" y1="228" x2="724" y2="228"></line>
 	</g>
-	<path d="M96 183 L200 148 L304 125 L408 106 L512 84 L616 76 L720 68 L720 228 L96 228 Z" fill="url(#sessionFill)"></path>
+	<path class="session-area-path" d="M96 183 L200 148 L304 125 L408 106 L512 84 L616 76 L720 68 L720 228 L96 228 Z" fill="url(#sessionFill)"></path>
 	<polyline class="session-line" points="96,183 200,148 304,125 408,106 512,84 616,76 720,68"></polyline>
 	<g fill="#fff" stroke="#3f8f76" stroke-width="4">
-	<circle cx="96" cy="183" r="6"></circle>
-	<circle cx="200" cy="148" r="6"></circle>
-	<circle cx="304" cy="125" r="6"></circle>
-	<circle cx="408" cy="106" r="6"></circle>
-	<circle cx="512" cy="84" r="6"></circle>
-	<circle cx="616" cy="76" r="6"></circle>
-	<circle cx="720" cy="68" r="6"></circle>
+	<circle class="session-point" style="--delay:.56s" cx="96" cy="183" r="6"></circle>
+	<circle class="session-point" style="--delay:.66s" cx="200" cy="148" r="6"></circle>
+	<circle class="session-point" style="--delay:.76s" cx="304" cy="125" r="6"></circle>
+	<circle class="session-point" style="--delay:.86s" cx="408" cy="106" r="6"></circle>
+	<circle class="session-point" style="--delay:.96s" cx="512" cy="84" r="6"></circle>
+	<circle class="session-point" style="--delay:1.06s" cx="616" cy="76" r="6"></circle>
+	<circle class="session-point" style="--delay:1.16s" cx="720" cy="68" r="6"></circle>
 	</g>
 	<g font-family="Lexend, Noto Sans JP, sans-serif" font-size="12" font-weight="800" fill="#3f8f76">
-	<text x="82" y="171">392</text>
-	<text x="186" y="136">405</text>
-	<text x="290" y="113">414</text>
-	<text x="394" y="94">421</text>
-	<text x="498" y="72">429</text>
-	<text x="602" y="64">432</text>
-	<text x="706" y="56">435</text>
+	<text class="session-value-label" style="--delay:.62s" x="82" y="171">392</text>
+	<text class="session-value-label" style="--delay:.72s" x="186" y="136">405</text>
+	<text class="session-value-label" style="--delay:.82s" x="290" y="113">414</text>
+	<text class="session-value-label" style="--delay:.92s" x="394" y="94">421</text>
+	<text class="session-value-label" style="--delay:1.02s" x="498" y="72">429</text>
+	<text class="session-value-label" style="--delay:1.12s" x="602" y="64">432</text>
+	<text class="session-value-label" style="--delay:1.22s" x="706" y="56">435</text>
 	</g>
 	<g font-family="Noto Sans JP, sans-serif" text-anchor="middle">
 	<g font-size="12" font-weight="900" fill="#3f8f76">

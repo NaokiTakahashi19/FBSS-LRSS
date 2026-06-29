@@ -171,6 +171,19 @@
       from{opacity:0;transform:translateY(16px) scale(.99);}
       to{opacity:1;transform:none;}
     }
+    @keyframes celebrationIn{
+      to{opacity:1;transform:none;}
+    }
+    @keyframes shineSweep{
+      to{transform:rotate(18deg) translateX(260%);}
+    }
+    @keyframes stampMaru{
+      70%{opacity:1;transform:translate(-50%,-50%) rotate(-9deg) scale(1.08);}
+      to{opacity:1;transform:translate(-50%,-50%) rotate(-9deg) scale(1);}
+    }
+    @keyframes badgeRise{
+      to{opacity:1;transform:none;}
+    }
     .problem-card{
       grid-area:problem;
       min-height:330px;
@@ -324,6 +337,65 @@
       background-image:radial-gradient(rgba(63,143,118,.2) 1px, transparent 1px);
       background-size:20px 20px;
     }
+    .correct-celebration{
+      position:relative;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      overflow:hidden;
+      margin:0 0 14px;
+      border:1px solid rgba(63,143,118,.18);
+      border-radius:14px;
+      background:#f1faf3;
+      padding:12px 14px;
+      opacity:0;
+      transform:translateY(8px);
+      animation:celebrationIn .42s cubic-bezier(.2,.78,.2,1) .16s forwards;
+    }
+    .correct-celebration::after{
+      content:"";
+      position:absolute;
+      inset:-40% auto auto -15%;
+      width:52%;
+      height:180%;
+      background:rgba(255,255,255,.45);
+      transform:rotate(18deg) translateX(-120%);
+      animation:shineSweep 1.05s ease .45s forwards;
+      pointer-events:none;
+    }
+    .celebration-icon{
+      position:relative;
+      z-index:1;
+      flex:0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:40px;
+      height:40px;
+      border-radius:999px;
+      background:#fff;
+      color:var(--primary);
+      box-shadow:inset 0 0 0 1px rgba(63,143,118,.16);
+    }
+    .celebration-copy{
+      position:relative;
+      z-index:1;
+      min-width:0;
+    }
+    .celebration-copy b{
+      display:block;
+      color:var(--primary-dark);
+      font-size:14px;
+      line-height:1.4;
+    }
+    .celebration-copy span{
+      display:block;
+      margin-top:2px;
+      color:#65746f;
+      font-size:12px;
+      font-weight:700;
+      line-height:1.45;
+    }
     .answer-label{
       position:absolute;
       top:11px;
@@ -357,7 +429,9 @@
       height:118px;
       border:6px solid rgba(239,68,68,.7);
       border-radius:999px;
-      transform:translate(-50%,-50%) rotate(-9deg);
+      transform:translate(-50%,-50%) rotate(-9deg) scale(.72);
+      opacity:0;
+      animation:stampMaru .38s cubic-bezier(.18,.88,.22,1.2) .42s forwards;
       pointer-events:none;
     }
     .answer-badge{
@@ -371,6 +445,9 @@
       padding:7px 12px;
       font-size:12px;
       font-weight:700;
+      opacity:0;
+      transform:translateY(6px);
+      animation:badgeRise .28s ease .62s forwards;
     }
     .explain-head{
       display:flex;
@@ -549,6 +626,20 @@
         animation:none !important;
         transition:none !important;
       }
+      .correct-celebration,
+      .correct-celebration::after,
+      .maru-mark,
+      .answer-badge{
+        animation:none !important;
+        opacity:1 !important;
+      }
+      .correct-celebration,
+      .answer-badge{
+        transform:none !important;
+      }
+      .maru-mark{
+        transform:translate(-50%,-50%) rotate(-9deg) !important;
+      }
     }
   </style>
 </head>
@@ -608,6 +699,14 @@
         <div class="status-pill">
           <span class="material-symbols-outlined">check_circle</span>
           正解
+        </div>
+      </div>
+
+      <div class="correct-celebration" aria-label="正解時のフィードバック">
+        <span class="celebration-icon material-symbols-outlined">workspace_premium</span>
+        <div class="celebration-copy">
+          <b>いい調子、正解です</b>
+          <span>この1問で累積解答数に +1問。次の問題へ進む準備ができました。</span>
         </div>
       </div>
 
