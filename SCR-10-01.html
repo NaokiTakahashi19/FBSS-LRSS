@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
   <script src="data/math-questions-3-a-02.js"></script>
 
   <style>
@@ -247,7 +248,7 @@
     }
     .test-formula,
     .math-text{
-      font-family:"STIX Two Text","Cambria Math","Times New Roman",serif;
+      font-family:"KaTeX_Main","Latin Modern Math","STIX Two Text","Cambria Math","Times New Roman",serif;
       font-style:normal;
       font-variant-numeric:lining-nums;
       text-rendering:geometricPrecision;
@@ -259,15 +260,15 @@
       font-size:clamp(1.65rem,2.55vw,2.15rem);
       font-weight:500;
       line-height:1.5;
-      word-spacing:.12em;
+      word-spacing:.08em;
       overflow-wrap:anywhere;
     }
     .math-var,
     .test-formula .var,
     .math-text .var{
-      font-family:"STIX Two Text","Cambria Math","Times New Roman",serif;
-      font-style:italic;
-      font-weight:500;
+      font-family:"KaTeX_Math","KaTeX_Main","Latin Modern Math","STIX Two Text","Cambria Math","Times New Roman",serif;
+      font-style:normal;
+      font-weight:400;
     }
     .test-formula sup,
     .math-text sup{
