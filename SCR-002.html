@@ -203,6 +203,61 @@
 	      min-width: 28px;
 	      box-shadow: inset 0 -2px 0 rgba(0,0,0,.08);
 	    }
+	    .design-textbook .login-metrics {
+	      min-width: min(460px, 42vw);
+	      border: 1px solid rgba(63, 143, 118, .16);
+	      background: rgba(255, 255, 253, .9);
+	      box-shadow: 0 10px 20px rgba(72, 92, 82, .07);
+	    }
+	    .design-textbook .login-metric-value {
+	      color: var(--report-green);
+	      font-family: Lexend, "Noto Sans JP", sans-serif;
+	      font-size: 1.35rem;
+	      font-weight: 700;
+	      line-height: 1.05;
+	    }
+	    .design-textbook .answer-total-value {
+	      font-size: 2rem;
+	      letter-spacing: .01em;
+	    }
+	    .animated-bar {
+	      transform-origin: left center;
+	      animation: bar-reveal .9s cubic-bezier(.2,.78,.24,1) both;
+	    }
+	    .animated-marker {
+	      opacity: 0;
+	      animation: marker-pop .42s cubic-bezier(.2,.78,.24,1) .72s both;
+	    }
+	    .radar-series {
+	      opacity: 0;
+	      transform-box: fill-box;
+	      transform-origin: center;
+	      animation: radar-reveal .72s cubic-bezier(.2,.78,.24,1) both;
+	    }
+	    .radar-series.target { animation-delay: .1s; }
+	    .radar-series.current { animation-delay: .24s; }
+	    .radar-series.baseline { animation-delay: .36s; }
+	    @keyframes bar-reveal {
+	      from { transform: scaleX(0); }
+	      to { transform: scaleX(1); }
+	    }
+	    @keyframes marker-pop {
+	      from { opacity: 0; }
+	      to { opacity: 1; }
+	    }
+	    @keyframes radar-reveal {
+	      from { opacity: 0; transform: scale(.86); }
+	      to { opacity: 1; transform: scale(1); }
+	    }
+	    @media (prefers-reduced-motion: reduce) {
+	      .animated-bar,
+	      .animated-marker,
+	      .radar-series {
+	        animation: none !important;
+	        opacity: 1 !important;
+	        transform: none !important;
+	      }
+	    }
 	    .design-textbook .logout-button {
 	      border: 1px solid rgba(154, 75, 69, .20);
 	      background: #fff8f4;
@@ -248,9 +303,19 @@
 		          <span class="block text-[11px] font-bold text-slate-500">デザイン案4 / 教材冊子テイスト</span>
 	        </span>
 	      </a>
-	      <div class="hidden rounded-xl border border-emerald-100 bg-white/78 px-4 py-2 text-center shadow-sm sm:block">
-	        <p class="text-[10px] font-medium tracking-wide text-slate-500">累積解答数</p>
-	        <p class="font-display text-xl font-bold text-[#3f8f76]">1,284<span class="ml-1 text-xs font-medium text-slate-500">問</span></p>
+	      <div class="login-metrics hidden rounded-xl px-4 py-2 text-center sm:grid sm:grid-cols-3 sm:divide-x sm:divide-emerald-100">
+	        <div class="px-3">
+	          <p class="text-[10px] font-medium tracking-wide text-slate-500">連続ログイン</p>
+	          <p class="login-metric-value mt-1">3<span class="ml-1 text-xs font-medium text-slate-500">日目</span></p>
+	        </div>
+	        <div class="px-3">
+	          <p class="text-[10px] font-medium tracking-wide text-slate-500">累積ログイン</p>
+	          <p class="login-metric-value mt-1">42<span class="ml-1 text-xs font-medium text-slate-500">日</span></p>
+	        </div>
+	        <div class="px-3">
+	          <p class="text-[10px] font-medium tracking-wide text-slate-500">累積解答数</p>
+	          <p class="login-metric-value answer-total-value mt-1">1,284<span class="ml-1 text-xs font-medium text-slate-500">問</span></p>
+	        </div>
 	      </div>
 	      <div class="flex items-center justify-end gap-3">
 	        <div class="hidden text-right sm:block">
@@ -294,16 +359,16 @@
           <span>0</span><span>300</span><span>600</span><span>900</span><span class="text-right">1200</span>
         </div>
 	        <div class="relative h-6 rounded-full bg-emerald-50 ring-1 ring-slate-200">
-		          <div class="flex h-6 w-[83.5%] overflow-hidden rounded-full">
+		          <div class="animated-bar flex h-6 w-[83.5%] overflow-hidden rounded-full">
 			            <div class="stack-segment h-full w-[22.8%] bg-[#3f8f76]" title="数学 228"></div>
 			            <div class="stack-segment h-full w-[23.4%] bg-[#4c7da8]" title="英語 234"></div>
 			            <div class="stack-segment h-full w-[24.5%] bg-[#d39a3a]" title="理科 246"></div>
 			            <div class="stack-segment h-full w-[29.3%] bg-[#9a4b45]" title="社会 294"></div>
 		          </div>
-		          <div class="absolute left-[83.5%] top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-[5px] border-emerald-600 bg-white"></div>
-		          <div class="absolute left-[80.5%] top-8 -translate-x-1/2 whitespace-nowrap rounded-md bg-emerald-600 px-2 py-1 text-[10px] font-black text-white">現在 1002</div>
-	          <div class="absolute left-[90%] top-0 -translate-x-1/2 -translate-y-7 text-orange-500" aria-label="目標位置"><span class="target-flag"></span></div>
-	          <div class="absolute left-[94%] top-8 -translate-x-1/2 whitespace-nowrap rounded-md bg-orange-50 px-2 py-1 text-[10px] font-black text-orange-600 ring-1 ring-orange-200">目標 1080</div>
+		          <div class="animated-marker absolute left-[83.5%] top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-[5px] border-emerald-600 bg-white"></div>
+		          <div class="animated-marker absolute left-[80.5%] top-8 -translate-x-1/2 whitespace-nowrap rounded-md bg-emerald-600 px-2 py-1 text-[10px] font-black text-white">現在 1002</div>
+	          <div class="animated-marker absolute left-[90%] top-0 -translate-x-1/2 -translate-y-7 text-orange-500" aria-label="目標位置"><span class="target-flag"></span></div>
+	          <div class="animated-marker absolute left-[94%] top-8 -translate-x-1/2 whitespace-nowrap rounded-md bg-orange-50 px-2 py-1 text-[10px] font-black text-orange-600 ring-1 ring-orange-200">目標 1080</div>
 	        </div>
 	        <div class="mt-10 flex flex-wrap gap-x-4 gap-y-2 text-[11px] font-black text-slate-500">
 		          <span class="inline-flex items-center gap-1"><i class="size-3 rounded-sm bg-[#3f8f76]"></i>数学 228</span>
@@ -333,9 +398,9 @@
                 <line x1="-110" y1="0" x2="110" y2="0"></line>
                 <polygon points="0,-110 110,0 0,110 -110,0"></polygon>
               </g>
-              <polygon points="0,-99 99,0 0,99 -99,0" fill="none" stroke="#f59e0b" stroke-width="2.5"></polygon>
-	              <polygon points="0,-84 86,0 0,81 -90,0" fill="#00906c" fill-opacity=".18" stroke="#00906c" stroke-width="3"></polygon>
-              <polygon points="0,-88 84,0 0,86 -83,0" fill="none" stroke="#10b981" stroke-dasharray="4 5" stroke-width="2.5"></polygon>
+              <polygon class="radar-series target" points="0,-99 99,0 0,99 -99,0" fill="none" stroke="#f59e0b" stroke-width="2.5"></polygon>
+	              <polygon class="radar-series current" points="0,-84 86,0 0,81 -90,0" fill="#00906c" fill-opacity=".18" stroke="#00906c" stroke-width="3"></polygon>
+              <polygon class="radar-series baseline" points="0,-88 84,0 0,86 -83,0" fill="none" stroke="#10b981" stroke-dasharray="4 5" stroke-width="2.5"></polygon>
               <circle cx="0" cy="-99" r="4" fill="#f59e0b"></circle>
               <circle cx="99" cy="0" r="4" fill="#f59e0b"></circle>
               <circle cx="0" cy="99" r="4" fill="#f59e0b"></circle>
@@ -399,11 +464,11 @@
             <span>0</span><span>75</span><span>150</span><span>225</span><span class="text-right">300</span>
           </div>
 	          <div class="relative h-6 rounded-full bg-emerald-50 ring-1 ring-slate-200">
-	            <div class="h-6 w-[76%] rounded-full bg-gradient-to-r from-emerald-400 to-emerald-600"></div>
-	            <div class="absolute left-[76%] top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-[5px] border-emerald-600 bg-white"></div>
-	            <div class="absolute left-[76%] top-8 -translate-x-1/2 rounded-md bg-emerald-600 px-2 py-1 text-[10px] font-black text-white">現在 228</div>
-	            <div class="absolute left-[90%] top-0 -translate-x-1/2 -translate-y-7 text-orange-500" aria-label="目標位置"><span class="target-flag"></span></div>
-	            <div class="absolute left-[90%] top-8 -translate-x-1/2 rounded-md bg-orange-50 px-2 py-1 text-[10px] font-black text-orange-600 ring-1 ring-orange-200">目標 270</div>
+	            <div class="animated-bar h-6 w-[76%] rounded-full bg-gradient-to-r from-emerald-400 to-emerald-600"></div>
+	            <div class="animated-marker absolute left-[76%] top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-[5px] border-emerald-600 bg-white"></div>
+	            <div class="animated-marker absolute left-[76%] top-8 -translate-x-1/2 rounded-md bg-emerald-600 px-2 py-1 text-[10px] font-black text-white">現在 228</div>
+	            <div class="animated-marker absolute left-[90%] top-0 -translate-x-1/2 -translate-y-7 text-orange-500" aria-label="目標位置"><span class="target-flag"></span></div>
+	            <div class="animated-marker absolute left-[90%] top-8 -translate-x-1/2 rounded-md bg-orange-50 px-2 py-1 text-[10px] font-black text-orange-600 ring-1 ring-orange-200">目標 270</div>
 	          </div>
         </div>
       </article>
@@ -427,9 +492,9 @@
               <line x1="-110" y1="0" x2="110" y2="0"></line>
               <polygon points="0,-110 110,0 0,110 -110,0"></polygon>
             </g>
-            <polygon points="0,-99 99,0 0,99 -99,0" fill="none" stroke="#f59e0b" stroke-width="2"></polygon>
-            <polygon points="0,-75 88,0 0,84 -99,0" fill="#00906c" fill-opacity=".18" stroke="#00906c" stroke-width="3"></polygon>
-            <polygon points="0,-80 83,0 0,80 -93,0" fill="none" stroke="#10b981" stroke-dasharray="4 5" stroke-width="2"></polygon>
+            <polygon class="radar-series target" points="0,-99 99,0 0,99 -99,0" fill="none" stroke="#f59e0b" stroke-width="2"></polygon>
+            <polygon class="radar-series current" points="0,-75 88,0 0,84 -99,0" fill="#00906c" fill-opacity=".18" stroke="#00906c" stroke-width="3"></polygon>
+            <polygon class="radar-series baseline" points="0,-80 83,0 0,80 -93,0" fill="none" stroke="#10b981" stroke-dasharray="4 5" stroke-width="2"></polygon>
             <circle cx="0" cy="-75" r="5" fill="#00906c"></circle>
             <circle cx="88" cy="0" r="5" fill="#00906c"></circle>
             <circle cx="0" cy="84" r="5" fill="#00906c"></circle>
