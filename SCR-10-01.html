@@ -198,10 +198,10 @@
       to{opacity:1;transform:translateX(-50%) rotate(9deg) scale(1);}
     }
     @keyframes batsuStamp{
-      0%{opacity:0;transform:translate(-50%,-50%) rotate(8deg) scale(.44);}
-      58%{opacity:1;transform:translate(-50%,-50%) rotate(5deg) scale(1.12);}
-      76%{opacity:1;transform:translate(-50%,-50%) rotate(5deg) scale(.96);}
-      to{opacity:1;transform:translate(-50%,-50%) rotate(5deg) scale(1);}
+      0%{opacity:0;transform:translate(-50%,-50%) scale(.44);}
+      58%{opacity:1;transform:translate(-50%,-50%) scale(1.12);}
+      76%{opacity:1;transform:translate(-50%,-50%) scale(.96);}
+      to{opacity:1;transform:translate(-50%,-50%) scale(1);}
     }
     @keyframes batsuStrokeA{
       0%{opacity:0;transform:translate(-50%,-50%) rotate(45deg) scaleX(.12);}
@@ -550,7 +550,7 @@
       width:150px;
       height:150px;
       border-radius:999px;
-      transform:translate(-50%,-50%) rotate(8deg) scale(.44);
+      transform:translate(-50%,-50%) scale(.44);
       opacity:0;
       animation:batsuStamp .58s cubic-bezier(.16,.9,.2,1.16) .36s forwards;
       pointer-events:none;
@@ -824,7 +824,7 @@
         transform:translateX(-50%) rotate(9deg) scale(1) !important;
       }
       .batsu-mark{
-        transform:translate(-50%,-50%) rotate(5deg) scale(1) !important;
+        transform:translate(-50%,-50%) scale(1) !important;
       }
       .batsu-mark::before{
         transform:translate(-50%,-50%) rotate(45deg) scaleX(1) !important;
