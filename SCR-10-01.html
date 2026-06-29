@@ -330,6 +330,56 @@
     }
     .explain-body p{margin:.25rem 0;}
     .explain-body strong{color:#263530;}
+    .explain-intro{
+      border:1px solid rgba(63,143,118,.13);
+      border-radius:14px;
+      background:#f8fbf4;
+      padding:13px 16px;
+    }
+    .step-list{
+      display:grid;
+      gap:10px;
+    }
+    .step-accordion{
+      overflow:hidden;
+      border:1px solid rgba(63,143,118,.18);
+      border-radius:14px;
+      background:#fff;
+      box-shadow:0 8px 18px rgba(71,91,82,.05);
+    }
+    .step-accordion summary{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      list-style:none;
+      cursor:pointer;
+      padding:14px 16px;
+      color:#263530;
+      font-weight:700;
+      line-height:1.6;
+      user-select:none;
+    }
+    .step-accordion summary::-webkit-details-marker{display:none;}
+    .step-accordion summary:hover{
+      background:#f8fbf4;
+    }
+    .step-chevron{
+      flex:0 0 auto;
+      color:var(--primary);
+      font-size:13px;
+      transition:transform .2s ease;
+    }
+    .step-accordion[open] .step-chevron{
+      transform:rotate(180deg);
+    }
+    .step-content{
+      display:grid;
+      gap:12px;
+      border-top:1px solid rgba(63,143,118,.12);
+      background:#fffffb;
+      padding:14px 16px 16px;
+    }
     .explain-body .formula-block{
       border:1px solid rgba(63,143,118,.15);
       border-radius:14px;
@@ -618,6 +668,37 @@
       function renderExplanation(raw){
         const source = String(raw ?? '').trim();
         if(!source) return '<p>解説データを準備中です。</p>';
+        const stepRegex = /\*\*ステップ(\d+)：\*\*\s*([^\n]*)/g;
+        const matches = [];
+        let stepMatch;
+        while((stepMatch = stepRegex.exec(source)) !== null){
+          matches.push({
+            number: stepMatch[1],
+            title: stepMatch[2].trim(),
+            index: stepMatch.index,
+            endOfHeading: stepRegex.lastIndex
+          });
+        }
+        if(matches.length){
+          const intro = source.slice(0, matches[0].index).trim();
+          const introHtml = intro ? '<div class="explain-intro">' + renderExplanationBlocks(intro) + '</div>' : '';
+          const stepsHtml = matches.map((step, index) => {
+            const next = matches[index + 1];
+            const body = source.slice(step.endOfHeading, next ? next.index : source.length).trim();
+            const label = `ステップ${step.number}： ${step.title}`;
+            return [
+              '<details class="step-accordion">',
+              '<summary><span>' + renderInline(label) + '</span><span class="step-chevron">▼</span></summary>',
+              '<div class="step-content">' + renderExplanationBlocks(body) + '</div>',
+              '</details>'
+            ].join('');
+          }).join('');
+          return introHtml + '<div class="step-list">' + stepsHtml + '</div>';
+        }
+        return renderExplanationBlocks(source);
+      }
+
+      function renderExplanationBlocks(source){
         const blocks = [];
         const regex = /\\\[((?:.|\n)*?)\\\]/g;
         let lastIndex = 0;
