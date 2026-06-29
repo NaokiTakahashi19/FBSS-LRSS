@@ -641,8 +641,7 @@
       function getQuestionIndex(){
         const params = new URLSearchParams(window.location.search);
         const fromQuery = Number(params.get('q'));
-        const fromSession = Number(sessionStorage.getItem('currentMathQuestionIndex'));
-        const candidate = Number.isFinite(fromQuery) && fromQuery > 0 ? fromQuery : fromSession;
+        const candidate = Number.isFinite(fromQuery) && fromQuery > 0 ? fromQuery : 1;
         if(!Number.isFinite(candidate) || candidate < 1) return 1;
         return Math.min(Math.max(Math.round(candidate), 1), total);
       }
