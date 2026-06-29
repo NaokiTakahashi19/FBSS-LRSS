@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>案1 改良版 - 学習系統ビュー</title>
+  <style>
+    :root {
+      --ink: #202124;
+      --muted: #5f6368;
+      --line: #d9dee5;
+      --bg: #f5f7fa;
+      --panel: #ffffff;
+      --done: #2f80ed;
+      --done-bg: #e7f1ff;
+      --active: #c88719;
+      --active-bg: #fff4da;
+      --weak: #d94b4b;
+      --weak-bg: #fdeaea;
+      --next: #2e9d65;
+      --next-bg: #e9f7ef;
+      --locked: #8b949e;
+      --locked-bg: #eef1f4;
+      --violet: #7357ff;
+      --violet-bg: #f0edff;
+      --shadow: 0 12px 28px rgba(32, 33, 36, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
+      line-height: 1.6;
+    }
+
+    .app { min-height: 100vh; display: grid; grid-template-rows: auto 1fr; }
+
+    header {
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 22px;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    h1 { margin: 0 0 6px; font-size: 24px; line-height: 1.25; }
+    h2 { margin: 0 0 10px; font-size: 16px; }
+    h3 { margin: 0 0 6px; font-size: 15px; }
+    p { margin: 0; }
+    .lead { max-width: 880px; color: var(--muted); font-size: 13px; }
+
+    .stats { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .stat { min-width: 92px; border: 1px solid var(--line); border-radius: 8px; background: #fbfcfd; padding: 8px 10px; }
+    .stat b { display: block; font-size: 18px; line-height: 1.15; }
+    .stat span { color: var(--muted); font-size: 11px; font-weight: 800; }
+
+    main { padding: 18px; display: grid; grid-template-columns: 310px 1fr 360px; gap: 16px; min-height: 0; }
+    aside, section.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); }
+    aside { padding: 16px; overflow: auto; }
+    .center { display: grid; gap: 16px; min-width: 0; }
+    .panel { overflow: hidden; }
+    .panel-head { padding: 13px 15px; border-bottom: 1px solid var(--line); background: #fbfcfd; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+    .panel-body { padding: 14px; }
+
+    .control { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+    .control:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
+    label { display: block; color: var(--muted); font-size: 12px; font-weight: 800; margin-bottom: 5px; }
+    select, input { width: 100%; border: 1px solid var(--line); border-radius: 7px; background: #fff; padding: 9px 10px; font-size: 14px; }
+    .buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+    button { border: 1px solid var(--line); border-radius: 7px; background: #fff; padding: 8px 10px; font-weight: 800; cursor: pointer; }
+    button.primary { background: #202124; border-color: #202124; color: #fff; }
+
+    .pill { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 2px 8px; font-size: 12px; font-weight: 800; white-space: nowrap; }
+    .pill::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+    .done { color: #165bb8; background: var(--done-bg); }
+    .active { color: #845100; background: var(--active-bg); }
+    .weak { color: #a72f2f; background: var(--weak-bg); }
+    .next { color: #1d7047; background: var(--next-bg); }
+    .locked { color: #59616b; background: var(--locked-bg); }
+
+    .unit-map { overflow-x: auto; }
+    .unit-lanes { min-width: 980px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .grade-lane { border: 1px solid var(--line); border-radius: 9px; background: #fff; padding: 12px; }
+    .grade-title { font-weight: 900; margin-bottom: 10px; }
+    .unit-card { border: 1px solid var(--line); border-radius: 8px; padding: 10px; margin-bottom: 10px; background: #fbfcfd; cursor: pointer; }
+    .unit-card:hover, .unit-card.selected { border-color: var(--violet); outline: 3px solid rgba(115, 87, 255, 0.12); }
+    .unit-card strong { display: block; font-size: 13px; }
+    .unit-meta { color: var(--muted); font-size: 12px; margin-top: 3px; }
+    .bar { height: 6px; border-radius: 99px; overflow: hidden; background: #e8edf3; margin-top: 8px; }
+    .bar i { display: block; height: 100%; background: var(--done); }
+
+    .focus-grid { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 12px; align-items: stretch; }
+    .focus-col { min-height: 300px; border: 1px solid var(--line); border-radius: 9px; background: #fbfcfd; padding: 12px; }
+    .focus-title { color: var(--muted); font-size: 12px; font-weight: 900; margin-bottom: 10px; }
+    .node-list { display: grid; gap: 8px; }
+    .node-card { width: 100%; text-align: left; border: 1px solid var(--line); border-radius: 8px; background: #fff; padding: 10px; cursor: pointer; }
+    .node-card:hover { border-color: var(--violet); }
+    .node-card.current { border-color: var(--violet); background: var(--violet-bg); outline: 3px solid rgba(115,87,255,.16); }
+    .node-code { font-size: 12px; font-weight: 900; }
+    .node-item { font-size: 13px; font-weight: 720; margin-top: 3px; }
+    .node-unit { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .empty { color: var(--muted); font-size: 13px; }
+
+    .route { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; }
+    .route-node { min-width: 190px; border: 1px solid var(--line); border-radius: 8px; background: #fff; padding: 10px; font-size: 12px; }
+    .arrow { display: flex; align-items: center; color: var(--muted); font-weight: 900; }
+
+    .side-card { border: 1px solid var(--line); border-radius: 8px; background: #fbfcfd; padding: 12px; margin-bottom: 12px; }
+    .side-card:last-child { margin-bottom: 0; }
+    .readiness b { font-size: 34px; color: var(--violet); line-height: 1; }
+    .risk-list { display: grid; gap: 8px; margin-top: 10px; }
+    .risk { border: 1px solid var(--line); border-radius: 8px; background: #fff; padding: 9px; }
+    .risk.hot { border-color: var(--weak); background: var(--weak-bg); }
+    .note { color: var(--muted); font-size: 12px; }
+
+    @media (max-width: 1100px) {
+      main { grid-template-columns: 1fr; }
+      .focus-grid { grid-template-columns: 1fr; }
+      header { display: block; }
+      .stats { justify-content: flex-start; margin-top: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div>
+        <h1>案1 改良版：学習系統ビュー</h1>
+        <p class="lead">全体グラフをそのまま見せるのではなく、上段で単元レベルの大きな道筋、中央で現在地周辺、右側で前提の習得状況を表示します。</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b id="nodeCount">122</b><span>学習項目</span></div>
+        <div class="stat"><b id="unitCount">14</b><span>単元グループ</span></div>
+        <div class="stat"><b id="readyScore">--</b><span>前提準備度</span></div>
+      </div>
+    </header>
+
+    <main>
+      <aside>
+        <div class="control">
+          <h2>現在地を選ぶ</h2>
+          <label for="search">項目番号・単元名・項目名</label>
+          <input id="search" type="search" placeholder="例：3-A-05-03 / 因数分解">
+        </div>
+        <div class="control">
+          <label for="itemSelect">学習項目</label>
+          <select id="itemSelect"></select>
+        </div>
+        <div class="control">
+          <label for="unitSelect">単元から見る</label>
+          <select id="unitSelect"><option value="all">すべての単元</option></select>
+        </div>
+        <div class="control">
+          <h2>表示の意図</h2>
+          <p class="note">生徒には「大きな地図」と「現在地周辺」だけをまず見せます。先生は右側で前提不足を確認できます。</p>
+        </div>
+        <div class="control">
+          <div class="buttons">
+            <button id="targetQuadratic" class="primary">2次方程式を目標にする</button>
+            <button id="targetCurrent">現在地へ戻る</button>
+          </div>
+        </div>
+      </aside>
+
+      <div class="center">
+        <section class="panel">
+          <div class="panel-head">
+            <h2>1. 大きな学習系統</h2>
+            <span class="note">単元単位で、どこからどこへ進むかを見る</span>
+          </div>
+          <div class="panel-body unit-map">
+            <div id="unitLanes" class="unit-lanes"></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>2. 現在地周辺の拡大図</h2>
+            <span id="focusTitle" class="note"></span>
+          </div>
+          <div class="panel-body">
+            <div class="focus-grid">
+              <div class="focus-col">
+                <div class="focus-title">直前の前提</div>
+                <div id="preList" class="node-list"></div>
+              </div>
+              <div class="focus-col">
+                <div class="focus-title">現在地</div>
+                <div id="currentBox" class="node-list"></div>
+              </div>
+              <div class="focus-col">
+                <div class="focus-title">次につながる項目</div>
+                <div id="nextList" class="node-list"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>3. 目標までの代表ルート</h2>
+            <span class="note">前提をたどって、学習の道筋を短く表示</span>
+          </div>
+          <div class="panel-body">
+            <div id="route" class="route"></div>
+          </div>
+        </section>
+      </div>
+
+      <aside>
+        <div class="side-card readiness">
+          <h2>前提の習得状況</h2>
+          <b id="readiness">--</b>
+          <p id="readinessText" class="note"></p>
+        </div>
+        <div class="side-card">
+          <h2>前提不足の候補</h2>
+          <div id="riskList" class="risk-list"></div>
+        </div>
+        <div class="side-card">
+          <h2>次のアクション</h2>
+          <p id="actionText" class="note"></p>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script id="graph-data" type="application/json">{"nodes": [{"id": "m-jh1-A-01-01b", "file": "m-jh1-A-01-01b.txt", "code": "1-A-01-01", "grade": "中1", "unit": "正と負の数", "item": "正と負", "status": "done", "mastery": 83, "x": 140, "y": 140, "unitGroup": "中1 正と負の数"}, {"id": "m-jh1-A-01-02b", "file": "m-jh1-A-01-02b.txt", "code": "1-A-01-02", "grade": "中1", "unit": "正と負の数", "item": "正の数と負の数を量で表す", "status": "done", "mastery": 84, "x": 140, "y": 222, "unitGroup": "中1 正と負の数"}, {"id": "m-jh1-A-01-03b", "file": "m-jh1-A-01-03b.txt", "code": "1-A-01-03", "grade": "中1", "unit": "正と負の数", "item": "数の大小と不等号", "status": "done", "mastery": 85, "x": 140, "y": 304, "unitGroup": "中1 正と負の数"}, {"id": "m-jh1-A-01-04b", "file": "m-jh1-A-01-04b.txt", "code": "1-A-01-04", "grade": "中1", "unit": "正と負の数", "item": "絶対値", "status": "done", "mastery": 86, "x": 140, "y": 386, "unitGroup": "中1 正と負の数"}, {"id": "m-jh1-A-01-05b", "file": "m-jh1-A-01-05b.txt", "code": "1-A-01-05", "grade": "中1", "unit": "加法と減法", "item": "正と負の数の加法", "status": "done", "mastery": 87, "x": 450, "y": 140, "unitGroup": "中1 加法と減法"}, {"id": "m-jh1-A-01-06b", "file": "m-jh1-A-01-06b.txt", "code": "1-A-01-06", "grade": "中1", "unit": "加法と減法", "item": "加法の交換法則・結合法則", "status": "done", "mastery": 88, "x": 450, "y": 222, "unitGroup": "中1 加法と減法"}, {"id": "m-jh1-A-01-07b", "file": "m-jh1-A-01-07b.txt", "code": "1-A-01-07", "grade": "中1", "unit": "加法と減法", "item": "正と負の数の減法", "status": "done", "mastery": 89, "x": 450, "y": 304, "unitGroup": "中1 加法と減法"}, {"id": "m-jh1-A-01-08b", "file": "m-jh1-A-01-08b.txt", "code": "1-A-01-08", "grade": "中1", "unit": "加法と減法", "item": "加法と減法の混合", "status": "done", "mastery": 90, "x": 450, "y": 386, "unitGroup": "中1 加法と減法"}, {"id": "m-jh1-A-01-09b", "file": "m-jh1-A-01-09b.txt", "code": "1-A-01-09", "grade": "中1", "unit": "乗法と除法", "item": "正と負の数の乗法", "status": "done", "mastery": 91, "x": 760, "y": 140, "unitGroup": "中1 乗法と除法"}, {"id": "m-jh1-A-01-10b", "file": "m-jh1-A-01-10b.txt", "code": "1-A-01-10", "grade": "中1", "unit": "乗法と除法", "item": "乗法の交換法則・結合法則", "status": "done", "mastery": 83, "x": 760, "y": 222, "unitGroup": "中1 乗法と除法"}, {"id": "m-jh1-A-01-11b", "file": "m-jh1-A-01-11b.txt", "code": "1-A-01-11", "grade": "中1", "unit": "乗法と除法", "item": "累乗", "status": "done", "mastery": 84, "x": 760, "y": 304, "unitGroup": "中1 乗法と除法"}, {"id": "m-jh1-A-01-12b", "file": "m-jh1-A-01-12b.txt", "code": "1-A-01-12", "grade": "中1", "unit": "乗法と除法", "item": "正と負の数の符号が同じ数の除法、符号が異なる数の除法", "status": "weak", "mastery": 39, "x": 760, "y": 386, "unitGroup": "中1 乗法と除法"}, {"id": "m-jh1-A-01-13b", "file": "m-jh1-A-01-13b.txt", "code": "1-A-01-13", "grade": "中1", "unit": "乗法と除法", "item": "逆数", "status": "done", "mastery": 86, "x": 760, "y": 468, "unitGroup": "中1 乗法と除法"}, {"id": "m-jh1-A-01-14b", "file": "m-jh1-A-01-14b.txt", "code": "1-A-01-14", "grade": "中1", "unit": "乗法と除法", "item": "逆数を使った除法", "status": "done", "mastery": 87, "x": 760, "y": 550, "unitGroup": "中1 乗法と除法"}, {"id": "m-jh1-A-01-15b", "file": "m-jh1-A-01-15b.txt", "code": "1-A-01-15", "grade": "中1", "unit": "いろいろな計算", "item": "四則混合計算", "status": "done", "mastery": 88, "x": 1070, "y": 140, "unitGroup": "中1 いろいろな計算"}, {"id": "m-jh1-A-01-16b", "file": "m-jh1-A-01-16b.txt", "code": "1-A-01-16", "grade": "中1", "unit": "いろいろな計算", "item": "累乗が含まれる計算", "status": "done", "mastery": 89, "x": 1070, "y": 222, "unitGroup": "中1 いろいろな計算"}, {"id": "m-jh1-A-01-17b", "file": "m-jh1-A-01-17b.txt", "code": "1-A-01-17", "grade": "中1", "unit": "いろいろな計算", "item": "分配法則を利用した計算", "status": "done", "mastery": 90, "x": 1070, "y": 304, "unitGroup": "中1 いろいろな計算"}, {"id": "m-jh1-A-01-18b", "file": "m-jh1-A-01-18b.txt", "code": "1-A-01-18", "grade": "中1", "unit": "いろいろな計算", "item": "数の集合（数＞整数＞自然数）", "status": "done", "mastery": 91, "x": 1070, "y": 386, "unitGroup": "中1 いろいろな計算"}, {"id": "m-jh1-A-01-19b", "file": "m-jh1-A-01-19b.txt", "code": "1-A-01-19", "grade": "中1", "unit": "いろいろな計算", "item": "正の数・負の数の利用（表問題）", "status": "done", "mastery": 92, "x": 1070, "y": 468, "unitGroup": "中1 いろいろな計算"}, {"id": "m-jh1-A-01-20b", "file": "m-jh1-A-01-20b.txt", "code": "1-A-01-20", "grade": "中1", "unit": "いろいろな計算", "item": "素数と素因数分解", "status": "done", "mastery": 84, "x": 1070, "y": 550, "unitGroup": "中1 いろいろな計算"}, {"id": "m-jh1-A-01-21b", "file": "m-jh1-A-01-21b.txt", "code": "1-A-01-21", "grade": "中1", "unit": "いろいろな計算", "item": "素因数分解の利用", "status": "done", "mastery": 85, "x": 1070, "y": 632, "unitGroup": "中1 いろいろな計算"}, {"id": "m-jh1-A-02-01b", "file": "m-jh1-A-02-01b.txt", "code": "1-A-02-01", "grade": "中1", "unit": "文字と式", "item": "文字を使った式", "status": "done", "mastery": 84, "x": 1380, "y": 140, "unitGroup": "中1 文字と式"}, {"id": "m-jh1-A-02-02b", "file": "m-jh1-A-02-02b.txt", "code": "1-A-02-02", "grade": "中1", "unit": "文字と式", "item": "文字式の表し方", "status": "done", "mastery": 85, "x": 1380, "y": 222, "unitGroup": "中1 文字と式"}, {"id": "m-jh1-A-02-03b", "file": "m-jh1-A-02-03b.txt", "code": "1-A-02-03", "grade": "中1", "unit": "文字と式", "item": "いろいろな数量と文字式", "status": "done", "mastery": 86, "x": 1380, "y": 304, "unitGroup": "中1 文字と式"}, {"id": "m-jh1-A-02-04b", "file": "m-jh1-A-02-04b.txt", "code": "1-A-02-04", "grade": "中1", "unit": "文字と式", "item": "式の値（代入）", "status": "done", "mastery": 87, "x": 1380, "y": 386, "unitGroup": "中1 文字と式"}, {"id": "m-jh1-A-02-05b", "file": "m-jh1-A-02-05b.txt", "code": "1-A-02-05", "grade": "中1", "unit": "文字と式", "item": "項と係数の関係", "status": "done", "mastery": 88, "x": 1380, "y": 468, "unitGroup": "中1 文字と式"}, {"id": "m-jh1-A-02-06b", "file": "m-jh1-A-02-06b.txt", "code": "1-A-02-06", "grade": "中1", "unit": "文字と式", "item": "文字式の加法と減法", "status": "done", "mastery": 89, "x": 1380, "y": 550, "unitGroup": "中1 文字と式"}, {"id": "m-jh1-A-02-07b", "file": "m-jh1-A-02-07b.txt", "code": "1-A-02-07", "grade": "中1", "unit": "文字と式", "item": "1次式の乗法（項が1つ・項が複数・分数）", "status": "done", "mastery": 90, "x": 1380, "y": 632, "unitGroup": "中1 文字と式"}, {"id": "m-jh1-A-02-08b", "file": "m-jh1-A-02-08b.txt", "code": "1-A-02-08", "grade": "中1", "unit": "文字と式", "item": "1次式の除法（項が1つ・項が複数）", "status": "weak", "mastery": 45, "x": 1380, "y": 714, "unitGroup": "中1 文字と式"}, {"id": "m-jh1-A-02-09b", "file": "m-jh1-A-02-09b.txt", "code": "1-A-02-09", "grade": "中1", "unit": "文字と式", "item": "1次式の計算（分配法則）", "status": "done", "mastery": 92, "x": 1380, "y": 796, "unitGroup": "中1 文字と式"}, {"id": "m-jh1-A-02-10b", "file": "m-jh1-A-02-10b.txt", "code": "1-A-02-10", "grade": "中1", "unit": "文字と式", "item": "文字式の利用（等式）", "status": "done", "mastery": 84, "x": 1380, "y": 878, "unitGroup": "中1 文字と式"}, {"id": "m-jh1-A-02-11b", "file": "m-jh1-A-02-11b.txt", "code": "1-A-02-11", "grade": "中1", "unit": "文字と式", "item": "文字式の利用（不等式）", "status": "done", "mastery": 85, "x": 1380, "y": 960, "unitGroup": "中1 文字と式"}, {"id": "m-jh1-A-03-01b", "file": "m-jh1-A-03-01b.txt", "code": "1-A-03-01", "grade": "中1", "unit": "１次方程式", "item": "方程式とその解（代入）①", "status": "done", "mastery": 85, "x": 1690, "y": 140, "unitGroup": "中1 １次方程式"}, {"id": "m-jh1-A-03-02b", "file": "m-jh1-A-03-02b.txt", "code": "1-A-03-02", "grade": "中1", "unit": "１次方程式", "item": "方程式とその解（代入）②", "status": "done", "mastery": 86, "x": 1690, "y": 222, "unitGroup": "中1 １次方程式"}, {"id": "m-jh1-A-03-03b", "file": "m-jh1-A-03-03b.txt", "code": "1-A-03-03", "grade": "中1", "unit": "１次方程式", "item": "等式の性質（加法性質・減法性質・乗法性質・除法性質）", "status": "done", "mastery": 87, "x": 1690, "y": 304, "unitGroup": "中1 １次方程式"}, {"id": "m-jh1-A-03-04b", "file": "m-jh1-A-03-04b.txt", "code": "1-A-03-04", "grade": "中1", "unit": "１次方程式", "item": "移項を利用した１次方程式の解き方", "status": "done", "mastery": 88, "x": 1690, "y": 386, "unitGroup": "中1 １次方程式"}, {"id": "m-jh1-A-03-05b", "file": "m-jh1-A-03-05b.txt", "code": "1-A-03-05", "grade": "中1", "unit": "１次方程式", "item": "かっこのある方程式の解き方", "status": "done", "mastery": 89, "x": 1690, "y": 468, "unitGroup": "中1 １次方程式"}, {"id": "m-jh1-A-03-06b", "file": "m-jh1-A-03-06b.txt", "code": "1-A-03-06", "grade": "中1", "unit": "１次方程式", "item": "小数が含まれる方程式の解き方", "status": "done", "mastery": 90, "x": 1690, "y": 550, "unitGroup": "中1 １次方程式"}, {"id": "m-jh1-A-03-07b", "file": "m-jh1-A-03-07b.txt", "code": "1-A-03-07", "grade": "中1", "unit": "１次方程式", "item": "分数が含まれる方程式の解き方", "status": "done", "mastery": 91, "x": 1690, "y": 632, "unitGroup": "中1 １次方程式"}, {"id": "m-jh1-A-03-08b", "file": "m-jh1-A-03-08b.txt", "code": "1-A-03-08", "grade": "中1", "unit": "１次方程式", "item": "比例式", "status": "done", "mastery": 92, "x": 1690, "y": 714, "unitGroup": "中1 １次方程式"}, {"id": "m-jh1-A-03-09b", "file": "m-jh1-A-03-09b.txt", "code": "1-A-03-09", "grade": "中1", "unit": "１次方程式", "item": "方程式の解と定数", "status": "done", "mastery": 93, "x": 1690, "y": 796, "unitGroup": "中1 １次方程式"}, {"id": "m-jh1-A-03-10b", "file": "m-jh1-A-03-10b.txt", "code": "1-A-03-10", "grade": "中1", "unit": "１次方程式", "item": "代金の問題", "status": "done", "mastery": 85, "x": 1690, "y": 878, "unitGroup": "中1 １次方程式"}, {"id": "m-jh1-A-03-11b", "file": "m-jh1-A-03-11b.txt", "code": "1-A-03-11", "grade": "中1", "unit": "１次方程式", "item": "過不足の問題", "status": "done", "mastery": 86, "x": 1690, "y": 960, "unitGroup": "中1 １次方程式"}, {"id": "m-jh1-A-03-12b", "file": "m-jh1-A-03-12b.txt", "code": "1-A-03-12", "grade": "中1", "unit": "１次方程式", "item": "速さに関する問題", "status": "done", "mastery": 87, "x": 1690, "y": 1042, "unitGroup": "中1 １次方程式"}, {"id": "m-jh1-A-03-13b", "file": "m-jh1-A-03-13b.txt", "code": "1-A-03-13", "grade": "中1", "unit": "１次方程式", "item": "割合問題", "status": "done", "mastery": 88, "x": 1690, "y": 1124, "unitGroup": "中1 １次方程式"}, {"id": "m-jh2-A-01-01b", "file": "m-jh2-A-01-01b.txt", "code": "2-A-01-01", "grade": "中2", "unit": "多項式の計算", "item": "多項式と項", "status": "done", "mastery": 84, "x": 2000, "y": 140, "unitGroup": "中2 多項式の計算"}, {"id": "m-jh2-A-01-02b", "file": "m-jh2-A-01-02b.txt", "code": "2-A-01-02", "grade": "中2", "unit": "多項式の計算", "item": "項の次数", "status": "done", "mastery": 85, "x": 2000, "y": 222, "unitGroup": "中2 多項式の計算"}, {"id": "m-jh2-A-01-03b", "file": "m-jh2-A-01-03b.txt", "code": "2-A-01-03", "grade": "中2", "unit": "多項式の計算", "item": "式の次数", "status": "done", "mastery": 86, "x": 2000, "y": 304, "unitGroup": "中2 多項式の計算"}, {"id": "m-jh2-A-01-04b", "file": "m-jh2-A-01-04b.txt", "code": "2-A-01-04", "grade": "中2", "unit": "多項式の計算", "item": "同類項", "status": "done", "mastery": 87, "x": 2000, "y": 386, "unitGroup": "中2 多項式の計算"}, {"id": "m-jh2-A-01-05b", "file": "m-jh2-A-01-05b.txt", "code": "2-A-01-05", "grade": "中2", "unit": "多項式の計算", "item": "多項式の加法と減法", "status": "done", "mastery": 88, "x": 2000, "y": 468, "unitGroup": "中2 多項式の計算"}, {"id": "m-jh2-A-01-06b", "file": "m-jh2-A-01-06b.txt", "code": "2-A-01-06", "grade": "中2", "unit": "多項式の計算", "item": "数と多項式の乗法", "status": "done", "mastery": 89, "x": 2000, "y": 550, "unitGroup": "中2 多項式の計算"}, {"id": "m-jh2-A-01-07b", "file": "m-jh2-A-01-07b.txt", "code": "2-A-01-07", "grade": "中2", "unit": "多項式の計算", "item": "多項式と数の除法", "status": "done", "mastery": 90, "x": 2000, "y": 632, "unitGroup": "中2 多項式の計算"}, {"id": "m-jh2-A-01-08b", "file": "m-jh2-A-01-08b.txt", "code": "2-A-01-08", "grade": "中2", "unit": "多項式の計算", "item": "分配法則を利用する加法と減法（分数を含まない）", "status": "done", "mastery": 91, "x": 2000, "y": 714, "unitGroup": "中2 多項式の計算"}, {"id": "m-jh2-A-01-09b", "file": "m-jh2-A-01-09b.txt", "code": "2-A-01-09", "grade": "中2", "unit": "多項式の計算", "item": "分配法則を利用する加法と減法（分数を含む）", "status": "done", "mastery": 92, "x": 2000, "y": 796, "unitGroup": "中2 多項式の計算"}, {"id": "m-jh2-A-01-10b", "file": "m-jh2-A-01-10b.txt", "code": "2-A-01-10", "grade": "中2", "unit": "多項式の計算", "item": "単項式の乗法", "status": "done", "mastery": 84, "x": 2000, "y": 878, "unitGroup": "中2 多項式の計算"}, {"id": "m-jh2-A-01-11b", "file": "m-jh2-A-01-11b.txt", "code": "2-A-01-11", "grade": "中2", "unit": "多項式の計算", "item": "単項式の除法", "status": "done", "mastery": 85, "x": 2000, "y": 960, "unitGroup": "中2 多項式の計算"}, {"id": "m-jh2-A-01-12b", "file": "m-jh2-A-01-12b.txt", "code": "2-A-01-12", "grade": "中2", "unit": "多項式の計算", "item": "単項式の乗法・除法混合", "status": "done", "mastery": 86, "x": 2000, "y": 1042, "unitGroup": "中2 多項式の計算"}, {"id": "m-jh2-A-01-13b", "file": "m-jh2-A-01-13b.txt", "code": "2-A-01-13", "grade": "中2", "unit": "多項式の計算", "item": "式の値", "status": "done", "mastery": 87, "x": 2000, "y": 1124, "unitGroup": "中2 多項式の計算"}, {"id": "m-jh2-A-02-01b", "file": "m-jh2-A-02-01b.txt", "code": "2-A-02-01", "grade": "中2", "unit": "文字式の利用", "item": "整数に関するいろいろな性質", "status": "done", "mastery": 85, "x": 2310, "y": 140, "unitGroup": "中2 文字式の利用"}, {"id": "m-jh2-A-02-02b", "file": "m-jh2-A-02-02b.txt", "code": "2-A-02-02", "grade": "中2", "unit": "文字式の利用", "item": "図形と文字式", "status": "done", "mastery": 86, "x": 2310, "y": 222, "unitGroup": "中2 文字式の利用"}, {"id": "m-jh2-A-02-03b", "file": "m-jh2-A-02-03b.txt", "code": "2-A-02-03", "grade": "中2", "unit": "文字式の利用", "item": "等式の変形", "status": "done", "mastery": 87, "x": 2310, "y": 304, "unitGroup": "中2 文字式の利用"}, {"id": "m-jh2-A-03-01b", "file": "m-jh2-A-03-01b.txt", "code": "2-A-03-01", "grade": "中2", "unit": "連立方程式", "item": "連立方程式とその解", "status": "done", "mastery": 86, "x": 2620, "y": 140, "unitGroup": "中2 連立方程式"}, {"id": "m-jh2-A-03-02b", "file": "m-jh2-A-03-02b.txt", "code": "2-A-03-02", "grade": "中2", "unit": "連立方程式", "item": "加減法①2つの式をそのまま加減する", "status": "done", "mastery": 87, "x": 2620, "y": 222, "unitGroup": "中2 連立方程式"}, {"id": "m-jh2-A-03-03b", "file": "m-jh2-A-03-03b.txt", "code": "2-A-03-03", "grade": "中2", "unit": "連立方程式", "item": "加減法②1つの式の両辺を何倍かして加減する", "status": "done", "mastery": 88, "x": 2620, "y": 304, "unitGroup": "中2 連立方程式"}, {"id": "m-jh2-A-03-04b", "file": "m-jh2-A-03-04b.txt", "code": "2-A-03-04", "grade": "中2", "unit": "連立方程式", "item": "加減法③それぞれの式の両辺を何倍かして加減する", "status": "done", "mastery": 89, "x": 2620, "y": 386, "unitGroup": "中2 連立方程式"}, {"id": "m-jh2-A-03-05b", "file": "m-jh2-A-03-05b.txt", "code": "2-A-03-05", "grade": "中2", "unit": "連立方程式", "item": "代入法　1つの式から、x= 〜もしくは、y=〜という形を作り、もう一方の式に代入して解く", "status": "done", "mastery": 90, "x": 2620, "y": 468, "unitGroup": "中2 連立方程式"}, {"id": "m-jh2-A-03-06b", "file": "m-jh2-A-03-06b.txt", "code": "2-A-03-06", "grade": "中2", "unit": "連立方程式", "item": "かっこのある連立方程式", "status": "done", "mastery": 91, "x": 2620, "y": 550, "unitGroup": "中2 連立方程式"}, {"id": "m-jh2-A-03-07b", "file": "m-jh2-A-03-07b.txt", "code": "2-A-03-07", "grade": "中2", "unit": "連立方程式", "item": "係数に分数を含む連立方程式", "status": "done", "mastery": 92, "x": 2620, "y": 632, "unitGroup": "中2 連立方程式"}, {"id": "m-jh2-A-03-08b", "file": "m-jh2-A-03-08b.txt", "code": "2-A-03-08", "grade": "中2", "unit": "連立方程式", "item": "係数に小数を含む連立方程式", "status": "done", "mastery": 93, "x": 2620, "y": 714, "unitGroup": "中2 連立方程式"}, {"id": "m-jh2-A-03-09b", "file": "m-jh2-A-03-09b.txt", "code": "2-A-03-09", "grade": "中2", "unit": "連立方程式", "item": "A＝B=Cの形をした連立方程式", "status": "done", "mastery": 94, "x": 2620, "y": 796, "unitGroup": "中2 連立方程式"}, {"id": "m-jh2-A-03-10b", "file": "m-jh2-A-03-10b.txt", "code": "2-A-03-10", "grade": "中2", "unit": "連立方程式", "item": "連立方程式の文章題（数、量、代金の問題）", "status": "active", "mastery": 59, "x": 2620, "y": 878, "unitGroup": "中2 連立方程式"}, {"id": "m-jh2-A-03-11b", "file": "m-jh2-A-03-11b.txt", "code": "2-A-03-11", "grade": "中2", "unit": "連立方程式", "item": "連立方程式の文章題（数字の問題）", "status": "active", "mastery": 60, "x": 2620, "y": 960, "unitGroup": "中2 連立方程式"}, {"id": "m-jh2-A-03-12b", "file": "m-jh2-A-03-12b.txt", "code": "2-A-03-12", "grade": "中2", "unit": "連立方程式", "item": "連立方程式の文章題（速さ、距離、時間に関する問題）", "status": "active", "mastery": 61, "x": 2620, "y": 1042, "unitGroup": "中2 連立方程式"}, {"id": "m-jh2-A-03-13b", "file": "m-jh2-A-03-13b.txt", "code": "2-A-03-13", "grade": "中2", "unit": "連立方程式", "item": "連立方程式の文章題（割合に関する問題）", "status": "weak", "mastery": 43, "x": 2620, "y": 1124, "unitGroup": "中2 連立方程式"}, {"id": "m-jh2-A-03-14b", "file": "m-jh2-A-03-14b.txt", "code": "2-A-03-14", "grade": "中2", "unit": "連立方程式", "item": "連立方程式の文章題（濃度に関する問題）", "status": "active", "mastery": 63, "x": 2620, "y": 1206, "unitGroup": "中2 連立方程式"}, {"id": "m-jh3-A-01-01b", "file": "m-jh3-A-01-01b.txt", "code": "3-A-01-01", "grade": "中3", "unit": "多項式の計算", "item": "単項式と多項式の乗法", "status": "done", "mastery": 85, "x": 2930, "y": 140, "unitGroup": "中3 多項式の計算"}, {"id": "m-jh3-A-01-02b", "file": "m-jh3-A-01-02b.txt", "code": "3-A-01-02", "grade": "中3", "unit": "多項式の計算", "item": "多項式を単項式でわる除法", "status": "done", "mastery": 86, "x": 2930, "y": 222, "unitGroup": "中3 多項式の計算"}, {"id": "m-jh3-A-01-03b", "file": "m-jh3-A-01-03b.txt", "code": "3-A-01-03", "grade": "中3", "unit": "多項式の計算", "item": "多項式と多項式の乗法（展開）", "status": "done", "mastery": 87, "x": 2930, "y": 304, "unitGroup": "中3 多項式の計算"}, {"id": "m-jh3-A-01-04b", "file": "m-jh3-A-01-04b.txt", "code": "3-A-01-04", "grade": "中3", "unit": "多項式の計算", "item": "多項式の展開（同類項を含む）", "status": "done", "mastery": 88, "x": 2930, "y": 386, "unitGroup": "中3 多項式の計算"}, {"id": "m-jh3-A-01-05b", "file": "m-jh3-A-01-05b.txt", "code": "3-A-01-05", "grade": "中3", "unit": "多項式の計算", "item": "(x + a)(x + b)の展開", "status": "done", "mastery": 89, "x": 2930, "y": 468, "unitGroup": "中3 多項式の計算"}, {"id": "m-jh3-A-01-06b", "file": "m-jh3-A-01-06b.txt", "code": "3-A-01-06", "grade": "中3", "unit": "多項式の計算", "item": "(x + a)^2の展開", "status": "done", "mastery": 90, "x": 2930, "y": 550, "unitGroup": "中3 多項式の計算"}, {"id": "m-jh3-A-01-07b", "file": "m-jh3-A-01-07b.txt", "code": "3-A-01-07", "grade": "中3", "unit": "多項式の計算", "item": "(x - a)^2の展開", "status": "done", "mastery": 91, "x": 2930, "y": 632, "unitGroup": "中3 多項式の計算"}, {"id": "m-jh3-A-01-08b", "file": "m-jh3-A-01-08b.txt", "code": "3-A-01-08", "grade": "中3", "unit": "多項式の計算", "item": "(a + b)(a -b)の展開", "status": "done", "mastery": 92, "x": 2930, "y": 714, "unitGroup": "中3 多項式の計算"}, {"id": "m-jh3-A-01-09b", "file": "m-jh3-A-01-09b.txt", "code": "3-A-01-09", "grade": "中3", "unit": "多項式の計算", "item": "乗法の公式を利用したいろいろな展開", "status": "done", "mastery": 93, "x": 2930, "y": 796, "unitGroup": "中3 多項式の計算"}, {"id": "m-jh3-A-01-10b", "file": "m-jh3-A-01-10b.txt", "code": "3-A-01-10", "grade": "中3", "unit": "多項式の計算", "item": "置き換えによる展開", "status": "done", "mastery": 85, "x": 2930, "y": 878, "unitGroup": "中3 多項式の計算"}, {"id": "m-jh3-A-02-01b", "file": "m-jh3-A-02-01b.txt", "code": "3-A-02-01", "grade": "中3", "unit": "因数分解", "item": "共通因数のくくりだし", "status": "done", "mastery": 86, "x": 3240, "y": 140, "unitGroup": "中3 因数分解"}, {"id": "m-jh3-A-02-02b", "file": "m-jh3-A-02-02b.txt", "code": "3-A-02-02", "grade": "中3", "unit": "因数分解", "item": "乗法の公式(x + a)(x + b) = x^2 +(a + b)x + abを利用した因数分解", "status": "done", "mastery": 87, "x": 3240, "y": 222, "unitGroup": "中3 因数分解"}, {"id": "m-jh3-A-02-03b", "file": "m-jh3-A-02-03b.txt", "code": "3-A-02-03", "grade": "中3", "unit": "因数分解", "item": "(x + a)^2, (x - a)^2の乗法の公式を利用した因数分解", "status": "weak", "mastery": 42, "x": 3240, "y": 304, "unitGroup": "中3 因数分解"}, {"id": "m-jh3-A-02-04b", "file": "m-jh3-A-02-04b.txt", "code": "3-A-02-04", "grade": "中3", "unit": "因数分解", "item": "(a + b)(a - b)の乗法の公式を利用した因数分解", "status": "done", "mastery": 89, "x": 3240, "y": 386, "unitGroup": "中3 因数分解"}, {"id": "m-jh3-A-02-05b", "file": "m-jh3-A-02-05b.txt", "code": "3-A-02-05", "grade": "中3", "unit": "因数分解", "item": "共通因数のくくりだしと乗法の公式を組み合わせた因数分解", "status": "active", "mastery": 63, "x": 3240, "y": 468, "unitGroup": "中3 因数分解"}, {"id": "m-jh3-A-02-06b", "file": "m-jh3-A-02-06b.txt", "code": "3-A-02-06", "grade": "中3", "unit": "因数分解", "item": "おきかえによる因数分解", "status": "done", "mastery": 91, "x": 3240, "y": 550, "unitGroup": "中3 因数分解"}, {"id": "m-jh3-A-03-01b", "file": "m-jh3-A-03-01b.txt", "code": "3-A-03-01", "grade": "中3", "unit": "乗法の公式や因数分解の利用", "item": "乗法の公式や因数分解を利用した計算", "status": "done", "mastery": 87, "x": 3550, "y": 140, "unitGroup": "中3 乗法の公式や因数分解の利用"}, {"id": "m-jh3-A-03-02b", "file": "m-jh3-A-03-02b.txt", "code": "3-A-03-02", "grade": "中3", "unit": "乗法の公式や因数分解の利用", "item": "乗法の公式や因数分解を利用してから式への値の代入", "status": "done", "mastery": 88, "x": 3550, "y": 222, "unitGroup": "中3 乗法の公式や因数分解の利用"}, {"id": "m-jh3-A-04-01b", "file": "m-jh3-A-04-01b.txt", "code": "3-A-04-01", "grade": "中3", "unit": "平方根", "item": "2乗するとaになる数（有理数）", "status": "active", "mastery": 61, "x": 3860, "y": 140, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-04-02b", "file": "m-jh3-A-04-02b.txt", "code": "3-A-04-02", "grade": "中3", "unit": "平方根", "item": "記号を使って平方根を表す", "status": "active", "mastery": 62, "x": 3860, "y": 222, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-04-03b", "file": "m-jh3-A-04-03b.txt", "code": "3-A-04-03", "grade": "中3", "unit": "平方根", "item": "根号のついた数を2乗する", "status": "active", "mastery": 63, "x": 3860, "y": 304, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-04-04b", "file": "m-jh3-A-04-04b.txt", "code": "3-A-04-04", "grade": "中3", "unit": "平方根", "item": "根号をはずせる根号のついた数", "status": "active", "mastery": 64, "x": 3860, "y": 386, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-04-05b", "file": "m-jh3-A-04-05b.txt", "code": "3-A-04-05", "grade": "中3", "unit": "平方根", "item": "平方根の大小", "status": "active", "mastery": 65, "x": 3860, "y": 468, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-04-06b", "file": "m-jh3-A-04-06b.txt", "code": "3-A-04-06", "grade": "中3", "unit": "平方根", "item": "有理数と無理数", "status": "active", "mastery": 66, "x": 3860, "y": 550, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-04-07b", "file": "m-jh3-A-04-07b.txt", "code": "3-A-04-07", "grade": "中3", "unit": "平方根", "item": "平方根の積と商", "status": "active", "mastery": 67, "x": 3860, "y": 632, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-04-08b", "file": "m-jh3-A-04-08b.txt", "code": "3-A-04-08", "grade": "中3", "unit": "平方根", "item": "平方根の変形", "status": "active", "mastery": 55, "x": 3860, "y": 714, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-04-09b", "file": "m-jh3-A-04-09b.txt", "code": "3-A-04-09", "grade": "中3", "unit": "平方根", "item": "分母の有理化", "status": "weak", "mastery": 37, "x": 3860, "y": 796, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-04-10b", "file": "m-jh3-A-04-10b.txt", "code": "3-A-04-10", "grade": "中3", "unit": "平方根", "item": "根号を含む式の乗法や除法", "status": "next", "mastery": 72, "x": 3860, "y": 878, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-04-11b", "file": "m-jh3-A-04-11b.txt", "code": "3-A-04-11", "grade": "中3", "unit": "平方根", "item": "根号をふくむ式の加法と減法（根号の中の数が同じ場合）", "status": "active", "mastery": 62, "x": 3860, "y": 960, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-04-12b", "file": "m-jh3-A-04-12b.txt", "code": "3-A-04-12", "grade": "中3", "unit": "平方根", "item": "根号をふくむ式の加法と減法（根号の中の数を合わせられる場合）", "status": "active", "mastery": 63, "x": 3860, "y": 1042, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-04-13b", "file": "m-jh3-A-04-13b.txt", "code": "3-A-04-13", "grade": "中3", "unit": "平方根", "item": "根号をふくむ式の加法と減法（有理化を利用した計算）", "status": "active", "mastery": 64, "x": 3860, "y": 1124, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-04-14b", "file": "m-jh3-A-04-14b.txt", "code": "3-A-04-14", "grade": "中3", "unit": "平方根", "item": "分配法則を利用した平方根の計算", "status": "active", "mastery": 65, "x": 3860, "y": 1206, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-04-15b", "file": "m-jh3-A-04-15b.txt", "code": "3-A-04-15", "grade": "中3", "unit": "平方根", "item": "展開の公式を利用した計算", "status": "active", "mastery": 66, "x": 3860, "y": 1288, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-04-16b", "file": "m-jh3-A-04-16b.txt", "code": "3-A-04-16", "grade": "中3", "unit": "平方根", "item": "平方根の近似値", "status": "active", "mastery": 67, "x": 3860, "y": 1370, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-04-17b", "file": "m-jh3-A-04-17b.txt", "code": "3-A-04-17", "grade": "中3", "unit": "平方根", "item": "平方根の計算", "status": "active", "mastery": 55, "x": 3860, "y": 1452, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-04-18b", "file": "m-jh3-A-04-18b.txt", "code": "3-A-04-18", "grade": "中3", "unit": "平方根", "item": "近似値と有効数字", "status": "active", "mastery": 56, "x": 3860, "y": 1534, "unitGroup": "中3 平方根"}, {"id": "m-jh3-A-05-01b", "file": "m-jh3-A-05-01b.txt", "code": "3-A-05-01", "grade": "中3", "unit": "2次方程式", "item": "2次方程式とその解", "status": "locked", "mastery": 19, "x": 4170, "y": 140, "unitGroup": "中3 2次方程式"}, {"id": "m-jh3-A-05-02b", "file": "m-jh3-A-05-02b.txt", "code": "3-A-05-02", "grade": "中3", "unit": "2次方程式", "item": "因数分解された形式の2次方程式の解き方", "status": "active", "mastery": 63, "x": 4170, "y": 222, "unitGroup": "中3 2次方程式"}, {"id": "m-jh3-A-05-03b", "file": "m-jh3-A-05-03b.txt", "code": "3-A-05-03", "grade": "中3", "unit": "2次方程式", "item": "因数分解して解く2次方程式", "status": "weak", "mastery": 45, "x": 4170, "y": 304, "unitGroup": "中3 2次方程式"}, {"id": "m-jh3-A-05-04b", "file": "m-jh3-A-05-04b.txt", "code": "3-A-05-04", "grade": "中3", "unit": "2次方程式", "item": "平方根を使った2次方程式の解き方", "status": "active", "mastery": 65, "x": 4170, "y": 386, "unitGroup": "中3 2次方程式"}, {"id": "m-jh3-A-05-05b", "file": "m-jh3-A-05-05b.txt", "code": "3-A-05-05", "grade": "中3", "unit": "2次方程式", "item": "因数分解できない2次方程式の解き方：平方完成でx^2+2ax=bの形から解く", "status": "locked", "mastery": 23, "x": 4170, "y": 468, "unitGroup": "中3 2次方程式"}, {"id": "m-jh3-A-05-06b", "file": "m-jh3-A-05-06b.txt", "code": "3-A-05-06", "grade": "中3", "unit": "2次方程式", "item": "2次方程式の解の公式を利用した解き方", "status": "locked", "mastery": 24, "x": 4170, "y": 550, "unitGroup": "中3 2次方程式"}, {"id": "m-jh3-A-05-07b", "file": "m-jh3-A-05-07b.txt", "code": "3-A-05-07", "grade": "中3", "unit": "2次方程式", "item": "複雑な2次方程式の解き方", "status": "next", "mastery": 66, "x": 4170, "y": 632, "unitGroup": "中3 2次方程式"}, {"id": "m-jh3-A-05-08b", "file": "m-jh3-A-05-08b.txt", "code": "3-A-05-08", "grade": "中3", "unit": "2次方程式", "item": "解が与えられた2次方程式", "status": "next", "mastery": 67, "x": 4170, "y": 714, "unitGroup": "中3 2次方程式"}, {"id": "m-jh3-A-05-09b", "file": "m-jh3-A-05-09b.txt", "code": "3-A-05-09", "grade": "中3", "unit": "2次方程式", "item": "2次方程式の利用（数の問題）", "status": "locked", "mastery": 14, "x": 4170, "y": 796, "unitGroup": "中3 2次方程式"}, {"id": "m-jh3-A-05-10b", "file": "m-jh3-A-05-10b.txt", "code": "3-A-05-10", "grade": "中3", "unit": "2次方程式", "item": "2次方程式の利用（図形の問題）", "status": "locked", "mastery": 19, "x": 4170, "y": 878, "unitGroup": "中3 2次方程式"}, {"id": "m-jh3-A-05-11b", "file": "m-jh3-A-05-11b.txt", "code": "3-A-05-11", "grade": "中3", "unit": "2次方程式", "item": "2次方程式の利用（動点の問題）", "status": "locked", "mastery": 20, "x": 4170, "y": 960, "unitGroup": "中3 2次方程式"}], "edges": [{"source": "m-jh1-A-01-01b", "target": "m-jh1-A-01-02b"}, {"source": "m-jh1-A-01-01b", "target": "m-jh1-A-01-03b"}, {"source": "m-jh1-A-01-01b", "target": "m-jh1-A-01-04b"}, {"source": "m-jh1-A-01-03b", "target": "m-jh1-A-01-04b"}, {"source": "m-jh1-A-01-01b", "target": "m-jh1-A-01-05b"}, {"source": "m-jh1-A-01-04b", "target": "m-jh1-A-01-05b"}, {"source": "m-jh1-A-01-05b", "target": "m-jh1-A-01-06b"}, {"source": "m-jh1-A-01-05b", "target": "m-jh1-A-01-07b"}, {"source": "m-jh1-A-01-06b", "target": "m-jh1-A-01-08b"}, {"source": "m-jh1-A-01-07b", "target": "m-jh1-A-01-08b"}, {"source": "m-jh1-A-01-01b", "target": "m-jh1-A-01-09b"}, {"source": "m-jh1-A-01-04b", "target": "m-jh1-A-01-09b"}, {"source": "m-jh1-A-01-09b", "target": "m-jh1-A-01-10b"}, {"source": "m-jh1-A-01-09b", "target": "m-jh1-A-01-11b"}, {"source": "m-jh1-A-01-10b", "target": "m-jh1-A-01-11b"}, {"source": "m-jh1-A-01-09b", "target": "m-jh1-A-01-12b"}, {"source": "m-jh1-A-01-09b", "target": "m-jh1-A-01-13b"}, {"source": "m-jh1-A-01-12b", "target": "m-jh1-A-01-14b"}, {"source": "m-jh1-A-01-13b", "target": "m-jh1-A-01-14b"}, {"source": "m-jh1-A-01-08b", "target": "m-jh1-A-01-15b"}, {"source": "m-jh1-A-01-10b", "target": "m-jh1-A-01-15b"}, {"source": "m-jh1-A-01-12b", "target": "m-jh1-A-01-15b"}, {"source": "m-jh1-A-01-11b", "target": "m-jh1-A-01-16b"}, {"source": "m-jh1-A-01-15b", "target": "m-jh1-A-01-16b"}, {"source": "m-jh1-A-01-10b", "target": "m-jh1-A-01-17b"}, {"source": "m-jh1-A-01-15b", "target": "m-jh1-A-01-17b"}, {"source": "m-jh1-A-01-01b", "target": "m-jh1-A-01-18b"}, {"source": "m-jh1-A-01-02b", "target": "m-jh1-A-01-19b"}, {"source": "m-jh1-A-01-08b", "target": "m-jh1-A-01-19b"}, {"source": "m-jh1-A-01-18b", "target": "m-jh1-A-01-20b"}, {"source": "m-jh1-A-01-20b", "target": "m-jh1-A-01-21b"}, {"source": "m-jh1-A-01-01b", "target": "m-jh1-A-02-01b"}, {"source": "m-jh1-A-02-01b", "target": "m-jh1-A-02-02b"}, {"source": "m-jh1-A-01-09b", "target": "m-jh1-A-02-02b"}, {"source": "m-jh1-A-02-01b", "target": "m-jh1-A-02-03b"}, {"source": "m-jh1-A-02-02b", "target": "m-jh1-A-02-03b"}, {"source": "m-jh1-A-02-02b", "target": "m-jh1-A-02-04b"}, {"source": "m-jh1-A-01-15b", "target": "m-jh1-A-02-04b"}, {"source": "m-jh1-A-02-02b", "target": "m-jh1-A-02-05b"}, {"source": "m-jh1-A-02-05b", "target": "m-jh1-A-02-06b"}, {"source": "m-jh1-A-01-08b", "target": "m-jh1-A-02-06b"}, {"source": "m-jh1-A-02-02b", "target": "m-jh1-A-02-07b"}, {"source": "m-jh1-A-01-17b", "target": "m-jh1-A-02-07b"}, {"source": "m-jh1-A-02-07b", "target": "m-jh1-A-02-08b"}, {"source": "m-jh1-A-01-14b", "target": "m-jh1-A-02-08b"}, {"source": "m-jh1-A-02-06b", "target": "m-jh1-A-02-09b"}, {"source": "m-jh1-A-02-07b", "target": "m-jh1-A-02-09b"}, {"source": "m-jh1-A-01-17b", "target": "m-jh1-A-02-09b"}, {"source": "m-jh1-A-02-03b", "target": "m-jh1-A-02-10b"}, {"source": "m-jh1-A-02-09b", "target": "m-jh1-A-02-10b"}, {"source": "m-jh1-A-01-03b", "target": "m-jh1-A-02-11b"}, {"source": "m-jh1-A-02-03b", "target": "m-jh1-A-02-11b"}, {"source": "m-jh1-A-02-04b", "target": "m-jh1-A-03-01b"}, {"source": "m-jh1-A-02-10b", "target": "m-jh1-A-03-01b"}, {"source": "m-jh1-A-03-01b", "target": "m-jh1-A-03-02b"}, {"source": "m-jh1-A-02-10b", "target": "m-jh1-A-03-03b"}, {"source": "m-jh1-A-03-01b", "target": "m-jh1-A-03-03b"}, {"source": "m-jh1-A-03-03b", "target": "m-jh1-A-03-04b"}, {"source": "m-jh1-A-02-09b", "target": "m-jh1-A-03-05b"}, {"source": "m-jh1-A-03-04b", "target": "m-jh1-A-03-05b"}, {"source": "m-jh1-A-01-15b", "target": "m-jh1-A-03-06b"}, {"source": "m-jh1-A-03-04b", "target": "m-jh1-A-03-06b"}, {"source": "m-jh1-A-01-14b", "target": "m-jh1-A-03-07b"}, {"source": "m-jh1-A-03-04b", "target": "m-jh1-A-03-07b"}, {"source": "m-jh1-A-02-10b", "target": "m-jh1-A-03-08b"}, {"source": "m-jh1-A-03-04b", "target": "m-jh1-A-03-08b"}, {"source": "m-jh1-A-02-04b", "target": "m-jh1-A-03-09b"}, {"source": "m-jh1-A-03-04b", "target": "m-jh1-A-03-09b"}, {"source": "m-jh1-A-02-03b", "target": "m-jh1-A-03-10b"}, {"source": "m-jh1-A-03-04b", "target": "m-jh1-A-03-10b"}, {"source": "m-jh1-A-03-04b", "target": "m-jh1-A-03-11b"}, {"source": "m-jh1-A-03-10b", "target": "m-jh1-A-03-11b"}, {"source": "m-jh1-A-02-03b", "target": "m-jh1-A-03-12b"}, {"source": "m-jh1-A-03-04b", "target": "m-jh1-A-03-12b"}, {"source": "m-jh1-A-02-03b", "target": "m-jh1-A-03-13b"}, {"source": "m-jh1-A-03-04b", "target": "m-jh1-A-03-13b"}, {"source": "m-jh1-A-02-05b", "target": "m-jh2-A-01-01b"}, {"source": "m-jh1-A-02-02b", "target": "m-jh2-A-01-02b"}, {"source": "m-jh2-A-01-01b", "target": "m-jh2-A-01-02b"}, {"source": "m-jh2-A-01-02b", "target": "m-jh2-A-01-03b"}, {"source": "m-jh2-A-01-01b", "target": "m-jh2-A-01-04b"}, {"source": "m-jh1-A-02-06b", "target": "m-jh2-A-01-05b"}, {"source": "m-jh2-A-01-04b", "target": "m-jh2-A-01-05b"}, {"source": "m-jh1-A-02-07b", "target": "m-jh2-A-01-06b"}, {"source": "m-jh2-A-01-05b", "target": "m-jh2-A-01-06b"}, {"source": "m-jh1-A-02-08b", "target": "m-jh2-A-01-07b"}, {"source": "m-jh2-A-01-06b", "target": "m-jh2-A-01-07b"}, {"source": "m-jh2-A-01-05b", "target": "m-jh2-A-01-08b"}, {"source": "m-jh2-A-01-06b", "target": "m-jh2-A-01-08b"}, {"source": "m-jh1-A-01-14b", "target": "m-jh2-A-01-09b"}, {"source": "m-jh2-A-01-08b", "target": "m-jh2-A-01-09b"}, {"source": "m-jh1-A-01-11b", "target": "m-jh2-A-01-10b"}, {"source": "m-jh1-A-01-09b", "target": "m-jh2-A-01-10b"}, {"source": "m-jh2-A-01-02b", "target": "m-jh2-A-01-10b"}, {"source": "m-jh1-A-01-14b", "target": "m-jh2-A-01-11b"}, {"source": "m-jh2-A-01-10b", "target": "m-jh2-A-01-11b"}, {"source": "m-jh2-A-01-10b", "target": "m-jh2-A-01-12b"}, {"source": "m-jh2-A-01-11b", "target": "m-jh2-A-01-12b"}, {"source": "m-jh1-A-02-04b", "target": "m-jh2-A-01-13b"}, {"source": "m-jh2-A-01-10b", "target": "m-jh2-A-01-13b"}, {"source": "m-jh1-A-02-10b", "target": "m-jh2-A-02-01b"}, {"source": "m-jh2-A-01-05b", "target": "m-jh2-A-02-01b"}, {"source": "m-jh1-A-02-03b", "target": "m-jh2-A-02-02b"}, {"source": "m-jh2-A-01-06b", "target": "m-jh2-A-02-02b"}, {"source": "m-jh1-A-03-04b", "target": "m-jh2-A-02-03b"}, {"source": "m-jh2-A-01-05b", "target": "m-jh2-A-02-03b"}, {"source": "m-jh1-A-03-01b", "target": "m-jh2-A-03-01b"}, {"source": "m-jh2-A-02-03b", "target": "m-jh2-A-03-01b"}, {"source": "m-jh1-A-03-03b", "target": "m-jh2-A-03-02b"}, {"source": "m-jh2-A-03-01b", "target": "m-jh2-A-03-02b"}, {"source": "m-jh2-A-03-02b", "target": "m-jh2-A-03-03b"}, {"source": "m-jh2-A-03-03b", "target": "m-jh2-A-03-04b"}, {"source": "m-jh1-A-03-04b", "target": "m-jh2-A-03-05b"}, {"source": "m-jh2-A-03-01b", "target": "m-jh2-A-03-05b"}, {"source": "m-jh1-A-03-05b", "target": "m-jh2-A-03-06b"}, {"source": "m-jh2-A-03-02b", "target": "m-jh2-A-03-06b"}, {"source": "m-jh1-A-03-07b", "target": "m-jh2-A-03-07b"}, {"source": "m-jh2-A-03-02b", "target": "m-jh2-A-03-07b"}, {"source": "m-jh1-A-03-06b", "target": "m-jh2-A-03-08b"}, {"source": "m-jh2-A-03-02b", "target": "m-jh2-A-03-08b"}, {"source": "m-jh2-A-03-01b", "target": "m-jh2-A-03-09b"}, {"source": "m-jh2-A-03-05b", "target": "m-jh2-A-03-09b"}, {"source": "m-jh1-A-03-10b", "target": "m-jh2-A-03-10b"}, {"source": "m-jh2-A-03-02b", "target": "m-jh2-A-03-10b"}, {"source": "m-jh2-A-03-05b", "target": "m-jh2-A-03-10b"}, {"source": "m-jh2-A-03-10b", "target": "m-jh2-A-03-11b"}, {"source": "m-jh1-A-03-12b", "target": "m-jh2-A-03-12b"}, {"source": "m-jh2-A-03-10b", "target": "m-jh2-A-03-12b"}, {"source": "m-jh1-A-03-13b", "target": "m-jh2-A-03-13b"}, {"source": "m-jh2-A-03-10b", "target": "m-jh2-A-03-13b"}, {"source": "m-jh2-A-03-13b", "target": "m-jh2-A-03-14b"}, {"source": "m-jh1-A-02-09b", "target": "m-jh3-A-01-01b"}, {"source": "m-jh2-A-01-06b", "target": "m-jh3-A-01-01b"}, {"source": "m-jh2-A-01-07b", "target": "m-jh3-A-01-02b"}, {"source": "m-jh3-A-01-01b", "target": "m-jh3-A-01-02b"}, {"source": "m-jh2-A-01-05b", "target": "m-jh3-A-01-03b"}, {"source": "m-jh3-A-01-01b", "target": "m-jh3-A-01-03b"}, {"source": "m-jh2-A-01-04b", "target": "m-jh3-A-01-04b"}, {"source": "m-jh3-A-01-03b", "target": "m-jh3-A-01-04b"}, {"source": "m-jh3-A-01-03b", "target": "m-jh3-A-01-05b"}, {"source": "m-jh3-A-01-03b", "target": "m-jh3-A-01-06b"}, {"source": "m-jh1-A-01-07b", "target": "m-jh3-A-01-07b"}, {"source": "m-jh3-A-01-03b", "target": "m-jh3-A-01-07b"}, {"source": "m-jh3-A-01-03b", "target": "m-jh3-A-01-08b"}, {"source": "m-jh3-A-01-05b", "target": "m-jh3-A-01-09b"}, {"source": "m-jh3-A-01-06b", "target": "m-jh3-A-01-09b"}, {"source": "m-jh3-A-01-07b", "target": "m-jh3-A-01-09b"}, {"source": "m-jh3-A-01-08b", "target": "m-jh3-A-01-09b"}, {"source": "m-jh3-A-01-09b", "target": "m-jh3-A-01-10b"}, {"source": "m-jh2-A-01-04b", "target": "m-jh3-A-02-01b"}, {"source": "m-jh3-A-01-01b", "target": "m-jh3-A-02-01b"}, {"source": "m-jh3-A-01-05b", "target": "m-jh3-A-02-02b"}, {"source": "m-jh3-A-01-06b", "target": "m-jh3-A-02-03b"}, {"source": "m-jh3-A-01-07b", "target": "m-jh3-A-02-03b"}, {"source": "m-jh3-A-01-08b", "target": "m-jh3-A-02-04b"}, {"source": "m-jh3-A-02-01b", "target": "m-jh3-A-02-05b"}, {"source": "m-jh3-A-02-02b", "target": "m-jh3-A-02-05b"}, {"source": "m-jh3-A-02-03b", "target": "m-jh3-A-02-05b"}, {"source": "m-jh3-A-02-04b", "target": "m-jh3-A-02-05b"}, {"source": "m-jh3-A-01-10b", "target": "m-jh3-A-02-06b"}, {"source": "m-jh3-A-02-05b", "target": "m-jh3-A-02-06b"}, {"source": "m-jh1-A-01-15b", "target": "m-jh3-A-03-01b"}, {"source": "m-jh3-A-01-09b", "target": "m-jh3-A-03-01b"}, {"source": "m-jh3-A-02-05b", "target": "m-jh3-A-03-01b"}, {"source": "m-jh1-A-02-04b", "target": "m-jh3-A-03-02b"}, {"source": "m-jh3-A-03-01b", "target": "m-jh3-A-03-02b"}, {"source": "m-jh1-A-01-04b", "target": "m-jh3-A-04-01b"}, {"source": "m-jh1-A-01-11b", "target": "m-jh3-A-04-01b"}, {"source": "m-jh3-A-04-01b", "target": "m-jh3-A-04-02b"}, {"source": "m-jh1-A-01-11b", "target": "m-jh3-A-04-03b"}, {"source": "m-jh3-A-04-02b", "target": "m-jh3-A-04-03b"}, {"source": "m-jh1-A-01-20b", "target": "m-jh3-A-04-04b"}, {"source": "m-jh3-A-04-02b", "target": "m-jh3-A-04-04b"}, {"source": "m-jh1-A-01-03b", "target": "m-jh3-A-04-05b"}, {"source": "m-jh3-A-04-02b", "target": "m-jh3-A-04-05b"}, {"source": "m-jh1-A-01-18b", "target": "m-jh3-A-04-06b"}, {"source": "m-jh3-A-04-02b", "target": "m-jh3-A-04-06b"}, {"source": "m-jh1-A-01-09b", "target": "m-jh3-A-04-07b"}, {"source": "m-jh1-A-01-12b", "target": "m-jh3-A-04-07b"}, {"source": "m-jh3-A-04-04b", "target": "m-jh3-A-04-07b"}, {"source": "m-jh3-A-04-04b", "target": "m-jh3-A-04-08b"}, {"source": "m-jh3-A-04-07b", "target": "m-jh3-A-04-08b"}, {"source": "m-jh3-A-04-07b", "target": "m-jh3-A-04-09b"}, {"source": "m-jh3-A-04-08b", "target": "m-jh3-A-04-09b"}, {"source": "m-jh3-A-04-07b", "target": "m-jh3-A-04-10b"}, {"source": "m-jh3-A-04-08b", "target": "m-jh3-A-04-10b"}, {"source": "m-jh3-A-04-09b", "target": "m-jh3-A-04-10b"}, {"source": "m-jh2-A-01-04b", "target": "m-jh3-A-04-11b"}, {"source": "m-jh3-A-04-04b", "target": "m-jh3-A-04-11b"}, {"source": "m-jh3-A-04-04b", "target": "m-jh3-A-04-12b"}, {"source": "m-jh3-A-04-11b", "target": "m-jh3-A-04-12b"}, {"source": "m-jh3-A-04-09b", "target": "m-jh3-A-04-13b"}, {"source": "m-jh3-A-04-12b", "target": "m-jh3-A-04-13b"}, {"source": "m-jh1-A-01-17b", "target": "m-jh3-A-04-14b"}, {"source": "m-jh3-A-04-10b", "target": "m-jh3-A-04-14b"}, {"source": "m-jh3-A-04-11b", "target": "m-jh3-A-04-14b"}, {"source": "m-jh3-A-01-09b", "target": "m-jh3-A-04-15b"}, {"source": "m-jh3-A-04-14b", "target": "m-jh3-A-04-15b"}, {"source": "m-jh3-A-04-02b", "target": "m-jh3-A-04-16b"}, {"source": "m-jh3-A-04-10b", "target": "m-jh3-A-04-17b"}, {"source": "m-jh3-A-04-12b", "target": "m-jh3-A-04-17b"}, {"source": "m-jh3-A-04-08b", "target": "m-jh3-A-04-18b"}, {"source": "m-jh3-A-04-09b", "target": "m-jh3-A-04-18b"}, {"source": "m-jh3-A-04-16b", "target": "m-jh3-A-04-18b"}, {"source": "m-jh1-A-03-01b", "target": "m-jh3-A-05-01b"}, {"source": "m-jh3-A-01-04b", "target": "m-jh3-A-05-01b"}, {"source": "m-jh3-A-02-01b", "target": "m-jh3-A-05-02b"}, {"source": "m-jh3-A-05-01b", "target": "m-jh3-A-05-02b"}, {"source": "m-jh3-A-02-02b", "target": "m-jh3-A-05-03b"}, {"source": "m-jh3-A-02-03b", "target": "m-jh3-A-05-03b"}, {"source": "m-jh3-A-02-04b", "target": "m-jh3-A-05-03b"}, {"source": "m-jh3-A-05-02b", "target": "m-jh3-A-05-03b"}, {"source": "m-jh3-A-04-02b", "target": "m-jh3-A-05-04b"}, {"source": "m-jh3-A-05-01b", "target": "m-jh3-A-05-04b"}, {"source": "m-jh3-A-01-06b", "target": "m-jh3-A-05-05b"}, {"source": "m-jh3-A-05-04b", "target": "m-jh3-A-05-05b"}, {"source": "m-jh3-A-04-10b", "target": "m-jh3-A-05-06b"}, {"source": "m-jh3-A-05-05b", "target": "m-jh3-A-05-06b"}, {"source": "m-jh3-A-01-04b", "target": "m-jh3-A-05-07b"}, {"source": "m-jh3-A-05-03b", "target": "m-jh3-A-05-07b"}, {"source": "m-jh3-A-05-06b", "target": "m-jh3-A-05-07b"}, {"source": "m-jh1-A-02-04b", "target": "m-jh3-A-05-08b"}, {"source": "m-jh3-A-05-03b", "target": "m-jh3-A-05-08b"}, {"source": "m-jh1-A-03-10b", "target": "m-jh3-A-05-09b"}, {"source": "m-jh3-A-05-07b", "target": "m-jh3-A-05-09b"}, {"source": "m-jh3-A-05-07b", "target": "m-jh3-A-05-10b"}, {"source": "m-jh1-A-03-12b", "target": "m-jh3-A-05-11b"}, {"source": "m-jh3-A-05-07b", "target": "m-jh3-A-05-11b"}], "statusLabels": {"done": "習得済み", "active": "学習中", "weak": "要復習", "next": "次におすすめ", "locked": "未学習"}, "unitSummary": [{"unitGroup": "中1 正と負の数", "grade": "中1", "unit": "正と負の数", "count": 4, "avg": 84, "statusCounts": {"done": 4, "active": 0, "weak": 0, "next": 0, "locked": 0}}, {"unitGroup": "中1 加法と減法", "grade": "中1", "unit": "加法と減法", "count": 4, "avg": 88, "statusCounts": {"done": 4, "active": 0, "weak": 0, "next": 0, "locked": 0}}, {"unitGroup": "中1 乗法と除法", "grade": "中1", "unit": "乗法と除法", "count": 6, "avg": 78, "statusCounts": {"done": 5, "active": 0, "weak": 1, "next": 0, "locked": 0}}, {"unitGroup": "中1 いろいろな計算", "grade": "中1", "unit": "いろいろな計算", "count": 7, "avg": 88, "statusCounts": {"done": 7, "active": 0, "weak": 0, "next": 0, "locked": 0}}, {"unitGroup": "中1 文字と式", "grade": "中1", "unit": "文字と式", "count": 11, "avg": 83, "statusCounts": {"done": 10, "active": 0, "weak": 1, "next": 0, "locked": 0}}, {"unitGroup": "中1 １次方程式", "grade": "中1", "unit": "１次方程式", "count": 13, "avg": 88, "statusCounts": {"done": 13, "active": 0, "weak": 0, "next": 0, "locked": 0}}, {"unitGroup": "中2 多項式の計算", "grade": "中2", "unit": "多項式の計算", "count": 13, "avg": 87, "statusCounts": {"done": 13, "active": 0, "weak": 0, "next": 0, "locked": 0}}, {"unitGroup": "中2 文字式の利用", "grade": "中2", "unit": "文字式の利用", "count": 3, "avg": 86, "statusCounts": {"done": 3, "active": 0, "weak": 0, "next": 0, "locked": 0}}, {"unitGroup": "中2 連立方程式", "grade": "中2", "unit": "連立方程式", "count": 14, "avg": 78, "statusCounts": {"done": 9, "active": 4, "weak": 1, "next": 0, "locked": 0}}, {"unitGroup": "中3 多項式の計算", "grade": "中3", "unit": "多項式の計算", "count": 10, "avg": 89, "statusCounts": {"done": 10, "active": 0, "weak": 0, "next": 0, "locked": 0}}, {"unitGroup": "中3 因数分解", "grade": "中3", "unit": "因数分解", "count": 6, "avg": 76, "statusCounts": {"done": 4, "active": 1, "weak": 1, "next": 0, "locked": 0}}, {"unitGroup": "中3 乗法の公式や因数分解の利用", "grade": "中3", "unit": "乗法の公式や因数分解の利用", "count": 2, "avg": 88, "statusCounts": {"done": 2, "active": 0, "weak": 0, "next": 0, "locked": 0}}, {"unitGroup": "中3 平方根", "grade": "中3", "unit": "平方根", "count": 18, "avg": 62, "statusCounts": {"done": 0, "active": 16, "weak": 1, "next": 1, "locked": 0}}, {"unitGroup": "中3 2次方程式", "grade": "中3", "unit": "2次方程式", "count": 11, "avg": 39, "statusCounts": {"done": 0, "active": 2, "weak": 1, "next": 2, "locked": 6}}], "unitEdges": [["中1 乗法と除法", "中1 いろいろな計算"], ["中3 多項式の計算", "中3 乗法の公式や因数分解の利用"], ["中1 １次方程式", "中2 連立方程式"], ["中3 因数分解", "中3 2次方程式"], ["中1 文字と式", "中2 多項式の計算"], ["中2 文字式の利用", "中2 連立方程式"], ["中1 正と負の数", "中3 平方根"], ["中3 多項式の計算", "中3 因数分解"], ["中2 多項式の計算", "中2 文字式の利用"], ["中3 因数分解", "中3 乗法の公式や因数分解の利用"], ["中1 文字と式", "中3 多項式の計算"], ["中1 いろいろな計算", "中3 乗法の公式や因数分解の利用"], ["中2 多項式の計算", "中3 因数分解"], ["中1 正と負の数", "中1 文字と式"], ["中3 多項式の計算", "中3 平方根"], ["中1 文字と式", "中2 文字式の利用"], ["中1 いろいろな計算", "中1 １次方程式"], ["中1 正と負の数", "中1 いろいろな計算"], ["中2 多項式の計算", "中3 平方根"], ["中1 乗法と除法", "中1 １次方程式"], ["中1 乗法と除法", "中1 文字と式"], ["中1 加法と減法", "中1 いろいろな計算"], ["中1 加法と減法", "中1 文字と式"], ["中3 平方根", "中3 2次方程式"], ["中1 加法と減法", "中3 多項式の計算"], ["中2 多項式の計算", "中3 多項式の計算"], ["中1 １次方程式", "中3 2次方程式"], ["中1 文字と式", "中3 2次方程式"], ["中1 正と負の数", "中1 加法と減法"], ["中1 正と負の数", "中1 乗法と除法"], ["中1 いろいろな計算", "中3 平方根"], ["中1 文字と式", "中3 乗法の公式や因数分解の利用"], ["中1 いろいろな計算", "中1 文字と式"], ["中1 乗法と除法", "中3 平方根"], ["中1 文字と式", "中1 １次方程式"], ["中3 多項式の計算", "中3 2次方程式"], ["中1 乗法と除法", "中2 多項式の計算"], ["中1 １次方程式", "中2 文字式の利用"]]}</script>
+  <script>
+    (() => {
+      const data = JSON.parse(document.getElementById('graph-data').textContent);
+      const nodes = data.nodes;
+      const labels = data.statusLabels;
+      const byId = new Map(nodes.map(n => [n.id, n]));
+      const unitSummary = data.unitSummary;
+      let selected = 'm-jh3-A-05-03b';
+      let unitFilter = 'all';
+
+      const itemSelect = document.getElementById('itemSelect');
+      const unitSelect = document.getElementById('unitSelect');
+      const search = document.getElementById('search');
+
+      const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+      const statusPill = n => `<span class="pill ${n.status}">${labels[n.status]} ${n.mastery}%</span>`;
+      const isRisk = n => n.status === 'weak' || n.status === 'locked' || n.mastery < 60;
+
+      function optionLabel(n) { return `${n.code} ${n.unit} / ${n.item}`; }
+
+      function populateControls() {
+        for (const n of nodes) {
+          const option = document.createElement('option');
+          option.value = n.id;
+          option.textContent = optionLabel(n);
+          itemSelect.appendChild(option);
+        }
+        for (const u of unitSummary) {
+          const option = document.createElement('option');
+          option.value = u.unitGroup;
+          option.textContent = u.unitGroup;
+          unitSelect.appendChild(option);
+        }
+      }
+
+      function filteredNodes() {
+        const q = search.value.trim().toLowerCase();
+        return nodes.filter(n => {
+          if (unitFilter !== 'all' && n.unitGroup !== unitFilter) return false;
+          if (!q) return true;
+          return `${n.code} ${n.unit} ${n.item} ${n.file}`.toLowerCase().includes(q);
+        });
+      }
+
+      function renderItemOptions() {
+        const current = selected;
+        itemSelect.innerHTML = '';
+        for (const n of filteredNodes()) {
+          const option = document.createElement('option');
+          option.value = n.id;
+          option.textContent = optionLabel(n);
+          itemSelect.appendChild(option);
+        }
+        if ([...itemSelect.options].some(o => o.value === current)) itemSelect.value = current;
+        else if (itemSelect.options[0]) selected = itemSelect.options[0].value;
+      }
+
+      function renderUnits() {
+        const lanes = document.getElementById('unitLanes');
+        const grades = ['中1', '中2', '中3'];
+        lanes.innerHTML = grades.map(g => `<div class="grade-lane"><div class="grade-title">${g}</div><div data-grade="${g}"></div></div>`).join('');
+        for (const u of unitSummary) {
+          if (unitFilter !== 'all' && unitFilter !== u.unitGroup) continue;
+          const lane = lanes.querySelector(`[data-grade="${u.grade}"]`);
+          if (!lane) continue;
+          const selectedUnit = byId.get(selected)?.unitGroup === u.unitGroup;
+          const div = document.createElement('button');
+          div.className = 'unit-card' + (selectedUnit ? ' selected' : '');
+          div.dataset.unit = u.unitGroup;
+          div.innerHTML = `<strong>${esc(u.unit)}</strong><div class="unit-meta">${u.count}項目 / 平均 ${u.avg}%</div><div class="bar"><i style="width:${u.avg}%"></i></div>`;
+          div.addEventListener('click', () => {
+            unitFilter = u.unitGroup;
+            unitSelect.value = u.unitGroup;
+            const first = nodes.find(n => n.unitGroup === u.unitGroup);
+            if (first) selected = first.id;
+            render();
+          });
+          lane.appendChild(div);
+        }
+      }
+
+      function nodeCard(id, current=false) {
+        const n = byId.get(id);
+        if (!n) return '';
+        return `<button class="node-card${current ? ' current' : ''}" data-id="${esc(id)}"><div class="node-code">${esc(n.code)} ${statusPill(n)}</div><div class="node-item">${esc(n.item)}</div><div class="node-unit">${esc(n.grade)} / ${esc(n.unit)}</div></button>`;
+      }
+
+      function ancestors(id, depth=1, seen=new Set()) {
+        if (depth > 3) return [];
+        const n = byId.get(id);
+        let out = [];
+        for (const p of n?.prereq || []) {
+          if (seen.has(p)) continue;
+          seen.add(p);
+          out.push(p);
+          out = out.concat(ancestors(p, depth + 1, seen));
+        }
+        return out;
+      }
+
+      function representativeRoute(id) {
+        const route = [];
+        let cur = id;
+        let guard = 0;
+        while (cur && guard++ < 6) {
+          route.unshift(cur);
+          const n = byId.get(cur);
+          const candidates = (n?.prereq || []).map(x => byId.get(x)).filter(Boolean);
+          candidates.sort((a, b) => a.mastery - b.mastery);
+          cur = candidates[0]?.id;
+        }
+        return route;
+      }
+
+      function renderFocus() {
+        const n = byId.get(selected);
+        if (!n) return;
+        document.getElementById('focusTitle').textContent = `${n.code} ${n.item}`;
+        document.getElementById('preList').innerHTML = (n.prereq || []).map(id => nodeCard(id)).join('') || '<p class="empty">直接の前提項目はありません。</p>';
+        document.getElementById('currentBox').innerHTML = nodeCard(n.id, true);
+        document.getElementById('nextList').innerHTML = (n.next || []).map(id => nodeCard(id)).join('') || '<p class="empty">直接つながる次項目はありません。</p>';
+        const route = representativeRoute(n.id);
+        document.getElementById('route').innerHTML = route.map((id, i) => `${i ? '<span class="arrow">→</span>' : ''}<div class="route-node">${nodeCard(id).replace('node-card', 'node-card route-inner')}</div>`).join('');
+      }
+
+      function renderSide() {
+        const n = byId.get(selected);
+        const allPre = ancestors(selected).map(id => byId.get(id)).filter(Boolean);
+        const direct = (n.prereq || []).map(id => byId.get(id)).filter(Boolean);
+        const target = direct.length ? direct : allPre;
+        const score = target.length ? Math.round(target.reduce((sum, x) => sum + x.mastery, 0) / target.length) : 100;
+        const risks = allPre.filter(isRisk).sort((a, b) => a.mastery - b.mastery).slice(0, 6);
+        document.getElementById('readiness').textContent = score + '%';
+        document.getElementById('readyScore').textContent = score + '%';
+        document.getElementById('readinessText').textContent = target.length ? '直接前提を中心に算出しています。' : 'この項目には直接前提がありません。';
+        document.getElementById('riskList').innerHTML = risks.length ? risks.map(x => `<div class="risk hot"><strong>${esc(x.code)} ${esc(x.item)}</strong><br>${statusPill(x)}</div>`).join('') : '<p class="empty">大きな前提不足は見当たりません。</p>';
+        const action = risks.length
+          ? `まず「${risks[0].code} ${risks[0].item}」へ戻ると、現在地の理解が安定しやすくなります。`
+          : `前提はおおむね整っています。「${n.code} ${n.item}」の演習に進めます。`;
+        document.getElementById('actionText').textContent = action;
+      }
+
+      function render() {
+        renderItemOptions();
+        itemSelect.value = selected;
+        renderUnits();
+        renderFocus();
+        renderSide();
+      }
+
+      itemSelect.addEventListener('change', () => { selected = itemSelect.value; render(); });
+      unitSelect.addEventListener('change', () => { unitFilter = unitSelect.value; render(); });
+      search.addEventListener('input', () => { render(); });
+      document.body.addEventListener('click', e => {
+        const btn = e.target.closest('[data-id]');
+        if (!btn) return;
+        selected = btn.dataset.id;
+        render();
+      });
+      document.getElementById('targetQuadratic').addEventListener('click', () => {
+        unitFilter = '中3 2次方程式';
+        unitSelect.value = unitFilter;
+        selected = 'm-jh3-A-05-07b';
+        search.value = '';
+        render();
+      });
+      document.getElementById('targetCurrent').addEventListener('click', () => {
+        unitFilter = 'all';
+        unitSelect.value = 'all';
+        selected = 'm-jh3-A-05-03b';
+        search.value = '';
+        render();
+      });
+
+      populateControls();
+      render();
+    })();
+  </script>
+</body>
+</html>
