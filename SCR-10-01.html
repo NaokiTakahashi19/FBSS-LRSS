@@ -115,6 +115,11 @@
       background:#d99a28;
       box-shadow:0 0 0 3px rgba(217,154,40,.15);
     }
+    .footprint-dot.incorrect{
+      border-color:var(--orange);
+      background:var(--orange);
+      box-shadow:0 0 0 3px rgba(217,154,40,.16);
+    }
     .progress-track{
       width:100%;
       height:5px;
@@ -191,6 +196,25 @@
       0%{opacity:0;transform:translateX(-50%) rotate(9deg) scale(.64);}
       72%{opacity:1;transform:translateX(-50%) rotate(9deg) scale(1.12);}
       to{opacity:1;transform:translateX(-50%) rotate(9deg) scale(1);}
+    }
+    @keyframes batsuStamp{
+      0%{opacity:0;transform:translate(-50%,-50%) rotate(8deg) scale(.44);}
+      58%{opacity:1;transform:translate(-50%,-50%) rotate(5deg) scale(1.12);}
+      76%{opacity:1;transform:translate(-50%,-50%) rotate(5deg) scale(.96);}
+      to{opacity:1;transform:translate(-50%,-50%) rotate(5deg) scale(1);}
+    }
+    @keyframes batsuStrokeA{
+      0%{opacity:0;transform:translate(-50%,-50%) rotate(45deg) scaleX(.12);}
+      to{opacity:1;transform:translate(-50%,-50%) rotate(45deg) scaleX(1);}
+    }
+    @keyframes batsuStrokeB{
+      0%{opacity:0;transform:translate(-50%,-50%) rotate(-45deg) scaleX(.12);}
+      to{opacity:1;transform:translate(-50%,-50%) rotate(-45deg) scaleX(1);}
+    }
+    @keyframes batsuWord{
+      0%{opacity:0;transform:translateX(-50%) rotate(-7deg) scale(.72);}
+      70%{opacity:1;transform:translateX(-50%) rotate(-7deg) scale(1.1);}
+      to{opacity:1;transform:translateX(-50%) rotate(-7deg) scale(1);}
     }
     @keyframes confettiPop{
       0%{opacity:0;transform:scale(.78) rotate(-2deg);}
@@ -343,6 +367,11 @@
       font-weight:700;
       white-space:nowrap;
     }
+    .answer-card.is-incorrect .status-pill{
+      border-color:rgba(217,154,40,.3);
+      background:#fff8e8;
+      color:#d27722;
+    }
     .answer-paper{
       position:relative;
       min-height:224px;
@@ -370,6 +399,13 @@
       transform:scale(.78);
       animation:confettiPop .72s ease .5s forwards;
     }
+    .answer-card.is-incorrect .answer-paper{
+      border-color:rgba(217,154,40,.34);
+      background-image:radial-gradient(rgba(217,154,40,.18) 1px, transparent 1px);
+    }
+    .answer-card.is-incorrect .answer-paper::before{
+      display:none;
+    }
     .correct-celebration{
       position:relative;
       display:flex;
@@ -384,6 +420,10 @@
       opacity:0;
       transform:translateY(8px);
       animation:celebrationIn .42s cubic-bezier(.2,.78,.2,1) .16s forwards;
+    }
+    .answer-card.is-incorrect .correct-celebration{
+      border-color:rgba(217,154,40,.28);
+      background:#fff8e8;
     }
     .correct-celebration::after{
       content:"";
@@ -410,6 +450,10 @@
       color:var(--primary);
       box-shadow:inset 0 0 0 1px rgba(63,143,118,.16);
     }
+    .answer-card.is-incorrect .celebration-icon{
+      color:#d27722;
+      box-shadow:inset 0 0 0 1px rgba(217,154,40,.2);
+    }
     .celebration-copy{
       position:relative;
       z-index:1;
@@ -420,6 +464,9 @@
       color:var(--primary-dark);
       font-size:14px;
       line-height:1.4;
+    }
+    .answer-card.is-incorrect .celebration-copy b{
+      color:#8a561d;
     }
     .celebration-copy span{
       display:block;
@@ -455,6 +502,9 @@
       font-size:clamp(1.55rem,2.35vw,2.2rem);
       line-height:1.5;
     }
+    .answer-card.is-incorrect .answer-value{
+      color:#4b3a24;
+    }
     .maru-mark{
       position:absolute;
       top:50%;
@@ -479,8 +529,7 @@
       opacity:0;
       animation:stampHalo .72s ease .58s forwards;
     }
-    .maru-mark::after{
-      content:"正解";
+    .maru-mark .stamp-label{
       position:absolute;
       left:50%;
       bottom:14px;
@@ -492,6 +541,54 @@
       opacity:0;
       transform:translateX(-50%) rotate(9deg) scale(.64);
       animation:stampWord .42s cubic-bezier(.18,.9,.2,1.18) .66s forwards;
+    }
+    .batsu-mark{
+      position:absolute;
+      top:50%;
+      left:50%;
+      z-index:3;
+      width:150px;
+      height:150px;
+      border-radius:999px;
+      transform:translate(-50%,-50%) rotate(8deg) scale(.44);
+      opacity:0;
+      animation:batsuStamp .58s cubic-bezier(.16,.9,.2,1.16) .36s forwards;
+      pointer-events:none;
+    }
+    .batsu-mark::before,
+    .batsu-mark::after{
+      content:"";
+      position:absolute;
+      top:50%;
+      left:50%;
+      width:118px;
+      height:9px;
+      border-radius:999px;
+      background:rgba(217,154,40,.86);
+      box-shadow:0 7px 18px rgba(217,154,40,.18);
+      opacity:0;
+      transform-origin:center;
+    }
+    .batsu-mark::before{
+      transform:translate(-50%,-50%) rotate(45deg) scaleX(.12);
+      animation:batsuStrokeA .34s cubic-bezier(.18,.9,.2,1.16) .52s forwards;
+    }
+    .batsu-mark::after{
+      transform:translate(-50%,-50%) rotate(-45deg) scaleX(.12);
+      animation:batsuStrokeB .34s cubic-bezier(.18,.9,.2,1.16) .62s forwards;
+    }
+    .batsu-mark .stamp-label{
+      position:absolute;
+      left:50%;
+      bottom:12px;
+      color:#b86a1b;
+      font-family:"Noto Sans JP",sans-serif;
+      font-size:17px;
+      font-weight:900;
+      letter-spacing:.06em;
+      opacity:0;
+      transform:translateX(-50%) rotate(-7deg) scale(.72);
+      animation:batsuWord .36s cubic-bezier(.18,.9,.2,1.16) .72s forwards;
     }
     .answer-badge{
       position:absolute;
@@ -507,6 +604,11 @@
       opacity:0;
       transform:translateY(6px);
       animation:badgeRise .28s ease .62s forwards;
+    }
+    .answer-card.is-incorrect .answer-badge{
+      border-color:rgba(217,154,40,.24);
+      background:#fff8e8;
+      color:#d27722;
     }
     .explain-head{
       display:flex;
@@ -690,7 +792,11 @@
       .answer-paper::before,
       .maru-mark,
       .maru-mark::before,
-      .maru-mark::after,
+      .maru-mark .stamp-label,
+      .batsu-mark,
+      .batsu-mark::before,
+      .batsu-mark::after,
+      .batsu-mark .stamp-label,
       .answer-badge{
         animation:none !important;
       }
@@ -701,7 +807,11 @@
         transform:none !important;
       }
       .maru-mark,
-      .maru-mark::after{
+      .maru-mark .stamp-label,
+      .batsu-mark,
+      .batsu-mark::before,
+      .batsu-mark::after,
+      .batsu-mark .stamp-label{
         opacity:1 !important;
       }
       .maru-mark::before{
@@ -710,8 +820,20 @@
       .maru-mark{
         transform:translate(-50%,-50%) rotate(-9deg) !important;
       }
-      .maru-mark::after{
+      .maru-mark .stamp-label{
         transform:translateX(-50%) rotate(9deg) scale(1) !important;
+      }
+      .batsu-mark{
+        transform:translate(-50%,-50%) rotate(5deg) scale(1) !important;
+      }
+      .batsu-mark::before{
+        transform:translate(-50%,-50%) rotate(45deg) scaleX(1) !important;
+      }
+      .batsu-mark::after{
+        transform:translate(-50%,-50%) rotate(-45deg) scaleX(1) !important;
+      }
+      .batsu-mark .stamp-label{
+        transform:translateX(-50%) rotate(-7deg) scale(1) !important;
       }
     }
   </style>
@@ -769,31 +891,31 @@
           <span class="material-symbols-outlined">edit_note</span>
           あなたの解答
         </h2>
-        <div class="status-pill">
-          <span class="material-symbols-outlined">check_circle</span>
-          正解
+        <div class="status-pill" id="statusPill">
+          <span class="material-symbols-outlined" id="statusIcon">check_circle</span>
+          <span id="statusText">正解</span>
         </div>
       </div>
 
       <div class="correct-celebration" aria-label="正解時のフィードバック">
-        <span class="celebration-icon material-symbols-outlined">workspace_premium</span>
+        <span class="celebration-icon material-symbols-outlined" id="feedbackIcon">workspace_premium</span>
         <div class="celebration-copy">
-          <b>いい調子、正解です</b>
-          <span>この1問で累積解答数に +1問。次の問題へ進む準備ができました。</span>
+          <b id="feedbackTitle">いい調子、正解です</b>
+          <span id="feedbackText">この1問で累積解答数に +1問。次の問題へ進む準備ができました。</span>
         </div>
       </div>
 
       <div class="answer-paper">
         <div class="answer-label">あなたの解答</div>
         <div class="answer-value math-text" id="studentAnswer"></div>
-        <div class="maru-mark" aria-hidden="true"></div>
-        <div class="answer-badge">正解</div>
+        <div class="maru-mark" id="resultStamp" aria-hidden="true"><span class="stamp-label" id="stampLabel">正解</span></div>
+        <div class="answer-badge" id="answerBadge">正解</div>
       </div>
     </section>
 
     <section class="card explain-card" aria-labelledby="explainTitle">
       <div class="explain-head">
-        <span class="tag">解答</span>
+        <span class="tag" id="answerTag">解答</span>
         <div class="answer-formula math-text" id="correctAnswer"></div>
       </div>
       <div class="summary-strip">
@@ -1006,6 +1128,77 @@
         return map[question?.itemId] || question?.ability || '学習項目';
       }
 
+      function getForcedResult(){
+        const params = new URLSearchParams(window.location.search);
+        const value = String(params.get('result') || '').toLowerCase();
+        if(['correct', 'ok', 'true', '1'].includes(value)) return 'correct';
+        if(['incorrect', 'wrong', 'ng', 'false', '0'].includes(value)) return 'incorrect';
+        return '';
+      }
+
+      function resolveResultState(question){
+        const forced = getForcedResult();
+        if(forced) return forced;
+        const key = `mathResultState:${question?.id || currentIndex}`;
+        const cached = sessionStorage.getItem(key);
+        if(cached === 'correct' || cached === 'incorrect') return cached;
+        const randomState = Math.random() < 0.5 ? 'correct' : 'incorrect';
+        sessionStorage.setItem(key, randomState);
+        return randomState;
+      }
+
+      function getSimulatedIncorrectAnswer(question){
+        if(question?.incorrectAnswer) return question.incorrectAnswer;
+        const examples = {
+          1:'3x(x+2)',
+          2:'-4ab(2a-3b-1)',
+          3:'(x+4)(x+6)',
+          4:'(x-6)(x+6)',
+          5:'(x+7)^2',
+          6:'(5x-3)^2',
+          7:'(x+9)^2',
+          8:'(6x+11y)^2',
+          9:'5(x^2-4)',
+          10:'4(a^2-6a+9)'
+        };
+        return examples[currentIndex] || String(question?.formula || '').replace(/\+/, '-');
+      }
+
+      function applyResultState(state){
+        const isCorrect = state === 'correct';
+        const answerCard = document.querySelector('.answer-card');
+        if(answerCard){
+          answerCard.classList.toggle('is-correct', isCorrect);
+          answerCard.classList.toggle('is-incorrect', !isCorrect);
+        }
+        const feedbackCard = document.querySelector('.correct-celebration');
+        if(feedbackCard){
+          feedbackCard.setAttribute('aria-label', isCorrect ? '正解時のフィードバック' : '不正解時のフィードバック');
+        }
+
+        setText('statusIcon', isCorrect ? 'check_circle' : 'error');
+        setText('statusText', isCorrect ? '正解' : '不正解');
+        setText('feedbackIcon', isCorrect ? 'workspace_premium' : 'psychology_alt');
+        setText('feedbackTitle', isCorrect ? 'いい調子、正解です' : 'あと少し、見直せば届きます');
+        setText(
+          'feedbackText',
+          isCorrect
+            ? 'この1問で累積解答数に +1問。次の問題へ進む準備ができました。'
+            : '考え方の近いところまで来ています。下の正しい解答とステップを見て、どこでずれたか確認しましょう。'
+        );
+        setText('answerBadge', isCorrect ? '正解' : '要確認');
+        setText('stampLabel', isCorrect ? '正解' : '見直し');
+        setText('answerTag', isCorrect ? '解答' : '正しい解答');
+
+        const stamp = document.getElementById('resultStamp');
+        if(stamp){
+          stamp.className = isCorrect ? 'maru-mark' : 'batsu-mark';
+        }
+
+        setHtml('studentAnswer', renderMath(isCorrect ? currentQuestion.answer : getSimulatedIncorrectAnswer(currentQuestion)));
+        renderFootprints(isCorrect ? 'correct' : 'incorrect');
+      }
+
       function renderFootprints(mode){
         const container = document.getElementById('footprints');
         if(!container) return;
@@ -1013,8 +1206,14 @@
           const number = index + 1;
           let state = '';
           if(number < currentIndex) state = 'done';
-          if(number === currentIndex) state = mode === 'correct' ? 'correct' : 'current';
-          const label = state === 'done' || state === 'correct' ? '完了' : state === 'current' ? '学習中' : '未実施';
+          if(number === currentIndex) state = mode === 'correct' ? 'correct' : mode === 'incorrect' ? 'incorrect' : 'current';
+          const label = state === 'done' || state === 'correct'
+            ? '完了'
+            : state === 'incorrect'
+              ? '見直し'
+              : state === 'current'
+                ? '学習中'
+                : '未実施';
           return `<span class="footprint-dot ${state}" title="${number}問目 ${label}" aria-label="${number}問目 ${label}"></span>`;
         }).join('');
       }
@@ -1042,14 +1241,13 @@
         setText('levelLabel', currentQuestion.levelLabel || '基礎レベル');
         setText('abilityLabel', getLearningType(currentQuestion));
         setHtml('questionFormula', renderMath(currentQuestion.formula));
-        setHtml('studentAnswer', renderMath(currentQuestion.answer));
         setHtml('correctAnswer', renderMath(currentQuestion.answer));
         setHtml('explanationBody', renderExplanation(currentQuestion.explanation));
         const formula = document.getElementById('questionFormula');
         if(formula) formula.setAttribute('aria-label', normalizeMathSource(currentQuestion.formula));
         const progress = document.getElementById('progressBar');
         if(progress) progress.style.width = `${Math.max(8, Math.round(currentIndex / total * 100))}%`;
-        renderFootprints('correct');
+        applyResultState(resolveResultState(currentQuestion));
         const next = document.getElementById('nextQuestionLink');
         if(next){
           if(currentIndex >= total){
