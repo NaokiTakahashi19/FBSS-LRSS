@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>数学・復習ドリル SPA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        packages: {'[+]': ['color']},
+        macros: {
+          hlblue: ['{\\color{#2f735e}{#1}}', 1],
+          hlpink: ['{\\color{#d99a28}{#1}}', 1]
+        }
+      },
+      svg: {fontCache: 'global'}
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script src="data/math-questions-3-a-02.js"></script>
+  <style>
+    :root{
+      --bg:#edf2df;
+      --paper:#fffffb;
+      --ink:#1f2a2a;
+      --muted:#657579;
+      --subtle:#8a9aa0;
+      --primary:#3f8f76;
+      --primary-dark:#2f735e;
+      --primary-soft:#e1f0e9;
+      --orange:#d99a28;
+      --orange-soft:#fff4df;
+      --danger:#ef4444;
+      --danger-soft:#fff1f2;
+      --line:rgba(63,143,118,.22);
+      --shadow:0 18px 42px rgba(62,87,76,.12);
+      --radius:22px;
+    }
+    *{box-sizing:border-box;}
+    html{min-width:320px;}
+    body{
+      margin:0;
+      min-height:100dvh;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing:0;
+      overflow-x:hidden;
+    }
+    button{font:inherit;}
+    .material-symbols-outlined{
+      font-family:"Material Symbols Outlined";
+      font-weight:normal;
+      font-style:normal;
+      font-size:22px;
+      line-height:1;
+      letter-spacing:normal;
+      text-transform:none;
+      display:inline-block;
+      white-space:nowrap;
+      word-wrap:normal;
+      direction:ltr;
+      -webkit-font-feature-settings:"liga";
+      -webkit-font-smoothing:antialiased;
+      font-variation-settings:"FILL" 0, "wght" 600, "GRAD" 0, "opsz" 24;
+    }
+    .lesson-header{
+      position:sticky;
+      top:0;
+      z-index:30;
+      background:rgba(255,255,251,.96);
+      border-bottom:1px solid rgba(63,143,118,.18);
+      box-shadow:0 4px 18px rgba(63,143,118,.08);
+    }
+    .header-inner{
+      width:min(1180px, calc(100% - 48px));
+      min-height:66px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      align-items:center;
+      gap:16px;
+    }
+    .header-left,
+    .header-right{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .header-right{justify-content:flex-end;}
+    .icon-button{
+      width:42px;
+      height:42px;
+      border:0;
+      border-radius:999px;
+      background:transparent;
+      color:var(--ink);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      transition:background .18s ease, transform .18s ease;
+    }
+    .icon-button:hover{background:var(--primary-soft);}
+    .icon-button:active{transform:scale(.96);}
+    .title-block{
+      text-align:center;
+      display:grid;
+      gap:3px;
+    }
+    .title-block h1{
+      margin:0;
+      font-size:17px;
+      font-weight:800;
+      color:#172322;
+    }
+    .title-block p{
+      margin:0;
+      font-size:12px;
+      font-weight:700;
+      color:#5f7075;
+    }
+    .footprints{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      margin-top:4px;
+    }
+    .footprint-dot{
+      width:9px;
+      height:9px;
+      border-radius:999px;
+      background:#dce8dd;
+      box-shadow:inset 0 0 0 1px rgba(63,143,118,.18);
+    }
+    .footprint-dot.done,
+    .footprint-dot.correct{background:var(--primary);}
+    .footprint-dot.current{
+      width:12px;
+      height:12px;
+      background:#fff;
+      border:3px solid var(--orange);
+      box-shadow:0 0 0 3px rgba(217,154,40,.12);
+    }
+    .footprint-dot.incorrect{
+      background:var(--danger);
+      box-shadow:0 0 0 3px rgba(239,68,68,.12);
+    }
+    .progress-track{
+      height:5px;
+      background:rgba(63,143,118,.12);
+      overflow:hidden;
+    }
+    .progress-bar{
+      display:block;
+      width:10%;
+      height:100%;
+      background:var(--primary);
+      transition:width .55s cubic-bezier(.2,.8,.2,1);
+    }
+    .mode-pill{
+      min-width:108px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--primary-dark);
+      font-size:12px;
+      font-weight:800;
+      text-align:center;
+    }
+    .page{
+      width:min(1180px, calc(100% - 48px));
+      margin:0 auto;
+      padding:26px 0 110px;
+    }
+    .view{animation:viewIn .28s ease both;}
+    .view:not(.is-active){display:none;}
+    @keyframes viewIn{
+      from{opacity:0; transform:translateY(10px);}
+      to{opacity:1; transform:translateY(0);}
+    }
+    .lesson-grid,
+    .result-grid{
+      display:grid;
+      grid-template-columns:minmax(360px, .82fr) minmax(520px, 1.18fr);
+      gap:22px;
+      align-items:start;
+    }
+    .card{
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .problem-card{
+      min-height:292px;
+      padding:28px 30px;
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+    .card-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:18px;
+    }
+    .section-label{
+      margin:0 0 12px;
+      color:#819196;
+      font-size:12px;
+      font-weight:800;
+    }
+    .problem-label-row{
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .learning-tag{
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      border:1px solid rgba(63,143,118,.2);
+      background:var(--primary-soft);
+      color:var(--primary-dark);
+      border-radius:999px;
+      padding:5px 9px;
+      font-size:11px;
+      font-weight:800;
+    }
+    .learning-tag .material-symbols-outlined{font-size:16px;}
+    .problem-prompt{
+      margin:0;
+      color:#142224;
+      font-size:18px;
+      line-height:1.85;
+      font-weight:600;
+    }
+    .problem-prompt strong{font-weight:800;}
+    .difficulty-pill{
+      min-width:136px;
+      padding:10px 15px;
+      border-radius:999px;
+      background:#fff;
+      color:#405155;
+      border:1px solid rgba(63,143,118,.2);
+      box-shadow:0 8px 22px rgba(62,87,76,.08);
+      font-size:13px;
+      font-weight:800;
+      text-align:center;
+      white-space:nowrap;
+    }
+    .formula-area{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:112px;
+      padding:12px 0;
+    }
+    .test-formula{
+      font-size:30px;
+      line-height:1.35;
+      color:#0f1720;
+    }
+    .problem-meta{
+      align-self:flex-end;
+      margin-top:auto;
+      color:#8b98a3;
+      font-size:12px;
+      font-weight:800;
+    }
+    .answer-stack{
+      display:grid;
+      gap:14px;
+    }
+    .panel-title{
+      margin:0;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:#34464b;
+      font-size:15px;
+      font-weight:800;
+    }
+    .panel-title .material-symbols-outlined{color:var(--primary);}
+    .tool-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:10px;
+    }
+    .tool-group{
+      display:flex;
+      align-items:center;
+      gap:4px;
+    }
+    .tool-button{
+      min-width:44px;
+      height:40px;
+      border:1px solid #dfe7e1;
+      background:#fff;
+      color:#8b98a3;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      transition:background .18s ease, color .18s ease, transform .18s ease;
+    }
+    .tool-button:first-child{border-radius:8px 0 0 8px;}
+    .tool-button:last-child{border-radius:0 8px 8px 0;}
+    .tool-button.tool-active{
+      background:var(--primary);
+      border-color:var(--primary);
+      color:#fff;
+    }
+    .tool-button.clear{
+      min-width:66px;
+      color:var(--danger);
+      font-size:12px;
+      font-weight:800;
+    }
+    .tool-button:hover{transform:translateY(-1px);}
+    .canvas-box{
+      position:relative;
+      overflow:hidden;
+      border-radius:20px;
+      border:2px solid rgba(63,143,118,.2);
+      background-color:#fff;
+      background-image:radial-gradient(rgba(63,143,118,.22) 1px, transparent 1px);
+      background-size:22px 22px;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.72);
+    }
+    .canvas-label,
+    .canvas-note{
+      position:absolute;
+      z-index:2;
+      top:12px;
+      left:14px;
+      padding:5px 9px;
+      border-radius:8px;
+      background:rgba(255,255,251,.92);
+      color:var(--primary-dark);
+      border:1px solid rgba(63,143,118,.18);
+      font-size:11px;
+      font-weight:800;
+    }
+    .canvas-note{
+      left:auto;
+      right:14px;
+      color:#66787d;
+    }
+    .answer-canvas{height:184px;}
+    .calc-canvas{height:294px;}
+    canvas{
+      position:absolute;
+      inset:0;
+      z-index:1;
+      width:100%;
+      height:100%;
+      touch-action:none;
+    }
+    .placeholder{
+      position:absolute;
+      inset:0;
+      z-index:0;
+      margin:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#ccd5d0;
+      font-size:15px;
+      font-weight:700;
+      pointer-events:none;
+    }
+    .ocr-trigger{
+      position:absolute;
+      right:14px;
+      bottom:14px;
+      z-index:3;
+      min-width:126px;
+      min-height:44px;
+      border:0;
+      border-radius:999px;
+      background:var(--primary);
+      color:#fff;
+      box-shadow:0 12px 24px rgba(63,143,118,.24);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      font-size:13px;
+      font-weight:800;
+      cursor:pointer;
+      transition:transform .18s ease, background .18s ease;
+    }
+    .ocr-trigger:hover{background:var(--primary-dark); transform:translateY(-1px);}
+    .ocr-card{
+      padding:16px 18px;
+      display:grid;
+      gap:10px;
+    }
+    .recognition-box{
+      min-height:54px;
+      display:flex;
+      align-items:center;
+      padding:12px 18px;
+      border-radius:18px;
+      background:#fff;
+      border:1px solid rgba(63,143,118,.16);
+      color:#7e8d92;
+      font-size:14px;
+      font-weight:700;
+    }
+    .calc-card{
+      grid-column:1 / -1;
+      padding:18px;
+    }
+    .result-grid{
+      grid-template-columns:minmax(380px, .9fr) minmax(520px, 1.1fr);
+    }
+    .result-side{
+      display:grid;
+      gap:16px;
+    }
+    .answer-card{
+      padding:20px;
+      transition:border-color .2s ease, background .2s ease;
+    }
+    .result-status{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:14px;
+    }
+    .status-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      border-radius:999px;
+      padding:8px 13px;
+      color:var(--primary-dark);
+      background:var(--primary-soft);
+      border:1px solid rgba(63,143,118,.22);
+      font-size:14px;
+      font-weight:900;
+    }
+    .answer-card.is-incorrect .status-pill{
+      color:var(--danger);
+      background:var(--danger-soft);
+      border-color:rgba(239,68,68,.28);
+    }
+    .feedback-card{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      padding:15px;
+      margin-bottom:14px;
+      border-radius:16px;
+      background:#f4fbf5;
+      border:1px solid rgba(63,143,118,.2);
+    }
+    .answer-card.is-incorrect .feedback-card{
+      background:#fff7ed;
+      border-color:rgba(217,154,40,.3);
+    }
+    .feedback-icon{
+      width:40px;
+      height:40px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+      color:#fff;
+      background:var(--primary);
+    }
+    .answer-card.is-incorrect .feedback-icon{background:var(--orange);}
+    .feedback-copy{
+      display:grid;
+      gap:3px;
+      color:#46585c;
+      font-size:13px;
+      line-height:1.65;
+    }
+    .feedback-copy b{
+      color:var(--primary-dark);
+      font-size:15px;
+    }
+    .answer-card.is-incorrect .feedback-copy b{color:#a45d12;}
+    .answer-paper{
+      position:relative;
+      min-height:184px;
+      border-radius:20px;
+      border:2px solid rgba(63,143,118,.2);
+      background-color:#fff;
+      background-image:radial-gradient(rgba(63,143,118,.18) 1px, transparent 1px);
+      background-size:22px 22px;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .answer-card.is-incorrect .answer-paper{
+      border-color:rgba(239,68,68,.28);
+      background-image:radial-gradient(rgba(239,68,68,.14) 1px, transparent 1px);
+    }
+    .answer-label,
+    .answer-badge{
+      position:absolute;
+      z-index:3;
+      top:13px;
+      left:14px;
+      padding:5px 9px;
+      border-radius:8px;
+      background:rgba(255,255,251,.92);
+      color:var(--primary-dark);
+      border:1px solid rgba(63,143,118,.18);
+      font-size:11px;
+      font-weight:900;
+    }
+    .answer-badge{
+      top:auto;
+      left:auto;
+      right:13px;
+      bottom:13px;
+      color:var(--orange);
+      border-color:rgba(217,154,40,.28);
+    }
+    .answer-value{
+      position:relative;
+      z-index:2;
+      font-size:34px;
+      color:#221b16;
+      text-align:center;
+    }
+    .stamp{
+      position:absolute;
+      z-index:4;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      pointer-events:none;
+    }
+    .stamp::before,
+    .stamp::after{
+      content:"";
+      position:absolute;
+      border-radius:999px;
+    }
+    .stamp.is-correct::before{
+      width:142px;
+      height:142px;
+      border:13px solid rgba(239,68,68,.84);
+      animation:stampPop .62s cubic-bezier(.12,1.38,.38,1) both;
+      transform:rotate(-10deg);
+    }
+    .stamp.is-correct .stamp-label{
+      color:#ef4444;
+      border:4px solid rgba(239,68,68,.84);
+      border-radius:14px;
+      padding:6px 12px;
+      background:rgba(255,255,255,.62);
+      transform:rotate(-10deg);
+    }
+    .stamp.is-incorrect::before,
+    .stamp.is-incorrect::after{
+      width:180px;
+      height:14px;
+      background:rgba(239,68,68,.86);
+      animation:stampPop .52s cubic-bezier(.12,1.38,.38,1) both;
+    }
+    .stamp.is-incorrect::before{transform:rotate(45deg);}
+    .stamp.is-incorrect::after{transform:rotate(-45deg);}
+    .stamp.is-incorrect .stamp-label{
+      position:absolute;
+      top:64%;
+      color:#ef4444;
+      font-size:18px;
+      font-weight:900;
+      text-shadow:0 2px 0 rgba(255,255,255,.7);
+    }
+    .stamp-label{
+      position:relative;
+      z-index:5;
+      font-size:20px;
+      font-weight:900;
+    }
+    @keyframes stampPop{
+      0%{opacity:0; scale:1.65;}
+      58%{opacity:1; scale:.9;}
+      100%{opacity:1; scale:1;}
+    }
+    .explain-card{
+      padding:22px;
+    }
+    .explain-head{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      padding-bottom:14px;
+      margin-bottom:14px;
+      border-bottom:1px solid rgba(63,143,118,.15);
+    }
+    .tag{
+      padding:5px 10px;
+      border-radius:999px;
+      color:#fff;
+      background:var(--primary);
+      font-size:12px;
+      font-weight:900;
+    }
+    .answer-formula{
+      font-size:24px;
+      color:#152222;
+    }
+    .summary-strip{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:16px;
+    }
+    .summary-chip{
+      border-radius:999px;
+      border:1px solid rgba(63,143,118,.18);
+      background:#fff;
+      color:#637579;
+      padding:6px 10px;
+      font-size:12px;
+      font-weight:800;
+    }
+    .explain-body{
+      color:#34474b;
+      font-size:16px;
+      line-height:1.9;
+    }
+    .explain-body p{margin:0 0 12px;}
+    .formula-block{
+      margin:12px 0 16px;
+      padding:14px 18px;
+      border-radius:16px;
+      background:#fffdf7;
+      border:1px solid rgba(217,154,40,.22);
+      overflow-x:auto;
+      text-align:center;
+    }
+    .formula-line{
+      display:block;
+      margin:4px 0;
+      font-size:20px;
+    }
+    .step-list{
+      display:grid;
+      gap:10px;
+    }
+    .step-accordion{
+      border:1px solid rgba(63,143,118,.18);
+      border-radius:16px;
+      background:#fff;
+      overflow:hidden;
+    }
+    .step-accordion summary{
+      cursor:pointer;
+      list-style:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      color:#263b3f;
+      font-weight:900;
+    }
+    .step-accordion summary::-webkit-details-marker{display:none;}
+    .step-chevron{
+      color:var(--orange);
+      font-size:13px;
+      transition:transform .18s ease;
+    }
+    .step-accordion[open] .step-chevron{transform:rotate(180deg);}
+    .step-content{
+      padding:0 16px 16px;
+      border-top:1px solid rgba(63,143,118,.12);
+    }
+    .footer{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:28;
+      padding:14px 0;
+      background:rgba(255,255,251,.96);
+      border-top:1px solid rgba(63,143,118,.16);
+      box-shadow:0 -12px 28px rgba(63,143,118,.08);
+    }
+    .footer-inner{
+      width:min(1180px, calc(100% - 48px));
+      margin:0 auto;
+      display:flex;
+      justify-content:flex-end;
+      gap:12px;
+    }
+    .secondary-action,
+    .primary-action{
+      min-width:178px;
+      min-height:52px;
+      border:0;
+      border-radius:16px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      cursor:pointer;
+      font-weight:900;
+      transition:transform .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+    .primary-action{
+      color:#fff;
+      background:var(--primary);
+      box-shadow:0 14px 28px rgba(63,143,118,.26);
+    }
+    .primary-action:hover{
+      background:var(--primary-dark);
+      transform:translateY(-1px);
+    }
+    .secondary-action{
+      color:var(--primary-dark);
+      background:#fff;
+      border:1px solid var(--line);
+    }
+    .secondary-action:hover{background:var(--primary-soft);}
+    .soft-transition{
+      animation:softFlash .34s ease both;
+    }
+    @keyframes softFlash{
+      0%{opacity:.35; transform:translateX(14px);}
+      100%{opacity:1; transform:translateX(0);}
+    }
+    @media (max-width:900px){
+      .header-inner,
+      .page,
+      .footer-inner{width:min(100% - 28px, 1180px);}
+      .lesson-grid,
+      .result-grid{grid-template-columns:1fr;}
+      .calc-card{grid-column:auto;}
+      .problem-card{min-height:250px;}
+      .answer-canvas{height:172px;}
+      .calc-canvas{height:260px;}
+      .test-formula{font-size:28px;}
+    }
+    @media (max-width:640px){
+      .header-inner{grid-template-columns:auto 1fr auto;}
+      .mode-pill{display:none;}
+      .page{padding-top:18px;}
+      .card-head,
+      .result-status,
+      .tool-row{align-items:flex-start; flex-direction:column;}
+      .tool-row{gap:10px;}
+      .tool-group{align-self:flex-end;}
+      .problem-card{padding:22px;}
+      .problem-prompt{font-size:16px;}
+      .answer-value{font-size:28px;}
+      .footer-inner{justify-content:stretch;}
+      .primary-action,
+      .secondary-action{flex:1; min-width:0;}
+    }
+  </style>
+</head>
+<body>
+  <header class="lesson-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <button id="backBtn" class="icon-button" type="button" aria-label="前の画面へ戻る">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <span id="modePill" class="mode-pill">問題</span>
+      </div>
+      <div class="title-block">
+        <h1 id="unitTitle">因数分解</h1>
+        <p id="questionCounter">第 1 問 / 全 10 問</p>
+        <div class="footprints" id="footprints" aria-label="学習の進み具合"></div>
+      </div>
+      <div class="header-right">
+        <button id="closeBtn" class="icon-button" type="button" aria-label="閉じる">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+    </div>
+    <div class="progress-track"><span id="progressBar" class="progress-bar"></span></div>
+  </header>
+
+  <main class="page">
+    <section id="questionView" class="view is-active" aria-labelledby="questionViewTitle">
+      <div class="lesson-grid">
+        <section class="card problem-card" aria-labelledby="problemTitle">
+          <div class="card-head">
+            <div>
+              <div class="problem-label-row">
+                <p class="section-label" id="problemTitle">問題</p>
+                <span class="learning-tag">
+                  <span class="material-symbols-outlined">category</span>
+                  <span id="learningItemTag">学習項目</span>
+                </span>
+              </div>
+              <p class="problem-prompt">
+                <strong id="questionIndexLabel">【問題1】</strong>
+                <span id="questionPrompt">次の式を因数分解しなさい。</span>
+              </p>
+            </div>
+            <div class="difficulty-pill" id="difficultyLabel">難易度 205 / 300</div>
+          </div>
+          <div class="formula-area">
+            <span class="test-formula" id="questionFormula">\(3x^2y+6xy\)</span>
+          </div>
+          <div class="problem-meta" id="problemNumberLabel">問題番号：3-A-02-01-b-01</div>
+        </section>
+
+        <div class="answer-stack">
+          <section class="card answer-card" aria-labelledby="answerTitle">
+            <div class="tool-row">
+              <h2 class="panel-title" id="answerTitle">
+                <span class="material-symbols-outlined">edit</span>
+                回答欄
+              </h2>
+              <div class="tool-group" aria-label="回答欄ツール">
+                <button type="button" data-target="answer" data-tool="pen" class="tool-button tool-active" aria-label="回答欄にペンで書く">
+                  <span class="material-symbols-outlined">edit</span>
+                </button>
+                <button type="button" data-target="answer" data-tool="eraser" class="tool-button" aria-label="回答欄の文字を消す">
+                  <span class="material-symbols-outlined">ink_eraser</span>
+                </button>
+                <button type="button" data-target="answer" data-tool="clear" class="tool-button clear" aria-label="回答欄をクリア">クリア</button>
+              </div>
+            </div>
+            <div class="canvas-box answer-canvas">
+              <div class="canvas-label">回答欄</div>
+              <button type="button" id="ocrTrigger" class="ocr-trigger" aria-label="回答欄を文字認識">
+                <span class="material-symbols-outlined">spellcheck</span>
+                文字認識
+              </button>
+              <canvas id="answerCanvas"></canvas>
+              <p id="answerPlaceholder" class="placeholder">答えはここに書いてください</p>
+            </div>
+          </section>
+
+          <section class="card ocr-card" aria-labelledby="ocrTitle">
+            <h2 class="panel-title" id="ocrTitle">
+              <span class="material-symbols-outlined">visibility</span>
+              認識結果
+            </h2>
+            <div class="recognition-box" id="ocrResultText">回答欄の文字認識ボタンを押してください</div>
+          </section>
+        </div>
+
+        <section class="card calc-card" aria-labelledby="calcTitle">
+          <div class="tool-row">
+            <h2 class="panel-title" id="calcTitle">
+              <span class="material-symbols-outlined">edit_note</span>
+              計算欄
+            </h2>
+            <div class="tool-group" aria-label="計算欄ツール">
+              <button type="button" data-target="calc" data-tool="pen" class="tool-button tool-active" aria-label="計算欄にペンで書く">
+                <span class="material-symbols-outlined">edit</span>
+              </button>
+              <button type="button" data-target="calc" data-tool="eraser" class="tool-button" aria-label="計算欄の文字を消す">
+                <span class="material-symbols-outlined">ink_eraser</span>
+              </button>
+              <button type="button" data-target="calc" data-tool="clear" class="tool-button clear" aria-label="計算欄をクリア">クリア</button>
+            </div>
+          </div>
+          <div class="canvas-box calc-canvas">
+            <div class="canvas-label">計算欄</div>
+            <div class="canvas-note">途中式・メモ用</div>
+            <canvas id="calcCanvas"></canvas>
+            <p id="calcPlaceholder" class="placeholder">途中式や計算メモをここに書いてください</p>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="resultView" class="view" aria-labelledby="resultViewTitle">
+      <div class="result-grid">
+        <section class="card problem-card" aria-labelledby="resultProblemTitle">
+          <div class="card-head">
+            <div>
+              <div class="problem-label-row">
+                <p class="section-label" id="resultProblemTitle">問題</p>
+                <span class="learning-tag">
+                  <span class="material-symbols-outlined">category</span>
+                  <span id="resultLearningItemTag">学習項目</span>
+                </span>
+              </div>
+              <p class="problem-prompt">
+                <strong id="resultQuestionIndexLabel">【問題1】</strong>
+                <span id="resultQuestionPrompt">次の式を因数分解しなさい。</span>
+              </p>
+            </div>
+            <div class="difficulty-pill" id="resultDifficultyLabel">難易度 205 / 300</div>
+          </div>
+          <div class="formula-area">
+            <span class="test-formula" id="resultQuestionFormula">\(3x^2y+6xy\)</span>
+          </div>
+          <div class="problem-meta" id="resultProblemNumberLabel">問題番号：3-A-02-01-b-01</div>
+        </section>
+
+        <div class="result-side">
+          <section class="card answer-card is-correct" id="resultAnswerCard" aria-labelledby="resultAnswerTitle">
+            <div class="result-status">
+              <h2 class="panel-title" id="resultAnswerTitle">
+                <span class="material-symbols-outlined">edit_note</span>
+                あなたの解答
+              </h2>
+              <div class="status-pill" id="statusPill">
+                <span class="material-symbols-outlined" id="statusIcon">check_circle</span>
+                <span id="statusText">正解</span>
+              </div>
+            </div>
+            <div class="feedback-card" aria-label="採点フィードバック">
+              <span class="feedback-icon material-symbols-outlined" id="feedbackIcon">workspace_premium</span>
+              <div class="feedback-copy">
+                <b id="feedbackTitle">いい調子、正解です</b>
+                <span id="feedbackText">この1問で累積解答数に +1問。次の問題へ進む準備ができました。</span>
+              </div>
+            </div>
+            <div class="answer-paper">
+              <div class="answer-label">あなたの解答</div>
+              <div class="answer-value" id="studentAnswer">\(3xy(x+2)\)</div>
+              <div class="stamp is-correct" id="resultStamp" aria-hidden="true"><span class="stamp-label" id="stampLabel">正解</span></div>
+              <div class="answer-badge" id="answerBadge">正解</div>
+            </div>
+          </section>
+        </div>
+
+        <section class="card explain-card" aria-labelledby="explainTitle">
+          <div class="explain-head">
+            <span class="tag" id="answerTag">解答</span>
+            <div class="answer-formula" id="correctAnswer">\(3xy(x+2)\)</div>
+          </div>
+          <div class="summary-strip">
+            <span class="summary-chip" id="levelLabel">基礎レベル</span>
+            <span class="summary-chip" id="abilityLabel">共通因数</span>
+            <span class="summary-chip" id="difficultySummary">難易度 205 / 300</span>
+          </div>
+          <h2 class="panel-title" id="explainTitle">
+            <span class="material-symbols-outlined">tips_and_updates</span>
+            解説
+          </h2>
+          <div class="explain-body" id="explanationBody"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <button id="secondaryAction" class="secondary-action" type="button">
+        <span class="material-symbols-outlined">edit</span>
+        もう一度書く
+      </button>
+      <button id="primaryAction" class="primary-action" type="button">
+        採点する
+        <span class="material-symbols-outlined">check_circle</span>
+      </button>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const data = window.MATH_QUESTIONS_3_A_02 || { unitTitle:'因数分解', questions:[] };
+      const questions = Array.isArray(data.questions) ? data.questions : [];
+      const total = Math.max(questions.length, 1);
+      const PEN_COLOR = '#111827';
+      let currentIndex = getQuestionIndex();
+      let currentQuestion = null;
+      let currentView = 'question';
+      let currentResult = '';
+
+      const fallbackQuestion = {
+        prompt:'次の式を因数分解しなさい。',
+        formula:'3x^2y+6xy',
+        answer:'3xy(x+2)',
+        explanation:'**ステップ1：** 共通因数をみつける\\n\\[3x^2y+6xy=3xy(x+2)\\]',
+        irtDifficulty:205,
+        levelLabel:'基礎レベル',
+        ability:'共通因数',
+        problemNumber:'3-A-02-01-b-01'
+      };
+
+      function escapeHtml(value){
+        return String(value ?? '').replace(/[&<>"']/g, (ch) => ({
+          '&':'&amp;',
+          '<':'&lt;',
+          '>':'&gt;',
+          '"':'&quot;',
+          "'":'&#39;'
+        }[ch]));
+      }
+
+      function getQuestionIndex(){
+        const params = new URLSearchParams(window.location.search);
+        const fromQuery = Number(params.get('q'));
+        const candidate = Number.isFinite(fromQuery) && fromQuery > 0 ? fromQuery : 1;
+        if(!Number.isFinite(candidate) || candidate < 1) return 1;
+        return Math.min(Math.max(Math.round(candidate), 1), total);
+      }
+
+      function mathInline(source){
+        const text = String(source ?? '').trim();
+        return text ? '\\(' + text + '\\)' : '';
+      }
+
+      function cleanLatex(source){
+        return String(source ?? '')
+          .replace(/\\begin\{aligned\}/g, '')
+          .replace(/\\end\{aligned\}/g, '')
+          .replace(/&=/g, '=')
+          .replace(/&/g, '')
+          .trim();
+      }
+
+      function renderInline(text){
+        return String(text ?? '')
+          .split(/(\$[^$]+\$)/g)
+          .map((part) => {
+            if(part.startsWith('$') && part.endsWith('$')){
+              return mathInline(part.slice(1, -1));
+            }
+            return escapeHtml(part).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+          })
+          .join('');
+      }
+
+      function renderMathBlock(raw){
+        return '<div class="formula-block">\\[' + cleanLatex(raw) + '\\]</div>';
+      }
+
+      function renderTextBlocks(text){
+        return String(text)
+          .trim()
+          .split(/\n{2,}/)
+          .filter((block) => block.trim())
+          .map((block) => '<p>' + block.split(/\n/).map((line) => renderInline(line.trim())).join('<br>') + '</p>')
+          .join('');
+      }
+
+      function renderExplanationBlocks(source){
+        const blocks = [];
+        const regex = /\\\[((?:.|\n)*?)\\\]/g;
+        let lastIndex = 0;
+        let match;
+        while((match = regex.exec(source)) !== null){
+          const textPart = source.slice(lastIndex, match.index);
+          if(textPart.trim()) blocks.push(renderTextBlocks(textPart));
+          blocks.push(renderMathBlock(match[1]));
+          lastIndex = regex.lastIndex;
+        }
+        const rest = source.slice(lastIndex);
+        if(rest.trim()) blocks.push(renderTextBlocks(rest));
+        return blocks.join('');
+      }
+
+      function renderExplanation(raw){
+        const source = String(raw ?? '').trim();
+        if(!source) return '<p>解説データを準備中です。</p>';
+        const stepRegex = /\*\*ステップ(\d+)：\*\*\s*([^\n]*)/g;
+        const matches = [];
+        let stepMatch;
+        while((stepMatch = stepRegex.exec(source)) !== null){
+          matches.push({
+            number:stepMatch[1],
+            title:stepMatch[2].trim(),
+            index:stepMatch.index,
+            endOfHeading:stepRegex.lastIndex
+          });
+        }
+        if(!matches.length) return renderExplanationBlocks(source);
+        const intro = source.slice(0, matches[0].index).trim();
+        const introHtml = intro ? '<div class="explain-intro">' + renderExplanationBlocks(intro) + '</div>' : '';
+        const stepsHtml = matches.map((step, index) => {
+          const next = matches[index + 1];
+          const body = source.slice(step.endOfHeading, next ? next.index : source.length).trim();
+          const open = index === 0 ? ' open' : '';
+          return [
+            '<details class="step-accordion"' + open + '>',
+            '<summary><span>ステップ' + escapeHtml(step.number) + '： ' + renderInline(step.title) + '</span><span class="step-chevron">▼</span></summary>',
+            '<div class="step-content">' + renderExplanationBlocks(body) + '</div>',
+            '</details>'
+          ].join('');
+        }).join('');
+        return introHtml + '<div class="step-list">' + stepsHtml + '</div>';
+      }
+
+      function setText(id, text){
+        const el = document.getElementById(id);
+        if(el) el.textContent = text;
+      }
+
+      function setHtml(id, html){
+        const el = document.getElementById(id);
+        if(el) el.innerHTML = html;
+      }
+
+      function getLearningType(question){
+        const map = {
+          '3-A-02-01':'共通因数',
+          '3-A-02-02':'積と和',
+          '3-A-02-03':'平方公式',
+          '3-A-02-04':'平方の差',
+          '3-A-02-05':'共通因数＋公式'
+        };
+        return map[question?.itemId] || question?.ability || '学習項目';
+      }
+
+      function getForcedResult(){
+        const params = new URLSearchParams(window.location.search);
+        const value = String(params.get('result') || '').toLowerCase();
+        if(['correct', 'ok', 'true', '1'].includes(value)) return 'correct';
+        if(['incorrect', 'wrong', 'ng', 'false', '0'].includes(value)) return 'incorrect';
+        return '';
+      }
+
+      function resolveResultState(question){
+        const forced = getForcedResult();
+        if(forced) return forced;
+        const key = `mathQuizSpaResult:${question?.id || currentIndex}`;
+        const cached = sessionStorage.getItem(key);
+        if(cached === 'correct' || cached === 'incorrect') return cached;
+        const randomState = Math.random() < 0.5 ? 'correct' : 'incorrect';
+        sessionStorage.setItem(key, randomState);
+        return randomState;
+      }
+
+      function getSimulatedIncorrectAnswer(question){
+        if(question?.incorrectAnswer) return question.incorrectAnswer;
+        const examples = {
+          1:'3x(x+2)',
+          2:'-4ab(2a-3b-1)',
+          3:'(x+4)(x+6)',
+          4:'(x-6)(x+6)',
+          5:'(x+7)^2',
+          6:'(5x-3)^2',
+          7:'(x+9)^2',
+          8:'(6x+11y)^2',
+          9:'5(x^2-4)',
+          10:'4(a^2-6a+9)'
+        };
+        return examples[currentIndex] || String(question?.formula || '').replace(/\+/, '-');
+      }
+
+      function typeset(){
+        if(window.MathJax?.typesetPromise){
+          window.MathJax.typesetPromise().catch(() => {});
+        }
+      }
+
+      function updateUrl(){
+        const url = new URL(window.location.href);
+        url.searchParams.set('q', String(currentIndex));
+        window.history.replaceState({ q:currentIndex, view:currentView }, '', url);
+      }
+
+      function renderFootprints(mode){
+        const container = document.getElementById('footprints');
+        if(!container) return;
+        container.innerHTML = Array.from({ length:total }, (_, index) => {
+          const number = index + 1;
+          let state = '';
+          if(number < currentIndex) state = 'done';
+          if(number === currentIndex) state = mode === 'correct' ? 'correct' : mode === 'incorrect' ? 'incorrect' : 'current';
+          const label = state === 'done' || state === 'correct'
+            ? '完了'
+            : state === 'incorrect'
+              ? '見直し'
+              : state === 'current'
+                ? '学習中'
+                : '未実施';
+          return `<span class="footprint-dot ${state}" title="${number}問目 ${label}" aria-label="${number}問目 ${label}"></span>`;
+        }).join('');
+      }
+
+      function renderSharedQuestion(prefix){
+        const q = currentQuestion;
+        const ids = prefix === 'result'
+          ? {
+            index:'resultQuestionIndexLabel',
+            prompt:'resultQuestionPrompt',
+            tag:'resultLearningItemTag',
+            difficulty:'resultDifficultyLabel',
+            problemNumber:'resultProblemNumberLabel',
+            formula:'resultQuestionFormula'
+          }
+          : {
+            index:'questionIndexLabel',
+            prompt:'questionPrompt',
+            tag:'learningItemTag',
+            difficulty:'difficultyLabel',
+            problemNumber:'problemNumberLabel',
+            formula:'questionFormula'
+          };
+        setText(ids.index, `【問題${currentIndex}】`);
+        setText(ids.prompt, q.prompt || '次の式を因数分解しなさい。');
+        setText(ids.tag, getLearningType(q));
+        setText(ids.difficulty, `難易度 ${q.irtDifficulty ?? '-'} / 300`);
+        setText(ids.problemNumber, `問題番号：${q.problemNumber || q.itemId || '-'}`);
+        setHtml(ids.formula, mathInline(q.formula));
+      }
+
+      function updateHeader(mode){
+        setText('unitTitle', data.unitTitle || '因数分解');
+        setText('questionCounter', `第 ${currentIndex} 問 / 全 ${total} 問`);
+        setText('modePill', mode === 'result' ? '採点結果' : '問題');
+        const progress = document.getElementById('progressBar');
+        if(progress) progress.style.width = `${Math.max(8, Math.round(currentIndex / total * 100))}%`;
+      }
+
+      function renderQuestion(){
+        currentQuestion = questions[currentIndex - 1] || questions[0] || fallbackQuestion;
+        currentView = 'question';
+        currentResult = '';
+        sessionStorage.setItem('currentMathQuestionIndex', String(currentIndex));
+        updateHeader('question');
+        renderSharedQuestion('');
+        renderFootprints('current');
+        setText('ocrResultText', '回答欄の文字認識ボタンを押してください');
+        const ocr = document.getElementById('ocrResultText');
+        if(ocr) ocr.classList.remove('has-math');
+        clearAllCanvases();
+        setPrimaryAction('採点する', 'check_circle');
+        showView('question');
+        updateUrl();
+        typeset();
+      }
+
+      function renderResult(){
+        currentResult = resolveResultState(currentQuestion);
+        const isCorrect = currentResult === 'correct';
+        updateHeader('result');
+        renderSharedQuestion('result');
+        setText('difficultySummary', `難易度 ${currentQuestion.irtDifficulty ?? '-'} / 300`);
+        setText('levelLabel', currentQuestion.levelLabel || '基礎レベル');
+        setText('abilityLabel', getLearningType(currentQuestion));
+        setHtml('correctAnswer', mathInline(currentQuestion.answer));
+        setHtml('studentAnswer', mathInline(isCorrect ? currentQuestion.answer : getSimulatedIncorrectAnswer(currentQuestion)));
+        setHtml('explanationBody', renderExplanation(currentQuestion.explanation));
+        applyResultState(currentResult);
+        renderFootprints(currentResult);
+        setPrimaryAction(currentIndex >= total ? '結果を見る' : '次の問題へ', 'arrow_forward');
+        showView('result');
+        typeset();
+      }
+
+      function applyResultState(state){
+        const isCorrect = state === 'correct';
+        const card = document.getElementById('resultAnswerCard');
+        if(card){
+          card.classList.toggle('is-correct', isCorrect);
+          card.classList.toggle('is-incorrect', !isCorrect);
+        }
+        setText('statusIcon', isCorrect ? 'check_circle' : 'cancel');
+        setText('statusText', isCorrect ? '正解' : '不正解');
+        setText('feedbackIcon', isCorrect ? 'workspace_premium' : 'psychology_alt');
+        setText('feedbackTitle', isCorrect ? 'いい調子、正解です' : 'あと少し、見直せば届きます');
+        setText(
+          'feedbackText',
+          isCorrect
+            ? 'この1問で累積解答数に +1問。次の問題へ進む準備ができました。'
+            : '考え方の近いところまで来ています。下の正しい解答とステップを見て、どこでずれたか確認しましょう。'
+        );
+        setText('answerBadge', isCorrect ? '正解' : '要確認');
+        setText('stampLabel', isCorrect ? '正解' : '見直し');
+        setText('answerTag', isCorrect ? '解答' : '正しい解答');
+        const stamp = document.getElementById('resultStamp');
+        if(stamp){
+          stamp.classList.toggle('is-correct', isCorrect);
+          stamp.classList.toggle('is-incorrect', !isCorrect);
+        }
+      }
+
+      function setPrimaryAction(label, icon){
+        const action = document.getElementById('primaryAction');
+        if(!action) return;
+        action.innerHTML = `${escapeHtml(label)} <span class="material-symbols-outlined">${escapeHtml(icon)}</span>`;
+      }
+
+      function showView(name){
+        currentView = name;
+        const questionView = document.getElementById('questionView');
+        const resultView = document.getElementById('resultView');
+        questionView?.classList.toggle('is-active', name === 'question');
+        resultView?.classList.toggle('is-active', name === 'result');
+        const active = name === 'question' ? questionView : resultView;
+        if(active){
+          active.classList.remove('soft-transition');
+          void active.offsetWidth;
+          active.classList.add('soft-transition');
+        }
+        const secondary = document.getElementById('secondaryAction');
+        if(secondary) secondary.style.display = name === 'result' ? 'inline-flex' : 'none';
+      }
+
+      function resizeCanvas(canvas){
+        const rect = canvas.getBoundingClientRect();
+        const ratio = window.devicePixelRatio || 1;
+        let dataUrl = null;
+        try{ dataUrl = canvas.toDataURL(); }catch(e){}
+        canvas.width = Math.max(1, Math.floor(rect.width * ratio));
+        canvas.height = Math.max(1, Math.floor(rect.height * ratio));
+        const ctx = canvas.getContext('2d');
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        if(dataUrl && dataUrl.length > 20 && dataUrl !== 'data:,'){
+          const img = new Image();
+          img.onload = () => ctx.drawImage(img, 0, 0, rect.width, rect.height);
+          img.src = dataUrl;
+        }
+        return ctx;
+      }
+
+      function getPoint(canvas, e){
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        return {
+          x:(e.clientX - rect.left) * scaleX,
+          y:(e.clientY - rect.top) * scaleY
+        };
+      }
+
+      function setupHandwriteArea(areaKey, canvasId, placeholderId){
+        const canvas = document.getElementById(canvasId);
+        const placeholder = document.getElementById(placeholderId);
+        if(!canvas) return null;
+        let ctx = resizeCanvas(canvas);
+        let drawing = false;
+        let tool = 'pen';
+
+        function applyTool(){
+          if(tool === 'eraser'){
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.lineWidth = 18;
+            ctx.strokeStyle = 'rgba(0,0,0,1)';
+          } else {
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = PEN_COLOR;
+          }
+        }
+        function hidePlaceholder(){ if(placeholder) placeholder.style.display = 'none'; }
+        function showPlaceholder(){ if(placeholder) placeholder.style.display = 'flex'; }
+        function pointerDown(e){
+          drawing = true;
+          canvas.setPointerCapture?.(e.pointerId);
+          hidePlaceholder();
+          applyTool();
+          const p = getPoint(canvas, e);
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p.x, p.y);
+          ctx.stroke();
+        }
+        function pointerMove(e){
+          if(!drawing) return;
+          applyTool();
+          const p = getPoint(canvas, e);
+          ctx.lineTo(p.x, p.y);
+          ctx.stroke();
+        }
+        function pointerUp(){
+          drawing = false;
+          ctx.closePath();
+        }
+        function clear(){
+          ctx.save();
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.restore();
+          showPlaceholder();
+        }
+        function setTool(nextTool){
+          tool = nextTool;
+          applyTool();
+        }
+        function hasInk(){
+          try{
+            const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+            for(let i = 3; i < pixels.length; i += 4){
+              if(pixels[i] !== 0) return true;
+            }
+          }catch(e){}
+          return false;
+        }
+        canvas.addEventListener('pointerdown', pointerDown);
+        canvas.addEventListener('pointermove', pointerMove);
+        canvas.addEventListener('pointerup', pointerUp);
+        canvas.addEventListener('pointercancel', pointerUp);
+        canvas.addEventListener('pointerleave', pointerUp);
+        return {
+          key:areaKey,
+          canvas,
+          clear,
+          setTool,
+          showPlaceholder,
+          refreshCtx(){
+            ctx = resizeCanvas(canvas);
+            applyTool();
+          },
+          hasInk
+        };
+      }
+
+      const areas = {
+        answer:setupHandwriteArea('answer', 'answerCanvas', 'answerPlaceholder'),
+        calc:setupHandwriteArea('calc', 'calcCanvas', 'calcPlaceholder')
+      };
+
+      function setActiveButton(targetKey, tool){
+        document.querySelectorAll(`[data-target="${targetKey}"][data-tool]`).forEach((button) => {
+          button.classList.toggle('tool-active', button.dataset.tool === tool);
+        });
+      }
+
+      function clearAllCanvases(){
+        Object.values(areas).forEach((area) => area?.clear());
+      }
+
+      document.querySelectorAll('[data-tool][data-target]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const target = button.dataset.target;
+          const tool = button.dataset.tool;
+          const area = areas[target];
+          if(!area) return;
+          if(tool === 'clear'){
+            area.clear();
+            return;
+          }
+          area.setTool(tool);
+          setActiveButton(target, tool);
+        });
+      });
+
+      if(window.ResizeObserver){
+        const ro = new ResizeObserver(() => {
+          Object.values(areas).forEach((area) => {
+            if(!area) return;
+            area.refreshCtx();
+            if(!area.hasInk()) area.showPlaceholder();
+          });
+        });
+        Object.values(areas).forEach((area) => area && ro.observe(area.canvas));
+      }
+
+      document.getElementById('ocrTrigger')?.addEventListener('click', () => {
+        const ocrResult = document.getElementById('ocrResultText');
+        if(!ocrResult || !currentQuestion) return;
+        ocrResult.classList.add('has-math');
+        ocrResult.innerHTML = mathInline(currentQuestion.answer);
+        typeset();
+      });
+
+      document.getElementById('primaryAction')?.addEventListener('click', () => {
+        if(currentView === 'question'){
+          renderResult();
+          return;
+        }
+        if(currentIndex >= total){
+          window.location.href = 'SCR-014.html';
+          return;
+        }
+        currentIndex += 1;
+        renderQuestion();
+      });
+
+      document.getElementById('secondaryAction')?.addEventListener('click', () => {
+        renderQuestion();
+      });
+
+      document.getElementById('backBtn')?.addEventListener('click', () => {
+        if(currentView === 'result'){
+          renderQuestion();
+          return;
+        }
+        if(currentIndex > 1){
+          currentIndex -= 1;
+          renderQuestion();
+          return;
+        }
+        window.location.href = 'SCR-002-design-04.html';
+      });
+
+      document.getElementById('closeBtn')?.addEventListener('click', () => {
+        window.location.href = 'SCR-002-design-04.html';
+      });
+
+      window.addEventListener('popstate', () => {
+        currentIndex = getQuestionIndex();
+        renderQuestion();
+      });
+
+      renderQuestion();
+    })();
+  </script>
+</body>
+</html>
