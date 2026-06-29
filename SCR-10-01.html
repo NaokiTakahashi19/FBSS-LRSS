@@ -178,8 +178,24 @@
       to{transform:rotate(18deg) translateX(260%);}
     }
     @keyframes stampMaru{
-      70%{opacity:1;transform:translate(-50%,-50%) rotate(-9deg) scale(1.08);}
+      0%{opacity:0;transform:translate(-50%,-50%) rotate(-16deg) scale(.35);}
+      56%{opacity:1;transform:translate(-50%,-50%) rotate(-9deg) scale(1.16);}
+      74%{opacity:1;transform:translate(-50%,-50%) rotate(-9deg) scale(.94);}
       to{opacity:1;transform:translate(-50%,-50%) rotate(-9deg) scale(1);}
+    }
+    @keyframes stampHalo{
+      0%{opacity:.72;transform:scale(.82);}
+      to{opacity:0;transform:scale(1.32);}
+    }
+    @keyframes stampWord{
+      0%{opacity:0;transform:translateX(-50%) rotate(9deg) scale(.64);}
+      72%{opacity:1;transform:translateX(-50%) rotate(9deg) scale(1.12);}
+      to{opacity:1;transform:translateX(-50%) rotate(9deg) scale(1);}
+    }
+    @keyframes confettiPop{
+      0%{opacity:0;transform:scale(.78) rotate(-2deg);}
+      44%{opacity:1;transform:scale(1.04) rotate(1deg);}
+      to{opacity:.78;transform:scale(1) rotate(0deg);}
     }
     @keyframes badgeRise{
       to{opacity:1;transform:none;}
@@ -337,6 +353,23 @@
       background-image:radial-gradient(rgba(63,143,118,.2) 1px, transparent 1px);
       background-size:20px 20px;
     }
+    .answer-paper::before{
+      content:"";
+      position:absolute;
+      inset:18px 18px 12px;
+      z-index:1;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 18% 28%, rgba(239,68,68,.72) 0 3px, transparent 4px),
+        radial-gradient(circle at 28% 74%, rgba(217,154,40,.72) 0 3px, transparent 4px),
+        radial-gradient(circle at 72% 22%, rgba(63,143,118,.7) 0 3px, transparent 4px),
+        radial-gradient(circle at 82% 64%, rgba(239,68,68,.56) 0 2px, transparent 3px),
+        radial-gradient(circle at 50% 18%, rgba(217,154,40,.5) 0 2px, transparent 3px),
+        radial-gradient(circle at 46% 82%, rgba(63,143,118,.5) 0 2px, transparent 3px);
+      opacity:0;
+      transform:scale(.78);
+      animation:confettiPop .72s ease .5s forwards;
+    }
     .correct-celebration{
       position:relative;
       display:flex;
@@ -412,6 +445,7 @@
     .answer-value{
       position:absolute;
       inset:0;
+      z-index:2;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -425,14 +459,39 @@
       position:absolute;
       top:50%;
       left:50%;
-      width:118px;
-      height:118px;
-      border:6px solid rgba(239,68,68,.7);
+      z-index:3;
+      width:150px;
+      height:150px;
+      border:8px solid rgba(239,68,68,.76);
       border-radius:999px;
-      transform:translate(-50%,-50%) rotate(-9deg) scale(.72);
+      box-shadow:0 8px 20px rgba(239,68,68,.15), inset 0 0 0 2px rgba(255,255,255,.58);
+      transform:translate(-50%,-50%) rotate(-16deg) scale(.35);
       opacity:0;
-      animation:stampMaru .38s cubic-bezier(.18,.88,.22,1.2) .42s forwards;
+      animation:stampMaru .62s cubic-bezier(.16,.9,.2,1.18) .42s forwards;
       pointer-events:none;
+    }
+    .maru-mark::before{
+      content:"";
+      position:absolute;
+      inset:-18px;
+      border:3px solid rgba(239,68,68,.32);
+      border-radius:999px;
+      opacity:0;
+      animation:stampHalo .72s ease .58s forwards;
+    }
+    .maru-mark::after{
+      content:"正解";
+      position:absolute;
+      left:50%;
+      bottom:14px;
+      color:rgba(239,68,68,.78);
+      font-family:"Noto Sans JP",sans-serif;
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:.08em;
+      opacity:0;
+      transform:translateX(-50%) rotate(9deg) scale(.64);
+      animation:stampWord .42s cubic-bezier(.18,.9,.2,1.18) .66s forwards;
     }
     .answer-badge{
       position:absolute;
@@ -628,17 +687,31 @@
       }
       .correct-celebration,
       .correct-celebration::after,
+      .answer-paper::before,
       .maru-mark,
+      .maru-mark::before,
+      .maru-mark::after,
       .answer-badge{
         animation:none !important;
-        opacity:1 !important;
       }
       .correct-celebration,
+      .answer-paper::before,
       .answer-badge{
+        opacity:1 !important;
         transform:none !important;
+      }
+      .maru-mark,
+      .maru-mark::after{
+        opacity:1 !important;
+      }
+      .maru-mark::before{
+        opacity:0 !important;
       }
       .maru-mark{
         transform:translate(-50%,-50%) rotate(-9deg) !important;
+      }
+      .maru-mark::after{
+        transform:translateX(-50%) rotate(9deg) scale(1) !important;
       }
     }
   </style>

@@ -124,6 +124,36 @@
 		            color: #3f8f76;
 		            box-shadow: inset 0 0 0 1px rgba(63, 143, 118, .18);
 	        }
+	        .result-textbook .growth-title {
+		            position: relative;
+		            display: inline-block;
+		            color: #2f745f;
+		            transform-origin: left center;
+		            animation: growthTitlePop .75s cubic-bezier(.18, .9, .2, 1.15) both .1s;
+	        }
+	        .result-textbook .growth-title::after {
+		            content: "";
+		            position: absolute;
+		            left: 0;
+		            right: 0;
+		            bottom: -7px;
+		            height: 5px;
+		            border-radius: 999px;
+		            background: linear-gradient(90deg, #3f8f76, #d39a3a);
+		            transform: scaleX(0);
+		            transform-origin: left center;
+		            animation: growthTitleLine .55s ease forwards .58s;
+	        }
+	        .result-textbook .growth-title-score {
+		            display: inline-block;
+		            margin: 0 .06em;
+		            border-radius: 12px;
+		            background: #fff8e8;
+		            color: #d27722;
+		            padding: .02em .16em .05em;
+		            box-shadow: 0 8px 18px rgba(211, 154, 58, .18);
+		            animation: growthScoreBounce .86s cubic-bezier(.16, .92, .2, 1.2) both .34s;
+	        }
 	        .result-textbook .growth-badge {
 		            border: 1px solid rgba(63, 143, 118, .2);
 		            border-radius: 16px;
@@ -142,7 +172,19 @@
 		            background: #fff8e8;
 	        }
 	        .result-textbook .mastery-section {
+		            position: relative;
 		            overflow: hidden;
+	        }
+	        .result-textbook .mastery-section::before {
+		            content: "";
+		            position: absolute;
+		            inset: -1px;
+		            pointer-events: none;
+		            background:
+		                radial-gradient(circle at 12% 30%, rgba(211, 154, 58, .18), transparent 12%),
+		                radial-gradient(circle at 86% 18%, rgba(63, 143, 118, .16), transparent 13%);
+		            opacity: 0;
+		            animation: masteryGlowIn .8s ease forwards .12s;
 	        }
 	        .result-textbook .mastery-card {
 		            position: relative;
@@ -151,9 +193,10 @@
 		            border-radius: 16px;
 		            background: #ffffff;
 		            box-shadow: 0 8px 16px rgba(72, 92, 82, .06);
+		            overflow: hidden;
 		            opacity: 0;
-		            transform: translateY(14px) scale(.96);
-		            animation: masteryCardIn .5s cubic-bezier(.2, .86, .2, 1.08) forwards;
+		            transform: translateY(24px) scale(.86) rotate(-1deg);
+		            animation: masteryCardIn .72s cubic-bezier(.16, .88, .2, 1.24) forwards;
 		            animation-delay: var(--delay, .1s);
 	        }
 	        .result-textbook .mastery-card::before {
@@ -163,6 +206,18 @@
 		            width: 4px;
 		            border-radius: 16px 0 0 16px;
 		            background: #3f8f76;
+	        }
+	        .result-textbook .mastery-card::after {
+		            content: "";
+		            position: absolute;
+		            top: -30%;
+		            left: -45%;
+		            width: 42%;
+		            height: 160%;
+		            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .8), transparent);
+		            transform: rotate(20deg) translateX(-130%);
+		            animation: masteryShine .85s ease forwards;
+		            animation-delay: calc(var(--delay, .1s) + .28s);
 	        }
 	        .result-textbook .mastery-icon {
 		            display: inline-flex;
@@ -174,9 +229,9 @@
 		            background: #f1faf3;
 		            color: #3f8f76;
 		            box-shadow: inset 0 0 0 1px rgba(63, 143, 118, .14);
-		            transform: scale(.8);
-		            animation: masteryIconPop .34s cubic-bezier(.2, .86, .2, 1.2) forwards;
-		            animation-delay: calc(var(--delay, .1s) + .16s);
+		            transform: scale(.45) rotate(-18deg);
+		            animation: masteryIconPop .5s cubic-bezier(.18, .9, .2, 1.25) forwards;
+		            animation-delay: calc(var(--delay, .1s) + .22s);
 	        }
 	        .result-textbook .session-area-path {
 		            opacity: 0;
@@ -218,15 +273,67 @@
 		                transform: none;
 		            }
 	        }
-	        @keyframes masteryCardIn {
-		            to {
+	        @keyframes growthTitlePop {
+		            0% {
+		                opacity: 0;
+		                transform: translateY(14px) scale(.9);
+		            }
+		            62% {
+		                opacity: 1;
+		                transform: translateY(-2px) scale(1.04);
+		            }
+		            100% {
 		                opacity: 1;
 		                transform: none;
 		            }
 	        }
-	        @keyframes masteryIconPop {
+	        @keyframes growthTitleLine {
 		            to {
-		                transform: scale(1);
+		                transform: scaleX(1);
+		            }
+	        }
+	        @keyframes growthScoreBounce {
+		            0% {
+		                transform: translateY(10px) scale(.82) rotate(-3deg);
+		            }
+		            58% {
+		                transform: translateY(-4px) scale(1.16) rotate(2deg);
+		            }
+		            100% {
+		                transform: none;
+		            }
+	        }
+	        @keyframes masteryGlowIn {
+		            55% {
+		                opacity: 1;
+		            }
+		            100% {
+		                opacity: .72;
+		            }
+	        }
+	        @keyframes masteryCardIn {
+		            55% {
+		                opacity: 1;
+		                transform: translateY(-7px) scale(1.04) rotate(.35deg);
+		                box-shadow: 0 18px 28px rgba(63, 143, 118, .16);
+		            }
+		            to {
+		                opacity: 1;
+		                transform: none;
+		                box-shadow: 0 10px 18px rgba(72, 92, 82, .08);
+		            }
+	        }
+	        @keyframes masteryIconPop {
+		            64% {
+		                transform: scale(1.22) rotate(8deg);
+		            }
+		            to {
+		                transform: scale(1) rotate(0deg);
+		            }
+	        }
+	        @keyframes masteryShine {
+		            to {
+		                transform: rotate(20deg) translateX(420%);
 		            }
 	        }
 	        @keyframes sessionLineDraw {
@@ -259,7 +366,12 @@
 	        }
 	        @media (prefers-reduced-motion: reduce) {
 		            .result-textbook .growth-badge,
+		            .result-textbook .growth-title,
+		            .result-textbook .growth-title::after,
+		            .result-textbook .growth-title-score,
+		            .result-textbook .mastery-section::before,
 		            .result-textbook .mastery-card,
+		            .result-textbook .mastery-card::after,
 		            .result-textbook .mastery-icon,
 		            .result-textbook .session-area-path,
 		            .result-textbook .session-line,
@@ -302,7 +414,7 @@
 </div>
 <div>
 <p class="text-xs font-bold text-slate-500">今回の成長</p>
-<h2 class="mt-1 text-2xl font-bold text-primary">前回より +12pt アップ</h2>
+<h2 class="growth-title mt-1 text-2xl font-bold">前回より <span class="growth-title-score">+12pt</span> アップ</h2>
 <p class="mt-1 text-sm font-bold text-slate-500">423 pt から 435 pt へ。学習の積み上げが見えています。</p>
 </div>
 </div>
