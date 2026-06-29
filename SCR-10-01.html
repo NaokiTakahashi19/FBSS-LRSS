@@ -5,300 +5,716 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>数学・復習ドリル（因数分解 採点結果）</title>
 
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;600;700&display=swap" rel="stylesheet" />
-
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            primary: "#3f8f76",
-            "background-light": "#edf2df",
-            "background-dark": "#101923",
-          },
-          fontFamily: {
-            display: ["Lexend", "Noto Sans JP", "sans-serif"],
-          },
-          borderRadius: {
-            DEFAULT: "0.25rem",
-            lg: "0.5rem",
-            xl: "0.75rem",
-            full: "9999px",
-          },
-        },
-      },
-    };
-  </script>
-
-  <style type="text/tailwindcss">
-    .no-scrollbar::-webkit-scrollbar{display:none;}
-    .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
-    .math-text{
-  font-family: "Times New Roman", Times, serif;
-  font-style: normal;   /* ★ 全体は斜体にしない */
-}
-	.math-text .var{
-	  font-style: italic;  /* ★ 変数だけ斜体 */
-	}
-
-	    .hlblue{
-	      color:#3f8f76;
-	      background:#f1faf3;
-	      border-radius:0.35rem;
-	      padding:0.05rem 0.25rem;
-	    }
-	    .hlpink{
-	      color:#db2777;
-	      background:#fdf2f8;
-	      border-radius:0.35rem;
-	      padding:0.05rem 0.25rem;
-	    }
-	    .formula-line{
-	      font-size:clamp(1.05rem, 1.35vw, 1.25rem);
-	      line-height:1.75;
-	    }
-	    .test-formula{
-	      font-family:"STIX Two Text", "Cambria Math", "Times New Roman", serif;
-	      font-size:clamp(1.75rem, 2.45vw, 2.25rem);
-	      font-style:normal;
-	      font-weight:500;
-	      line-height:1.55;
-	      letter-spacing:0;
-	      word-spacing:0.12em;
-	      font-variant-numeric:lining-nums;
-	      text-rendering:geometricPrecision;
-	    }
-	    .test-formula .var{
-	      font-family:"STIX Two Text", "Cambria Math", "Times New Roman", serif;
-	      font-style:italic;
-	      font-weight:500;
-	    }
-	    .test-formula sup{
-	      font-size:0.58em;
-	      line-height:0;
-	      margin-left:0.02em;
-	    }
-	    .result-landscape > section + section {
-	      margin-top: 1.5rem;
-	    }
-	    @media (orientation: landscape) and (min-width: 900px) {
-	      .result-landscape {
-	        display:grid;
-	        grid-template-columns:minmax(0, 1fr) minmax(320px, 0.58fr);
-	        gap:1.25rem;
-	        align-items:start;
-	      }
-	      .result-landscape > section + section {
-	        margin-top:0;
-	      }
-	      .result-problem {
-	        grid-column:1;
-	        grid-row:1;
-	      }
-	      .result-answer {
-	        grid-column:2;
-	        grid-row:1;
-	      }
-	      .result-explanation {
-	        grid-column:1 / -1;
-	        grid-row:2;
-	      }
-	    }
-
-    /* 手書きっぽい表示(デモ) */
-    .canvas-grid{
-      background-image: linear-gradient(#e2e8f0 1px, transparent 1px), linear-gradient(90deg, #e2e8f0 1px, transparent 1px);
-      background-size: 32px 32px;
-    }
-    .dark .canvas-grid{
-      background-image: linear-gradient(#1e293b 1px, transparent 1px), linear-gradient(90deg, #1e293b 1px, transparent 1px);
-    }
-.handwritten-answer{
-  /* font-family: 'Lexend', cursive; ← これを削除 or コメントアウト */
-  font-style: normal;   /* 斜体は var に任せる */
-  font-weight: 400;
-  color: #334155;
-  filter: blur(0.2px);
-}
-	    .maru-mark{
-	      border: 5px solid #ef4444;
-	      border-radius: 50%;
-	      width: 112px;
-	      height: 112px;
-	      opacity: 0.68;
-	      transform: rotate(-10deg);
-	    }
-	    body.result-textbook {
-	      --lesson-bg: #edf2df;
-	      background: var(--lesson-bg);
-	      overflow-x: hidden;
-	    }
-	    body.result-textbook header,
-	    body.result-textbook footer {
-	      background: rgba(252, 255, 246, .94);
-	      border-color: rgba(63, 143, 118, .16);
-	    }
-	    body.result-textbook .result-card {
-	      border-color: rgba(63, 143, 118, .18);
-	      background: rgba(255, 255, 253, .96);
-	      box-shadow: 0 12px 22px rgba(72, 92, 82, .08);
-	    }
-	    body.result-textbook .upper-panel {
-	      background: color-mix(in srgb, var(--lesson-bg) 58%, white 42%);
-	    }
-	    body.result-textbook .result-problem,
-	    body.result-textbook .result-problem.upper-panel {
-	      background: #ffffff;
-	    }
-	    body.result-textbook .upper-canvas {
-	      background-color: #ffffff;
-	    }
-	    body.result-textbook .lower-panel {
-	      background: color-mix(in srgb, var(--lesson-bg) 64%, white 36%);
-	    }
-	    body.result-textbook .soft-label {
-	      border-color: rgba(63, 143, 118, .18);
-	      background: rgba(241, 250, 243, .86);
-	      color: #5d6762;
-	    }
-	  </style>
+  <script src="data/math-questions-3-a-02.js"></script>
 
   <style>
-    body{min-height:max(884px, 100dvh);}
+    :root{
+      --primary:#3f8f76;
+      --primary-dark:#2f735e;
+      --bg:#edf2df;
+      --paper:#fffffb;
+      --line:rgba(63,143,118,.2);
+      --text:#23332f;
+      --muted:#6d7a74;
+      --soft:#f5faf2;
+      --orange:#d99a28;
+      --danger:#ef4444;
+      --shadow:0 14px 28px rgba(71,91,82,.09);
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      min-height:100dvh;
+      background:var(--bg);
+      color:var(--text);
+      font-family:"Lexend","Noto Sans JP",sans-serif;
+      letter-spacing:0;
+      overflow-x:hidden;
+    }
+    button,a{font:inherit;}
+    .material-symbols-outlined{
+      font-variation-settings:'FILL' 0,'wght' 600,'GRAD' 0,'opsz' 24;
+      line-height:1;
+      vertical-align:middle;
+    }
+    .result-header{
+      position:fixed;
+      inset:0 0 auto 0;
+      z-index:50;
+      background:rgba(255,255,251,.96);
+      border-bottom:1px solid rgba(63,143,118,.18);
+      backdrop-filter:blur(12px);
+    }
+    .header-inner{
+      width:min(1180px,100%);
+      margin:0 auto;
+      padding:12px 24px 10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .icon-button{
+      width:42px;
+      height:42px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:0;
+      border-radius:999px;
+      background:transparent;
+      color:#1f2d29;
+      cursor:pointer;
+      transition:background .18s ease, transform .18s ease;
+    }
+    .icon-button:hover{background:rgba(63,143,118,.1);}
+    .icon-button:active{transform:scale(.96);}
+    .title-block{text-align:center;}
+    .title-block h1{
+      margin:0;
+      font-size:16px;
+      font-weight:700;
+      line-height:1.25;
+    }
+    .title-block p{
+      margin:3px 0 0;
+      font-size:11px;
+      font-weight:600;
+      color:#66756f;
+    }
+    .progress-track{
+      width:100%;
+      height:5px;
+      background:rgba(63,143,118,.1);
+    }
+    .progress-bar{
+      display:block;
+      height:100%;
+      width:10%;
+      background:var(--primary);
+      transition:width .34s ease;
+    }
+    .page{
+      width:min(1180px,100%);
+      margin:0 auto;
+      padding:104px 24px 104px;
+      opacity:0;
+      transform:translateY(8px);
+      transition:opacity .26s ease, transform .26s ease;
+    }
+    body.is-ready .page{opacity:1;transform:none;}
+    body.is-leaving .page{opacity:0;transform:translateY(-4px);}
+    .result-grid{
+      display:grid;
+      gap:18px;
+      grid-template-columns:1fr;
+      grid-template-areas:
+        "problem"
+        "answer"
+        "explain";
+    }
+    .card{
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+    }
+    .problem-card{
+      grid-area:problem;
+      min-height:330px;
+      padding:26px 28px;
+      position:relative;
+      display:flex;
+      flex-direction:column;
+    }
+    .answer-card{grid-area:answer;padding:20px;}
+    .explain-card{grid-area:explain;padding:24px;}
+    .card-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:18px;
+    }
+    .section-label{
+      margin:0 0 8px;
+      color:#8a9690;
+      font-size:12px;
+      font-weight:700;
+    }
+    .problem-prompt{
+      margin:0;
+      color:#111827;
+      font-size:clamp(16px,1.7vw,19px);
+      font-weight:500;
+      line-height:1.8;
+    }
+    .problem-prompt strong{font-weight:700;}
+    .difficulty-pill{
+      flex:0 0 auto;
+      border:1px solid rgba(63,143,118,.18);
+      border-radius:999px;
+      background:#f8fbf4;
+      padding:9px 16px;
+      color:#4b5c56;
+      font-size:14px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+    .formula-area{
+      flex:1;
+      min-height:150px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px 12px 34px;
+      text-align:center;
+    }
+    .test-formula,
+    .math-text{
+      font-family:"STIX Two Text","Cambria Math","Times New Roman",serif;
+      font-style:normal;
+      font-variant-numeric:lining-nums;
+      text-rendering:geometricPrecision;
+      letter-spacing:0;
+    }
+    .test-formula{
+      display:block;
+      color:#111827;
+      font-size:clamp(1.9rem,3.1vw,2.55rem);
+      font-weight:500;
+      line-height:1.5;
+      word-spacing:.12em;
+      overflow-wrap:anywhere;
+    }
+    .math-var,
+    .test-formula .var,
+    .math-text .var{
+      font-family:"STIX Two Text","Cambria Math","Times New Roman",serif;
+      font-style:italic;
+      font-weight:500;
+    }
+    .test-formula sup,
+    .math-text sup{
+      font-size:.58em;
+      line-height:0;
+      margin-left:.02em;
+    }
+    .problem-meta{
+      position:absolute;
+      right:24px;
+      bottom:18px;
+      color:#8f9a95;
+      font-size:12px;
+      font-weight:700;
+    }
+    .panel-title{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin:0;
+      color:#44554f;
+      font-size:15px;
+      font-weight:700;
+    }
+    .panel-title .material-symbols-outlined{color:var(--primary);}
+    .result-status{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:12px;
+    }
+    .status-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      border:1px solid rgba(63,143,118,.18);
+      border-radius:999px;
+      background:#f1faf3;
+      color:var(--primary);
+      padding:7px 12px;
+      font-size:13px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+    .answer-paper{
+      position:relative;
+      min-height:224px;
+      overflow:hidden;
+      border:2px solid rgba(63,143,118,.28);
+      border-radius:16px;
+      background:#fff;
+      background-image:radial-gradient(rgba(63,143,118,.2) 1px, transparent 1px);
+      background-size:20px 20px;
+    }
+    .answer-label{
+      position:absolute;
+      top:11px;
+      left:12px;
+      z-index:5;
+      border:1px solid rgba(63,143,118,.16);
+      border-radius:8px;
+      background:rgba(255,255,255,.88);
+      color:var(--primary);
+      padding:5px 9px;
+      font-size:11px;
+      font-weight:700;
+    }
+    .answer-value{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:44px 24px 28px;
+      color:#111827;
+      text-align:center;
+      font-size:clamp(1.35rem,2.1vw,1.9rem);
+      line-height:1.5;
+    }
+    .maru-mark{
+      position:absolute;
+      top:50%;
+      left:50%;
+      width:118px;
+      height:118px;
+      border:6px solid rgba(239,68,68,.7);
+      border-radius:999px;
+      transform:translate(-50%,-50%) rotate(-9deg);
+      pointer-events:none;
+    }
+    .answer-badge{
+      position:absolute;
+      right:12px;
+      bottom:12px;
+      border:1px solid rgba(239,68,68,.16);
+      border-radius:999px;
+      background:#fff5f5;
+      color:var(--danger);
+      padding:7px 12px;
+      font-size:12px;
+      font-weight:700;
+    }
+    .explain-head{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:16px;
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      border-radius:8px;
+      background:var(--primary);
+      color:#fff;
+      padding:5px 9px;
+      font-size:11px;
+      font-weight:700;
+      line-height:1;
+    }
+    .answer-formula{
+      color:#24332f;
+      font-size:clamp(1.1rem,1.5vw,1.35rem);
+      font-weight:500;
+    }
+    .explain-body{
+      display:grid;
+      gap:14px;
+      color:#4a5b55;
+      font-size:14px;
+      line-height:1.85;
+    }
+    .explain-body p{margin:.25rem 0;}
+    .explain-body strong{color:#263530;}
+    .explain-body .formula-block{
+      border:1px solid rgba(63,143,118,.15);
+      border-radius:14px;
+      background:#fff;
+      padding:13px 16px;
+      color:#111827;
+      overflow-x:auto;
+    }
+    .explain-body .formula-line{
+      display:block;
+      margin:4px 0;
+      color:#111827;
+      font-size:clamp(1rem,1.3vw,1.25rem);
+      line-height:1.7;
+      white-space:nowrap;
+    }
+    .summary-strip{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:16px;
+    }
+    .summary-chip{
+      border:1px solid rgba(63,143,118,.15);
+      border-radius:999px;
+      background:#f8fbf4;
+      color:#53625d;
+      padding:7px 11px;
+      font-size:12px;
+      font-weight:700;
+    }
+    .footer{
+      position:fixed;
+      inset:auto 0 0 0;
+      z-index:40;
+      border-top:1px solid rgba(63,143,118,.16);
+      background:rgba(255,255,251,.94);
+      backdrop-filter:blur(12px);
+      padding:14px 24px;
+    }
+    .footer-inner{
+      width:min(1180px,100%);
+      margin:0 auto;
+      display:flex;
+      justify-content:flex-end;
+    }
+    .primary-action{
+      min-width:176px;
+      min-height:52px;
+      border:0;
+      border-radius:14px;
+      background:var(--primary);
+      color:#fff;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:0 28px;
+      font-size:15px;
+      font-weight:700;
+      text-decoration:none;
+      box-shadow:0 10px 20px rgba(63,143,118,.22);
+      cursor:pointer;
+      transition:filter .18s ease, transform .18s ease;
+    }
+    .primary-action:hover{filter:brightness(1.05);}
+    .primary-action:active{transform:translateY(1px) scale(.99);}
+    @media (orientation:landscape) and (min-width:900px){
+      .result-grid{
+        grid-template-columns:minmax(0,1fr) minmax(360px,.58fr);
+        grid-template-areas:
+          "problem answer"
+          "explain explain";
+        align-items:start;
+      }
+      .problem-card{min-height:354px;}
+      .answer-paper{min-height:268px;}
+    }
+    @media (max-width:640px){
+      .header-inner{padding-inline:14px;}
+      .page{padding:92px 14px 104px;}
+      .problem-card,.answer-card,.explain-card{padding:18px;}
+      .card-head{display:block;}
+      .difficulty-pill{display:inline-flex;margin-top:14px;}
+      .problem-meta{position:static;margin-top:10px;text-align:right;}
+      .result-status{align-items:flex-start;}
+      .footer-inner{justify-content:stretch;}
+      .primary-action{width:100%;}
+    }
   </style>
 </head>
 
-	<body class="result-textbook bg-background-light dark:bg-background-dark font-display text-[#24332f] dark:text-slate-100 flex flex-col min-h-screen">
-
-  <!-- Header: SCR-09-01.html と同じ構造 -->
-	  <header class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
-    <div class="flex items-center justify-between px-6 py-3 max-w-6xl mx-auto w-full">
-      <button type="button" class="flex items-center justify-center size-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" aria-label="back">
+<body>
+  <header class="result-header">
+    <div class="header-inner">
+      <button id="backBtn" class="icon-button" type="button" aria-label="前の画面へ戻る">
         <span class="material-symbols-outlined">arrow_back</span>
       </button>
-
-      <div class="text-center">
-        <h1 class="text-base font-bold">因数分解</h1>
-        <p class="text-[11px] text-gray-500 font-medium">第 1 問 / 全 10 問</p>
+      <div class="title-block">
+        <h1 id="unitTitle">因数分解</h1>
+        <p id="questionCounter">第 1 問 / 全 10 問</p>
       </div>
-
-      <button id="closeBtn" type="button" class="flex items-center justify-center size-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" aria-label="close">
+      <button id="closeBtn" class="icon-button" type="button" aria-label="閉じる">
         <span class="material-symbols-outlined">close</span>
       </button>
     </div>
-
-    <div class="w-full h-1.5 bg-gray-100 dark:bg-gray-800">
-      <div class="bg-primary h-full w-[10%] transition-all duration-500"></div>
-    </div>
+    <div class="progress-track"><span id="progressBar" class="progress-bar"></span></div>
   </header>
 
-  <main class="result-landscape flex-1 w-full max-w-6xl mx-auto px-5 md:px-6 pt-32 pb-28">
-
-    <!-- 問題カード(見た目は SCR-09-01.html に準拠) -->
-    <section class="result-problem result-card upper-panel bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 p-6 md:p-7 shadow-sm relative overflow-visible">
-      <div class="flex justify-between items-start mb-5 gap-4">
+  <main class="page result-grid">
+    <section class="card problem-card" aria-labelledby="problemTitle">
+      <div class="card-head">
         <div>
-          <p class="text-xs font-bold text-gray-400 mb-2">問題</p>
-          <p class="text-gray-900 dark:text-gray-100 text-base md:text-lg text-left leading-8"><span class="font-bold">【問題1】</span> 次の式を因数分解しなさい。</p>
+          <p class="section-label" id="problemTitle">問題</p>
+          <p class="problem-prompt">
+            <strong id="questionIndexLabel">【問題1】</strong>
+            <span id="questionPrompt">次の式を因数分解しなさい。</span>
+          </p>
         </div>
-        <div class="soft-label mt-1 bg-gray-50 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg text-sm font-bold tracking-tight border border-gray-200 dark:border-gray-700 shadow-sm whitespace-nowrap">
-          難易度 180 / 300
-        </div>
+        <div class="difficulty-pill" id="difficultyLabel">難易度 180 / 300</div>
       </div>
 
-      <div class="py-4 text-center">
-        <span class="test-formula text-gray-900 dark:text-white">
-          25<span class="var">a</span><sup>2</sup> &minus; 36<span class="var">b</span><sup>2</sup>
-        </span>
+      <div class="formula-area">
+        <span class="test-formula" id="questionFormula" aria-live="polite"></span>
       </div>
-      <div class="absolute bottom-4 right-5 text-xs font-bold text-gray-400 dark:text-gray-500">問題番号：3-A-02-06ｰ01</div>
+
+      <div class="problem-meta" id="problemNumberLabel">問題番号：3-A-02-01-b-01</div>
     </section>
 
-    <!-- 採点結果(雰囲気は SCR-09-01.html のカード/余白に合わせる) -->
-    <section class="result-answer space-y-3">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <span class="material-symbols-outlined text-gray-400">edit_note</span>
-          <h3 class="text-sm font-bold text-gray-600 dark:text-gray-300">あなたの解答</h3>
-        </div>
-
-        <div class="flex items-center gap-1.5 text-sm font-bold text-red-500">
+    <section class="card answer-card" aria-labelledby="answerTitle">
+      <div class="result-status">
+        <h2 class="panel-title" id="answerTitle">
+          <span class="material-symbols-outlined">edit_note</span>
+          あなたの解答
+        </h2>
+        <div class="status-pill">
           <span class="material-symbols-outlined">check_circle</span>
-          正解！
+          正解
         </div>
       </div>
 
-	      <div class="upper-canvas w-full h-32 md:h-36 bg-white dark:bg-gray-900 rounded-xl border-2 border-primary/30 dark:border-primary/50 relative overflow-hidden shadow-inner">
-	        <div class="absolute top-2 left-3 z-10 rounded-md bg-white/85 dark:bg-gray-900/85 px-2 py-1 text-[11px] font-bold text-primary border border-primary/15 pointer-events-none">あなたの解答</div>
-	        <div class="absolute inset-0 canvas-grid opacity-30 dark:opacity-10"></div>
-
-        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div class="handwritten-answer text-xl md:text-2xl tracking-tight select-none math-text px-4 text-center">
-            (5<span class="var">a</span> + 6<span class="var">b</span>)(5<span class="var">a</span> - 6<span class="var">b</span>)
-          </div>
-        </div>
-
-        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div class="maru-mark"></div>
-        </div>
-
-        <div class="absolute bottom-2 right-3 rounded-full bg-red-50 px-3 py-1 text-xs font-bold text-red-500 border border-red-100">正解</div>
+      <div class="answer-paper">
+        <div class="answer-label">あなたの解答</div>
+        <div class="answer-value math-text" id="studentAnswer"></div>
+        <div class="maru-mark" aria-hidden="true"></div>
+        <div class="answer-badge">正解</div>
       </div>
     </section>
 
-    <!-- 解答/解説カード -->
-    <section class="result-explanation lower-panel rounded-2xl p-6 border border-primary/15 dark:border-gray-800">
-      <div class="flex items-center gap-2 mb-4">
-        <span class="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded">解答</span>
-        <span class="text-base font-bold math-text text-gray-800 dark:text-white">(5<span class="var">a</span> + 6<span class="var">b</span>)(5<span class="var">a</span> - 6<span class="var">b</span>)</span>
+    <section class="card explain-card" aria-labelledby="explainTitle">
+      <div class="explain-head">
+        <span class="tag">解答</span>
+        <div class="answer-formula math-text" id="correctAnswer"></div>
       </div>
-
-      <div class="space-y-5 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-        <div class="rounded-xl bg-white/75 dark:bg-gray-900/50 border border-primary/15 dark:border-gray-700 p-4">
-          <p class="font-bold text-gray-800 dark:text-gray-100 mb-2">ステップ1：平方の形を確認する</p>
-          <p class="formula-line math-text text-gray-800 dark:text-white">
-            25<span class="var">a</span><sup>2</sup> - 36<span class="var">b</span><sup>2</sup>
-            = <span class="hlblue">(5<span class="var">a</span>)<sup>2</sup></span>
-            - <span class="hlpink">(6<span class="var">b</span>)<sup>2</sup></span>
-          </p>
-        </div>
-        <div class="rounded-xl bg-white/75 dark:bg-gray-900/50 border border-primary/15 dark:border-gray-700 p-4">
-          <p class="font-bold text-gray-800 dark:text-gray-100 mb-2">ステップ2：2つの平方の差の公式を使う</p>
-          <p class="formula-line math-text text-gray-800 dark:text-white">
-            <span class="var">A</span><sup>2</sup> - <span class="var">B</span><sup>2</sup>
-            = (<span class="var">A</span> + <span class="var">B</span>)(<span class="var">A</span> - <span class="var">B</span>)
-          </p>
-          <p class="mt-2">ここで、<span class="math-text"><span class="var">A</span> = 5<span class="var">a</span></span>、<span class="math-text"><span class="var">B</span> = 6<span class="var">b</span></span> と見ます。</p>
-        </div>
-        <div class="rounded-xl bg-white/75 dark:bg-gray-900/50 border border-primary/15 dark:border-gray-700 p-4">
-          <p class="font-bold text-gray-800 dark:text-gray-100 mb-2">ステップ3：公式にあてはめて因数分解する</p>
-          <p class="formula-line math-text text-gray-800 dark:text-white">
-            = (5<span class="var">a</span> + 6<span class="var">b</span>)(5<span class="var">a</span> - 6<span class="var">b</span>)
-          </p>
-        </div>
+      <div class="summary-strip">
+        <span class="summary-chip" id="levelLabel">基礎レベル</span>
+        <span class="summary-chip" id="abilityLabel">学習項目</span>
+        <span class="summary-chip" id="difficultySummary">難易度 180 / 300</span>
       </div>
+      <h2 class="panel-title" id="explainTitle">
+        <span class="material-symbols-outlined">tips_and_updates</span>
+        解説
+      </h2>
+      <div class="explain-body" id="explanationBody"></div>
     </section>
-
-    <div class="h-16"></div>
   </main>
 
-  <!-- Footer: SCR-09-01.と同じ固定フッター -->
-  <footer class="fixed bottom-0 left-0 right-0 p-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 z-30">
-    <div class="max-w-6xl mx-auto flex justify-end">
-      <a href="SCR-09-02.html" class="w-full sm:w-auto min-w-44 px-8 py-3 bg-primary text-white rounded-lg font-bold text-sm shadow-md shadow-primary/25 hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+  <footer class="footer">
+    <div class="footer-inner">
+      <a id="nextQuestionLink" class="primary-action" href="SCR-09-01.html?q=2">
         次の問題へ
-        <span class="material-symbols-outlined text-xl">arrow_forward</span>
+        <span class="material-symbols-outlined">arrow_forward</span>
       </a>
     </div>
   </footer>
 
   <script>
-    // closeボタンは必要に応じてリンク先を設定してください
-    // 例: document.getElementById('closeBtn').onclick = () => location.href = 'SCR-11-01.html';
+    (function(){
+      const data = window.MATH_QUESTIONS_3_A_02 || { unitTitle: '因数分解', questions: [] };
+      const questions = Array.isArray(data.questions) ? data.questions : [];
+      const total = Math.max(questions.length, 1);
+      let currentIndex = getQuestionIndex();
+      let currentQuestion = null;
+
+      function escapeHtml(value){
+        return String(value ?? '').replace(/[&<>"']/g, (ch) => ({
+          '&':'&amp;',
+          '<':'&lt;',
+          '>':'&gt;',
+          '"':'&quot;',
+          "'":'&#39;'
+        }[ch]));
+      }
+
+      function getQuestionIndex(){
+        const params = new URLSearchParams(window.location.search);
+        const fromQuery = Number(params.get('q'));
+        const fromSession = Number(sessionStorage.getItem('currentMathQuestionIndex'));
+        const candidate = Number.isFinite(fromQuery) && fromQuery > 0 ? fromQuery : fromSession;
+        if(!Number.isFinite(candidate) || candidate < 1) return 1;
+        return Math.min(Math.max(Math.round(candidate), 1), total);
+      }
+
+      function normalizeMathSource(raw){
+        return String(raw ?? '')
+          .replace(/\\begin\{[^}]+\}|\\end\{[^}]+\}/g, '')
+          .replace(/\\hl(?:blue|pink)\{([^{}]*)\}/g, '$1')
+          .replace(/\\left|\\right/g, '')
+          .replace(/\\times/g, '×')
+          .replace(/\\cdot/g, '・')
+          .replace(/\\qquad|\\quad/g, '  ')
+          .replace(/\\,/g, ' ')
+          .replace(/\\\[/g, '')
+          .replace(/\\\]/g, '')
+          .replace(/\$/g, '')
+          .replace(/&/g, '')
+          .replace(/\\\\/g, '  ')
+          .replace(/\\([{}])/g, '$1')
+          .replace(/\\/g, '')
+          .trim();
+      }
+
+      function renderMath(raw){
+        const source = normalizeMathSource(raw);
+        let html = '';
+        for(let i = 0; i < source.length; i++){
+          const ch = source[i];
+          if(ch === '^'){
+            let exponent = '';
+            if(source[i + 1] === '{'){
+              const end = source.indexOf('}', i + 2);
+              if(end !== -1){
+                exponent = source.slice(i + 2, end);
+                i = end;
+              }
+            } else if(source[i + 1]){
+              exponent = source[i + 1];
+              i += 1;
+            }
+            html += '<sup>' + renderMath(exponent) + '</sup>';
+          } else if(/[A-Za-z]/.test(ch)){
+            html += '<span class="var math-var">' + escapeHtml(ch) + '</span>';
+          } else if(ch === '-'){
+            html += ' &minus; ';
+          } else if(ch === '+'){
+            html += ' + ';
+          } else if(ch === '='){
+            html += ' = ';
+          } else if(ch === '×' || ch === '・'){
+            html += ' ' + ch + ' ';
+          } else if(ch === ','){
+            html += ', ';
+          } else {
+            html += escapeHtml(ch);
+          }
+        }
+        return html
+          .replace(/\s+/g, ' ')
+          .replace(/\(\s+/g, '(')
+          .replace(/\s+\)/g, ')')
+          .trim();
+      }
+
+      function renderInline(text){
+        const parts = String(text ?? '').split(/(\$[^$]+\$)/g);
+        return parts.map((part) => {
+          if(part.startsWith('$') && part.endsWith('$')){
+            return '<span class="math-text">' + renderMath(part.slice(1, -1)) + '</span>';
+          }
+          return escapeHtml(part).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        }).join('');
+      }
+
+      function renderMathBlock(raw){
+        const lines = String(raw ?? '')
+          .replace(/\\begin\{[^}]+\}|\\end\{[^}]+\}/g, '')
+          .split(/\\\\/)
+          .map((line) => line.trim())
+          .filter(Boolean);
+        const rendered = lines.length ? lines : [raw];
+        return '<div class="formula-block">' + rendered.map((line) => {
+          return '<span class="formula-line math-text">' + renderMath(line) + '</span>';
+        }).join('') + '</div>';
+      }
+
+      function renderExplanation(raw){
+        const source = String(raw ?? '').trim();
+        if(!source) return '<p>解説データを準備中です。</p>';
+        const blocks = [];
+        const regex = /\\\[((?:.|\n)*?)\\\]/g;
+        let lastIndex = 0;
+        let match;
+        while((match = regex.exec(source)) !== null){
+          const textPart = source.slice(lastIndex, match.index);
+          if(textPart.trim()) blocks.push(renderTextBlocks(textPart));
+          blocks.push(renderMathBlock(match[1]));
+          lastIndex = regex.lastIndex;
+        }
+        const rest = source.slice(lastIndex);
+        if(rest.trim()) blocks.push(renderTextBlocks(rest));
+        return blocks.join('');
+      }
+
+      function renderTextBlocks(text){
+        return String(text)
+          .trim()
+          .split(/\n{2,}/)
+          .filter((block) => block.trim())
+          .map((block) => '<p>' + block.split(/\n/).map((line) => renderInline(line.trim())).join('<br>') + '</p>')
+          .join('');
+      }
+
+      function setText(id, text){
+        const el = document.getElementById(id);
+        if(el) el.textContent = text;
+      }
+
+      function setHtml(id, html){
+        const el = document.getElementById(id);
+        if(el) el.innerHTML = html;
+      }
+
+      function renderQuestion(){
+        currentQuestion = questions[currentIndex - 1] || questions[0] || {
+          prompt:'次の式を因数分解しなさい。',
+          formula:'3x^2y+6xy',
+          answer:'3xy(x+2)',
+          explanation:'',
+          irtDifficulty:205,
+          levelLabel:'基礎レベル',
+          ability:'共通因数',
+          problemNumber:'3-A-02-01-b-01'
+        };
+        sessionStorage.setItem('currentMathQuestionIndex', String(currentIndex));
+        setText('unitTitle', data.unitTitle || '因数分解');
+        setText('questionCounter', `第 ${currentIndex} 問 / 全 ${total} 問`);
+        setText('questionIndexLabel', `【問題${currentIndex}】`);
+        setText('questionPrompt', currentQuestion.prompt || '次の式を因数分解しなさい。');
+        setText('difficultyLabel', `難易度 ${currentQuestion.irtDifficulty ?? '-'} / 300`);
+        setText('difficultySummary', `難易度 ${currentQuestion.irtDifficulty ?? '-'} / 300`);
+        setText('problemNumberLabel', `問題番号：${currentQuestion.problemNumber || currentQuestion.itemId || '-'}`);
+        setText('levelLabel', currentQuestion.levelLabel || '基礎レベル');
+        setText('abilityLabel', currentQuestion.ability || currentQuestion.title || '学習項目');
+        setHtml('questionFormula', renderMath(currentQuestion.formula));
+        setHtml('studentAnswer', renderMath(currentQuestion.answer));
+        setHtml('correctAnswer', renderMath(currentQuestion.answer));
+        setHtml('explanationBody', renderExplanation(currentQuestion.explanation));
+        const formula = document.getElementById('questionFormula');
+        if(formula) formula.setAttribute('aria-label', normalizeMathSource(currentQuestion.formula));
+        const progress = document.getElementById('progressBar');
+        if(progress) progress.style.width = `${Math.max(8, Math.round(currentIndex / total * 100))}%`;
+        const next = document.getElementById('nextQuestionLink');
+        if(next){
+          if(currentIndex >= total){
+            next.href = 'SCR-014.html';
+            next.innerHTML = '結果を見る <span class="material-symbols-outlined">arrow_forward</span>';
+          } else {
+            next.href = `SCR-09-01.html?q=${currentIndex + 1}`;
+            next.innerHTML = '次の問題へ <span class="material-symbols-outlined">arrow_forward</span>';
+          }
+        }
+      }
+
+      function navigateSoft(url){
+        document.body.classList.add('is-leaving');
+        window.setTimeout(() => {
+          window.location.href = url;
+        }, 180);
+      }
+
+      renderQuestion();
+
+      document.getElementById('nextQuestionLink')?.addEventListener('click', (event) => {
+        event.preventDefault();
+        navigateSoft(event.currentTarget.href);
+      });
+      document.getElementById('backBtn')?.addEventListener('click', () => {
+        navigateSoft(`SCR-09-01.html?q=${currentIndex}`);
+      });
+      document.getElementById('closeBtn')?.addEventListener('click', () => {
+        navigateSoft('SCR-002-design-04.html');
+      });
+
+      window.setTimeout(() => document.body.classList.add('is-ready'), 20);
+    })();
   </script>
 </body>
 </html>
