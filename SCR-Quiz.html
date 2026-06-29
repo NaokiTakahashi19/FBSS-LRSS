@@ -14,8 +14,8 @@
         displayMath: [['\\[', '\\]']],
         packages: {'[+]': ['color']},
         macros: {
-          hlblue: ['{\\color[HTML]{2f735e}{#1}}', 1],
-          hlpink: ['{\\color[HTML]{d99a28}{#1}}', 1]
+          hlblue: ['{#1}', 1],
+          hlpink: ['{#1}', 1]
         }
       },
       svg: {fontCache: 'global'}
@@ -1296,13 +1296,23 @@
         return Math.min(Math.max(Math.round(candidate), 1), total);
       }
 
+      function stripHighlightMacros(source){
+        let text = String(source ?? '');
+        let previous = '';
+        while(previous !== text){
+          previous = text;
+          text = text.replace(/\\hl(?:blue|pink)\{([^{}]*)\}/g, '$1');
+        }
+        return text;
+      }
+
       function mathInline(source){
-        const text = String(source ?? '').trim();
+        const text = stripHighlightMacros(source).trim();
         return text ? '\\(' + text + '\\)' : '';
       }
 
       function cleanLatex(source){
-        return String(source ?? '')
+        return stripHighlightMacros(source)
           .replace(/\\begin\{aligned\}/g, '')
           .replace(/\\end\{aligned\}/g, '')
           .replace(/&=/g, '=')
