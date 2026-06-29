@@ -42,68 +42,276 @@
       border-left: 0;
       border-radius: 2px;
     }
-  </style>
-</head>
-<body class="font-sans text-ink">
+    body.design-report {
+      background: #ffffff;
+      color: #1f2933;
+      --report-green: #00906c;
+      --report-green-dark: #008860;
+      --report-gray: #808080;
+      --report-green-soft: #e9f6f2;
+    }
+    .design-report header {
+      border-bottom: 1px solid #e9f2ef;
+      background: rgba(255, 255, 255, .96);
+    }
+    .design-report main {
+      max-width: 1180px;
+    }
+    .design-report article,
+    .design-report main > section.rounded-2xl {
+      border: 1px solid #edf3f0 !important;
+      border-radius: 10px !important;
+      background: #fff !important;
+      box-shadow: 0 14px 28px rgba(8, 92, 72, .08) !important;
+    }
+	    .design-report h2 {
+	      color: var(--report-gray) !important;
+	      font-weight: 500 !important;
+	      line-height: 1.35;
+	    }
+    .design-report .font-black {
+      font-weight: 500 !important;
+    }
+    .design-report .font-bold {
+      font-weight: 500 !important;
+    }
+    .design-report b,
+    .design-report .font-display {
+      font-weight: 700 !important;
+    }
+    .design-report .text-2xl,
+    .design-report .text-xl {
+      letter-spacing: 0;
+    }
+    .design-report svg text {
+      font-weight: 600 !important;
+    }
+    .design-report .text-xs {
+      font-weight: 500 !important;
+    }
+    .design-report .text-blue-600,
+    .design-report .text-blue-700,
+    .design-report .text-violet-600,
+    .design-report .text-emerald-600 {
+      color: var(--report-green) !important;
+    }
+    .design-report .text-slate-400,
+    .design-report .text-slate-500,
+    .design-report .text-slate-600,
+    .design-report .text-slate-800 {
+      color: var(--report-gray) !important;
+    }
+    .design-report .text-rose-500 {
+      color: #ff762c !important;
+    }
+    .design-report .bg-blue-600,
+    .design-report .bg-blue-700,
+    .design-report .bg-emerald-500,
+    .design-report .bg-emerald-600 {
+      background: var(--report-green) !important;
+    }
+    .design-report .bg-rose-500,
+    .design-report .bg-orange-500 {
+      background: #ff762c !important;
+    }
+    .design-report .bg-blue-50,
+    .design-report .bg-blue-100,
+    .design-report .bg-violet-50,
+    .design-report .bg-emerald-50 {
+      background: var(--report-green-soft) !important;
+    }
+    .design-report .border-blue-600,
+    .design-report .border-blue-700,
+    .design-report .border-emerald-600 {
+      border-color: var(--report-green) !important;
+    }
+    .design-report .from-emerald-400 {
+      --tw-gradient-from: var(--report-green) var(--tw-gradient-from-position) !important;
+      --tw-gradient-to: rgba(0, 144, 108, 0) var(--tw-gradient-to-position) !important;
+      --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+    }
+    .design-report .to-emerald-600 {
+      --tw-gradient-to: var(--report-green-dark) var(--tw-gradient-to-position) !important;
+    }
+    .design-report .text-orange-500,
+    .design-report .text-orange-600 {
+      color: #ff762c !important;
+    }
+    .design-report .ring-orange-200 {
+      --tw-ring-color: rgba(255, 118, 44, .24) !important;
+    }
+    .design-report .bg-orange-50 {
+      background: #fff4ec !important;
+    }
+    .design-report svg polygon[stroke="#10b981"] {
+      stroke: var(--report-green-dark) !important;
+    }
+    .design-report svg circle[fill="#10b981"] {
+      fill: var(--report-green-dark) !important;
+    }
+    .design-report svg polygon[stroke="#f59e0b"] {
+      stroke: #ff762c !important;
+    }
+    .design-report svg circle[fill="#f59e0b"] {
+      fill: #ff762c !important;
+    }
+    .design-report section.grid.gap-4 a {
+      border-radius: 8px !important;
+      min-height: 78px;
+    }
+	    .design-report section.grid.gap-4 a span:first-child {
+	      height: 6px;
+	    }
+	    body.design-textbook {
+	      background: #edf2df;
+	      color: #24332f;
+	      overflow-x: hidden;
+	      --report-green: #3f8f76;
+	      --report-green-dark: #2f745f;
+	      --report-gray: #5d6762;
+	      --report-green-soft: #f1faf3;
+	      --textbook-blue: #4c7da8;
+	      --textbook-red: #9a4b45;
+	      --textbook-ochre: #d39a3a;
+	      --textbook-cream: #fff8df;
+	    }
+	    .design-textbook header {
+	      background: rgba(252, 255, 246, .96);
+	      border-bottom: 2px solid rgba(63, 143, 118, .16);
+	    }
+	    .design-textbook article,
+	    .design-textbook main > section.rounded-2xl {
+	      border-color: rgba(63, 143, 118, .18) !important;
+	      border-radius: 22px !important;
+	      background: rgba(255, 255, 253, .96) !important;
+	      box-shadow: 0 12px 22px rgba(72, 92, 82, .08) !important;
+	    }
+	    .design-textbook article:nth-of-type(2n) {
+	      border-color: rgba(76, 125, 168, .18) !important;
+	    }
+	    .design-textbook .textbook-pill {
+	      border-radius: 3px;
+	      background: var(--report-green-dark);
+	      color: #fff;
+	      box-shadow: 0 2px 0 rgba(47, 116, 95, .18);
+	    }
+	    .design-textbook .book-outline {
+	      border: 3px solid rgba(47, 111, 93, .35);
+	      border-radius: 44px 34px 48px 30px;
+	    }
+	    .design-textbook .stack-segment {
+	      min-width: 28px;
+	      box-shadow: inset 0 -2px 0 rgba(0,0,0,.08);
+	    }
+	    .design-textbook .logout-button {
+	      border: 1px solid rgba(154, 75, 69, .20);
+	      background: #fff8f4;
+	      color: var(--textbook-red);
+	    }
+	    .design-textbook .subject-zone {
+	      position: relative;
+	      isolation: isolate;
+	    }
+	    .design-textbook .subject-zone::before {
+	      content: "";
+	      position: absolute;
+	      z-index: -1;
+	      top: -1.5rem;
+	      bottom: -1.5rem;
+	      left: 50%;
+	      width: 100vw;
+	      transform: translateX(-50%);
+	    }
+	    .design-textbook .all-subject-zone::before {
+	      bottom: -.75rem;
+	      background: #dcebea;
+	    }
+	    .design-textbook .math-subject-zone::before {
+	      top: -.75rem;
+	      background: #edf2df;
+	    }
+	    .design-textbook .math-context {
+	      border-bottom: 1px solid rgba(63, 143, 118, .14);
+	      background: #f1faf3;
+	    }
+	  </style>
+	</head>
+	<body class="design-report design-textbook font-sans text-ink">
   <header class="sticky top-0 z-30 border-b border-slate-200 bg-white/95 backdrop-blur">
-    <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-      <a href="SCR-002.html" class="flex items-center gap-3">
-        <span class="grid size-10 place-items-center rounded-xl bg-blue-600 text-white shadow-lg shadow-blue-200">
-          <span class="material-symbols-outlined">auto_stories</span>
-        </span>
+	    <div class="mx-auto grid max-w-6xl grid-cols-[1fr_auto] items-center gap-4 px-4 py-3 sm:grid-cols-[1fr_auto_1fr] sm:px-6">
+	      <a href="SCR-002.html" class="flex items-center gap-3">
+	        <span class="grid size-10 place-items-center rounded-xl bg-blue-600 text-white shadow-lg shadow-blue-200">
+	          <span class="material-symbols-outlined">auto_stories</span>
+	        </span>
         <span>
-          <span class="block text-sm font-black tracking-wide">学力定着支援サービス</span>
-          <span class="block text-[11px] font-bold text-slate-500">TOP / ホーム</span>
-        </span>
-      </a>
-      <div class="flex items-center gap-3">
-        <div class="hidden text-right sm:block">
-          <p class="text-xs font-bold text-slate-500">こんにちは</p>
-          <p class="text-sm font-black">健太さん</p>
-        </div>
-        <span class="grid size-10 place-items-center rounded-full bg-blue-100 text-blue-700 font-black">健</span>
+	          <span class="block text-sm font-black tracking-wide">学力定着支援サービス</span>
+		          <span class="block text-[11px] font-bold text-slate-500">デザイン案4 / 教材冊子テイスト</span>
+	        </span>
+	      </a>
+	      <div class="hidden rounded-xl border border-emerald-100 bg-white/78 px-4 py-2 text-center shadow-sm sm:block">
+	        <p class="text-[10px] font-medium tracking-wide text-slate-500">累積解答数</p>
+	        <p class="font-display text-xl font-bold text-[#3f8f76]">1,284<span class="ml-1 text-xs font-medium text-slate-500">問</span></p>
+	      </div>
+	      <div class="flex items-center justify-end gap-3">
+	        <div class="hidden text-right sm:block">
+	          <p class="text-xs font-bold text-slate-500">学習者ID</p>
+	          <p class="text-sm font-black tracking-wider">ID 582914</p>
+	        </div>
+	        <button type="button" class="logout-button rounded-lg px-3 py-2 text-xs font-black transition hover:bg-white">ログアウト</button>
       </div>
     </div>
   </header>
 
-  <main class="mx-auto max-w-6xl space-y-6 px-4 py-6 pb-12 sm:px-6">
-    <section class="grid gap-5 lg:grid-cols-12">
+	  <main class="mx-auto max-w-6xl space-y-6 px-4 py-6 pb-12 sm:px-6">
+	    <div class="subject-zone all-subject-zone">
+	    <section class="grid gap-5 lg:grid-cols-12">
     <article class="min-h-[270px] rounded-3xl border border-slate-100 bg-white px-6 py-6 shadow-card lg:col-span-8">
       <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div>
           <div class="mb-2 flex flex-wrap items-center gap-3">
-            <span class="rounded-md bg-blue-50 px-3 py-1 text-xs font-black text-slate-600">第一志望</span>
-            <span class="text-sm font-black text-slate-600">県立朝日高等学校</span>
+	            <span class="textbook-pill px-3 py-1 text-xs font-black">第一志望</span>
+	            <span class="text-sm font-black text-slate-600">県立朝日高等学校</span>
           </div>
-          <h2 class="text-xl font-black leading-tight tracking-tight text-slate-900 sm:text-2xl">全教科の目標学力値に対する進捗度 <span class="mt-2 block text-sm font-black text-slate-500">4教科合計 IRT <b class="text-xl text-slate-800">0〜1200</b></span></h2>
+	          <h2 class="text-lg font-medium leading-tight tracking-tight text-slate-800 sm:text-xl">全教科の目標学力値に対する進捗度</h2>
         </div>
-        <div class="grid w-full grid-cols-2 rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-card sm:max-w-[390px] sm:grid-cols-[92px_92px_minmax(150px,1fr)] sm:divide-x sm:divide-slate-200 sm:px-5">
-          <div>
-            <p class="text-[10px] font-black uppercase tracking-wide text-slate-400">Current</p>
-            <p class="mt-1 font-display text-2xl font-black text-blue-600">1032</p>
-          </div>
+	        <div class="grid w-full grid-cols-2 rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-card sm:max-w-[390px] sm:grid-cols-[82px_82px_minmax(140px,1fr)] sm:divide-x sm:divide-slate-200 sm:px-5">
+	          <div>
+	            <p class="text-[10px] font-black uppercase tracking-wide text-slate-500">Current</p>
+		            <p class="mt-1 font-display text-2xl font-black text-blue-600">1002</p>
+	          </div>
           <div class="pl-4 sm:px-6">
-            <p class="text-[10px] font-black uppercase tracking-wide text-slate-400">Gap</p>
-            <p class="mt-1 font-display text-2xl font-black text-rose-500">-48</p>
-          </div>
-          <div class="col-span-2 mt-3 border-t border-slate-100 pt-3 sm:col-span-1 sm:mt-0 sm:border-t-0 sm:pl-6 sm:pt-0">
-            <p class="text-xs font-black text-slate-600 sm:text-sm">合格圏内まで</p>
-            <p class="mt-1 text-xs font-black text-orange-500">弱点補強が必要です</p>
-          </div>
+	            <p class="text-[10px] font-black uppercase tracking-wide text-slate-500">Gap</p>
+		            <p class="mt-1 font-display text-2xl font-black text-rose-500">-78</p>
+	          </div>
+	          <div class="col-span-2 mt-3 border-t border-slate-100 pt-3 sm:col-span-1 sm:mt-0 sm:border-t-0 sm:pl-6 sm:pt-0">
+	            <p class="text-xs font-black text-slate-600 sm:text-sm">合格圏内まで</p>
+	            <p class="mt-1 text-xs font-black text-orange-500">弱点補強が必要です</p>
+	          </div>
         </div>
       </div>
       <div class="mt-6">
-        <div class="mb-3 grid grid-cols-5 text-[11px] font-black text-slate-400">
+        <div class="mb-3 grid grid-cols-5 text-[11px] font-black text-slate-500">
           <span>0</span><span>300</span><span>600</span><span>900</span><span class="text-right">1200</span>
         </div>
-        <div class="relative h-4 rounded-full bg-emerald-50">
-          <div class="h-4 w-[86%] rounded-full bg-gradient-to-r from-blue-400 to-blue-700"></div>
-          <div class="absolute left-[86%] top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-[5px] border-blue-700 bg-white"></div>
-          <div class="absolute left-[86%] top-6 -translate-x-1/2 rounded-md bg-blue-700 px-2 py-1 text-[10px] font-black text-white">現在 1032</div>
-          <div class="absolute left-[90%] top-0 -translate-x-1/2 -translate-y-7 text-orange-500" aria-label="目標位置"><span class="target-flag"></span></div>
-          <div class="absolute left-[90%] top-6 -translate-x-1/2 rounded-md bg-orange-50 px-2 py-1 text-[10px] font-black text-orange-600 ring-1 ring-orange-200">目標 1080</div>
-        </div>
-      </div>
+	        <div class="relative h-6 rounded-full bg-emerald-50 ring-1 ring-slate-200">
+		          <div class="flex h-6 w-[83.5%] overflow-hidden rounded-full">
+			            <div class="stack-segment h-full w-[22.8%] bg-[#3f8f76]" title="数学 228"></div>
+			            <div class="stack-segment h-full w-[23.4%] bg-[#4c7da8]" title="英語 234"></div>
+			            <div class="stack-segment h-full w-[24.5%] bg-[#d39a3a]" title="理科 246"></div>
+			            <div class="stack-segment h-full w-[29.3%] bg-[#9a4b45]" title="社会 294"></div>
+		          </div>
+		          <div class="absolute left-[83.5%] top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-[5px] border-emerald-600 bg-white"></div>
+		          <div class="absolute left-[80.5%] top-8 -translate-x-1/2 whitespace-nowrap rounded-md bg-emerald-600 px-2 py-1 text-[10px] font-black text-white">現在 1002</div>
+	          <div class="absolute left-[90%] top-0 -translate-x-1/2 -translate-y-7 text-orange-500" aria-label="目標位置"><span class="target-flag"></span></div>
+	          <div class="absolute left-[94%] top-8 -translate-x-1/2 whitespace-nowrap rounded-md bg-orange-50 px-2 py-1 text-[10px] font-black text-orange-600 ring-1 ring-orange-200">目標 1080</div>
+	        </div>
+	        <div class="mt-10 flex flex-wrap gap-x-4 gap-y-2 text-[11px] font-black text-slate-500">
+		          <span class="inline-flex items-center gap-1"><i class="size-3 rounded-sm bg-[#3f8f76]"></i>数学 228</span>
+		          <span class="inline-flex items-center gap-1"><i class="size-3 rounded-sm bg-[#4c7da8]"></i>英語 234</span>
+		          <span class="inline-flex items-center gap-1"><i class="size-3 rounded-sm bg-[#d39a3a]"></i>理科 246</span>
+		          <span class="inline-flex items-center gap-1"><i class="size-3 rounded-sm bg-[#9a4b45]"></i>社会 294</span>
+	        </div>
+	      </div>
     </article>
 
       <article class="min-h-[270px] rounded-2xl border border-slate-100 bg-white p-5 shadow-card lg:col-span-4">
@@ -111,7 +319,7 @@
           <span class="grid size-8 place-items-center rounded-xl bg-violet-50 text-violet-600">
             <span class="material-symbols-outlined text-[22px]">radar</span>
           </span>
-          <h2 class="text-lg font-black">教科バランス</h2>
+	          <h2 class="text-base font-medium">教科バランス</h2>
         </div>
         <div class="mx-auto mt-4 max-w-[290px]">
           <svg class="h-auto w-full" viewBox="0 0 300 250" aria-label="4教科のIRT値バランス">
@@ -126,46 +334,58 @@
                 <polygon points="0,-110 110,0 0,110 -110,0"></polygon>
               </g>
               <polygon points="0,-99 99,0 0,99 -99,0" fill="none" stroke="#f59e0b" stroke-width="2.5"></polygon>
-              <polygon points="0,-95 86,0 0,81 -90,0" fill="#3b82f6" fill-opacity=".28" stroke="#3b82f6" stroke-width="3"></polygon>
+	              <polygon points="0,-84 86,0 0,81 -90,0" fill="#00906c" fill-opacity=".18" stroke="#00906c" stroke-width="3"></polygon>
               <polygon points="0,-88 84,0 0,86 -83,0" fill="none" stroke="#10b981" stroke-dasharray="4 5" stroke-width="2.5"></polygon>
               <circle cx="0" cy="-99" r="4" fill="#f59e0b"></circle>
               <circle cx="99" cy="0" r="4" fill="#f59e0b"></circle>
               <circle cx="0" cy="99" r="4" fill="#f59e0b"></circle>
               <circle cx="-99" cy="0" r="4" fill="#f59e0b"></circle>
-              <circle cx="0" cy="-95" r="5" fill="#3b82f6"></circle>
-              <circle cx="86" cy="0" r="5" fill="#3b82f6"></circle>
-              <circle cx="0" cy="81" r="5" fill="#3b82f6"></circle>
-              <circle cx="-90" cy="0" r="5" fill="#3b82f6"></circle>
+	              <circle cx="0" cy="-84" r="5" fill="#00906c"></circle>
+              <circle cx="86" cy="0" r="5" fill="#00906c"></circle>
+              <circle cx="0" cy="81" r="5" fill="#00906c"></circle>
+              <circle cx="-90" cy="0" r="5" fill="#00906c"></circle>
               <circle cx="0" cy="-88" r="4" fill="#10b981"></circle>
               <circle cx="84" cy="0" r="4" fill="#10b981"></circle>
               <circle cx="0" cy="86" r="4" fill="#10b981"></circle>
               <circle cx="-83" cy="0" r="4" fill="#10b981"></circle>
             </g>
-            <g font-family="Noto Sans JP, sans-serif" font-weight="900" font-size="13" fill="#64748b">
-              <text x="150" y="18" text-anchor="middle">数学 258</text>
+            <g font-family="Noto Sans JP, sans-serif" font-weight="900" font-size="13" fill="#808080">
+	              <text x="150" y="18" text-anchor="middle">数学 228</text>
               <text x="284" y="127" text-anchor="end">英語 234</text>
               <text x="150" y="242" text-anchor="middle">社会 222</text>
               <text x="16" y="127">理科 246</text>
             </g>
           </svg>
         </div>
-      </article>
-    </section>
+	      </article>
+	    </section>
+	    </div>
 
-    <section class="grid gap-5 lg:grid-cols-12">
-      <article class="min-h-[270px] rounded-3xl border border-slate-100 bg-white px-6 py-6 shadow-card lg:col-span-8">
+	    <div class="subject-zone math-subject-zone">
+	    <section class="rounded-2xl border border-slate-100 bg-white p-5 shadow-card">
+	      <div class="math-context -mx-5 -mt-5 mb-5 rounded-t-2xl px-5 py-4">
+	        <div class="flex items-center gap-3">
+	          <span class="grid size-10 place-items-center rounded-lg bg-[#3f8f76] text-white">
+	            <span class="material-symbols-outlined">calculate</span>
+	          </span>
+	          <h2 class="text-xl font-semibold text-slate-800">数学 <span class="text-sm font-medium text-slate-500">Math</span></h2>
+	        </div>
+	      </div>
+
+	      <div class="grid gap-5 lg:grid-cols-12">
+	      <article class="min-h-[270px] rounded-3xl border border-slate-100 bg-white px-6 py-6 shadow-card lg:col-span-8">
         <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div>
             <p class="text-xs font-bold text-slate-500">数学</p>
-            <h2 class="mt-1 text-xl font-black leading-tight tracking-tight text-slate-900 sm:text-2xl">数学の目標学力値に対する進捗度 <span class="mt-2 block text-sm font-black text-slate-500">IRT <b class="text-xl text-slate-800">0〜300</b></span></h2>
+            <h2 class="mt-1 text-lg font-medium leading-tight tracking-tight text-slate-800 sm:text-xl">数学の目標学力値に対する進捗度</h2>
           </div>
           <div class="grid w-full grid-cols-2 rounded-2xl border border-slate-100 bg-white px-4 py-3 shadow-card sm:max-w-[390px] sm:grid-cols-[92px_92px_minmax(150px,1fr)] sm:divide-x sm:divide-slate-200 sm:px-5">
             <div>
-              <p class="text-[10px] font-black uppercase tracking-wide text-slate-400">Current</p>
+              <p class="text-[10px] font-black uppercase tracking-wide text-slate-500">Current</p>
               <p class="mt-1 font-display text-2xl font-black text-blue-600">228</p>
             </div>
             <div class="pl-4 sm:px-6">
-              <p class="text-[10px] font-black uppercase tracking-wide text-slate-400">Gap</p>
+              <p class="text-[10px] font-black uppercase tracking-wide text-slate-500">Gap</p>
               <p class="mt-1 font-display text-2xl font-black text-rose-500">-42</p>
             </div>
             <div class="col-span-2 mt-3 border-t border-slate-100 pt-3 sm:col-span-1 sm:mt-0 sm:border-t-0 sm:pl-6 sm:pt-0">
@@ -175,16 +395,16 @@
           </div>
         </div>
         <div class="mt-6">
-          <div class="mb-3 grid grid-cols-5 text-[11px] font-black text-slate-400">
+          <div class="mb-3 grid grid-cols-5 text-[11px] font-black text-slate-500">
             <span>0</span><span>75</span><span>150</span><span>225</span><span class="text-right">300</span>
           </div>
-          <div class="relative h-4 rounded-full bg-emerald-50">
-            <div class="h-4 w-[76%] rounded-full bg-gradient-to-r from-blue-400 to-blue-700"></div>
-            <div class="absolute left-[76%] top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-[5px] border-blue-700 bg-white"></div>
-            <div class="absolute left-[76%] top-6 -translate-x-1/2 rounded-md bg-blue-700 px-2 py-1 text-[10px] font-black text-white">現在 228</div>
-            <div class="absolute left-[90%] top-0 -translate-x-1/2 -translate-y-7 text-orange-500" aria-label="目標位置"><span class="target-flag"></span></div>
-            <div class="absolute left-[90%] top-6 -translate-x-1/2 rounded-md bg-orange-50 px-2 py-1 text-[10px] font-black text-orange-600 ring-1 ring-orange-200">目標 270</div>
-          </div>
+	          <div class="relative h-6 rounded-full bg-emerald-50 ring-1 ring-slate-200">
+	            <div class="h-6 w-[76%] rounded-full bg-gradient-to-r from-emerald-400 to-emerald-600"></div>
+	            <div class="absolute left-[76%] top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-[5px] border-emerald-600 bg-white"></div>
+	            <div class="absolute left-[76%] top-8 -translate-x-1/2 rounded-md bg-emerald-600 px-2 py-1 text-[10px] font-black text-white">現在 228</div>
+	            <div class="absolute left-[90%] top-0 -translate-x-1/2 -translate-y-7 text-orange-500" aria-label="目標位置"><span class="target-flag"></span></div>
+	            <div class="absolute left-[90%] top-8 -translate-x-1/2 rounded-md bg-orange-50 px-2 py-1 text-[10px] font-black text-orange-600 ring-1 ring-orange-200">目標 270</div>
+	          </div>
         </div>
       </article>
 
@@ -193,7 +413,7 @@
         <span class="grid size-8 place-items-center rounded-xl bg-violet-50 text-violet-600">
           <span class="material-symbols-outlined text-[22px]">pentagon</span>
         </span>
-        <h2 class="text-lg font-black">領域別バランス</h2>
+        <h2 class="text-base font-medium">領域別バランス</h2>
       </div>
       <div class="mx-auto mt-4 max-w-[290px]">
         <svg class="h-auto w-full" viewBox="0 0 300 250" aria-label="数学の領域別バランス">
@@ -208,70 +428,43 @@
               <polygon points="0,-110 110,0 0,110 -110,0"></polygon>
             </g>
             <polygon points="0,-99 99,0 0,99 -99,0" fill="none" stroke="#f59e0b" stroke-width="2"></polygon>
-            <polygon points="0,-75 88,0 0,84 -99,0" fill="#3b82f6" fill-opacity=".28" stroke="#3b82f6" stroke-width="3"></polygon>
+            <polygon points="0,-75 88,0 0,84 -99,0" fill="#00906c" fill-opacity=".18" stroke="#00906c" stroke-width="3"></polygon>
             <polygon points="0,-80 83,0 0,80 -93,0" fill="none" stroke="#10b981" stroke-dasharray="4 5" stroke-width="2"></polygon>
-            <circle cx="0" cy="-75" r="5" fill="#3b82f6"></circle>
-            <circle cx="88" cy="0" r="5" fill="#3b82f6"></circle>
-            <circle cx="0" cy="84" r="5" fill="#3b82f6"></circle>
-            <circle cx="-99" cy="0" r="5" fill="#3b82f6"></circle>
+            <circle cx="0" cy="-75" r="5" fill="#00906c"></circle>
+            <circle cx="88" cy="0" r="5" fill="#00906c"></circle>
+            <circle cx="0" cy="84" r="5" fill="#00906c"></circle>
+            <circle cx="-99" cy="0" r="5" fill="#00906c"></circle>
           </g>
-          <g font-family="Noto Sans JP, sans-serif" font-weight="900" font-size="13" fill="#64748b">
+          <g font-family="Noto Sans JP, sans-serif" font-weight="900" font-size="13" fill="#808080">
             <text x="150" y="18" text-anchor="middle">数と式</text>
             <text x="284" y="127" text-anchor="end">関数</text>
             <text x="150" y="242" text-anchor="middle">図形</text>
             <text x="16" y="127">資料活用</text>
           </g>
           <g font-family="Noto Sans JP, sans-serif" font-size="10" font-weight="800">
-            <circle cx="91" cy="220" r="4" fill="#3b82f6"></circle><text x="99" y="224" fill="#64748b">現在</text>
-            <circle cx="141" cy="220" r="4" fill="#f59e0b"></circle><text x="149" y="224" fill="#64748b">目標</text>
-            <circle cx="184" cy="220" r="4" fill="#10b981"></circle><text x="192" y="224" fill="#64748b">中3平均</text>
+            <circle cx="91" cy="220" r="4" fill="#00906c"></circle><text x="99" y="224" fill="#808080">現在</text>
+            <circle cx="141" cy="220" r="4" fill="#f59e0b"></circle><text x="149" y="224" fill="#808080">目標</text>
+            <circle cx="184" cy="220" r="4" fill="#10b981"></circle><text x="192" y="224" fill="#808080">中3平均</text>
           </g>
         </svg>
       </div>
-    </article>
-    </section>
+	    </article>
+	    </div>
 
-    <section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      <a href="SCR-003.html" class="group relative min-h-[78px] overflow-hidden rounded-xl border border-slate-100 bg-white px-5 py-4 text-center shadow-card transition hover:-translate-y-0.5 hover:shadow-lg">
-        <span class="pointer-events-none absolute inset-x-0 bottom-0 h-2 bg-blue-600 shadow-[0_-2px_8px_rgba(37,99,235,.22)]"></span>
-        <span class="pointer-events-none absolute inset-0 grid place-items-center font-display text-3xl font-black text-blue-50 transition group-hover:text-blue-100">Math</span>
-        <span class="relative block text-lg font-black text-blue-600">数学</span>
-        <span class="relative mt-0.5 block text-xs font-black text-slate-400">Math</span>
-      </a>
-      <a href="SCR-06-01.html" class="group relative min-h-[78px] overflow-hidden rounded-xl border border-slate-100 bg-white px-5 py-4 text-center shadow-card transition hover:-translate-y-0.5 hover:shadow-lg">
-        <span class="pointer-events-none absolute inset-x-0 bottom-0 h-2 bg-rose-500 shadow-[0_-2px_8px_rgba(244,63,94,.22)]"></span>
-        <span class="pointer-events-none absolute inset-0 grid place-items-center font-display text-3xl font-black text-rose-50 transition group-hover:text-rose-100">English</span>
-        <span class="relative block text-lg font-black text-rose-500">英語</span>
-        <span class="relative mt-0.5 block text-xs font-black text-slate-400">English</span>
-      </a>
-      <a href="SCR-10-01.html" class="group relative min-h-[78px] overflow-hidden rounded-xl border border-slate-100 bg-white px-5 py-4 text-center shadow-card transition hover:-translate-y-0.5 hover:shadow-lg">
-        <span class="pointer-events-none absolute inset-x-0 bottom-0 h-2 bg-emerald-500 shadow-[0_-2px_8px_rgba(16,185,129,.22)]"></span>
-        <span class="pointer-events-none absolute inset-0 grid place-items-center font-display text-3xl font-black text-emerald-50 transition group-hover:text-emerald-100">Science</span>
-        <span class="relative block text-lg font-black text-emerald-600">理科</span>
-        <span class="relative mt-0.5 block text-xs font-black text-slate-400">Science</span>
-      </a>
-      <a href="SCR-11-01.html" class="group relative min-h-[78px] overflow-hidden rounded-xl border border-slate-100 bg-white px-5 py-4 text-center shadow-card transition hover:-translate-y-0.5 hover:shadow-lg">
-        <span class="pointer-events-none absolute inset-x-0 bottom-0 h-2 bg-orange-500 shadow-[0_-2px_8px_rgba(249,115,22,.22)]"></span>
-        <span class="pointer-events-none absolute inset-0 grid place-items-center font-display text-3xl font-black text-orange-50 transition group-hover:text-orange-100">Social</span>
-        <span class="relative block text-lg font-black text-orange-500">社会</span>
-        <span class="relative mt-0.5 block text-xs font-black text-slate-400">Social Studies</span>
-      </a>
-    </section>
-
-    <section class="rounded-2xl border border-slate-100 bg-white p-5 shadow-card">
-      <div><p class="text-xs font-bold text-slate-500">学習メニュー</p><h2 class="mt-1 text-lg font-black">目標到達までの学習を進める</h2><p class="mt-1 text-sm text-slate-500">基本／標準問題を進めると、修了判定と過去問挑戦が利用できるようになります。</p></div>
-      <div class="mt-5 grid gap-3 md:grid-cols-3">
+	      <div class="mt-6"><p class="text-xs font-medium text-slate-500">学習メニュー</p><h2 class="mt-1 text-lg font-medium">目標到達までの学習を進める</h2><p class="mt-1 text-sm text-slate-500">基本／標準問題を進めると、修了判定と過去問挑戦が利用できるようになります。</p></div>
+	      <div class="mt-5 grid gap-3 md:grid-cols-3">
         <a href="SCR-09-01.html" class="group rounded-xl border-2 border-blue-600 bg-blue-600 p-4 text-white shadow-lg shadow-blue-100 hover:bg-blue-700">
-          <div class="flex items-center justify-between"><span class="material-symbols-outlined">play_circle</span><span class="text-xs font-bold">利用可能</span></div><h3 class="mt-4 font-black">基本／標準問題を開始する</h3><p class="mt-1 text-xs text-blue-100">数と式から学習を始めます</p>
+	          <div class="flex items-center justify-between"><span class="material-symbols-outlined">play_circle</span><span class="text-xs font-medium">利用可能</span></div><h3 class="mt-4 font-semibold">基本／標準問題を開始する</h3><p class="mt-1 text-xs text-blue-100">数と式から学習を始めます</p>
         </a>
         <div class="disabled-button rounded-xl border border-slate-200 bg-slate-50 p-4 text-slate-500" aria-disabled="true">
-          <div class="flex items-center justify-between"><span class="material-symbols-outlined">task_alt</span><span class="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-bold">目標到達後に有効</span></div><h3 class="mt-4 font-black">修了判定</h3><p class="mt-1 text-xs">最も難易度の高い問題に挑戦</p>
+	          <div class="flex items-center justify-between"><span class="material-symbols-outlined">task_alt</span><span class="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-medium">目標到達後に有効</span></div><h3 class="mt-4 font-semibold">修了判定</h3><p class="mt-1 text-xs">最も難易度の高い問題に挑戦</p>
         </div>
         <div class="disabled-button rounded-xl border border-slate-200 bg-slate-50 p-4 text-slate-500" aria-disabled="true">
-          <div class="flex items-center justify-between"><span class="material-symbols-outlined">history_edu</span><span class="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-bold">目標到達後に有効</span></div><h3 class="mt-4 font-black">過去問に挑戦</h3><p class="mt-1 text-xs">過去問ドリルを繰り返し学習</p>
-        </div>
-      </div>
-    </section>
-  </main>
+	          <div class="flex items-center justify-between"><span class="material-symbols-outlined">history_edu</span><span class="rounded-full bg-slate-200 px-2 py-0.5 text-[10px] font-medium">目標到達後に有効</span></div><h3 class="mt-4 font-semibold">過去問に挑戦</h3><p class="mt-1 text-xs">過去問ドリルを繰り返し学習</p>
+	        </div>
+	      </div>
+	    </section>
+	    </div>
+	  </main>
 </body>
 </html>
