@@ -85,6 +85,41 @@
       font-weight:600;
       color:#66756f;
     }
+    .footprint-wrap{
+      margin-top:6px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+    }
+    .footprint-label{
+      color:#7b8982;
+      font-size:10px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+    .footprints{
+      display:flex;
+      align-items:center;
+      gap:4px;
+    }
+    .footprint-dot{
+      width:8px;
+      height:8px;
+      border:1px solid rgba(63,143,118,.18);
+      border-radius:999px;
+      background:rgba(63,143,118,.14);
+    }
+    .footprint-dot.done,
+    .footprint-dot.correct{
+      border-color:var(--primary);
+      background:var(--primary);
+    }
+    .footprint-dot.current{
+      border-color:#d99a28;
+      background:#d99a28;
+      box-shadow:0 0 0 3px rgba(217,154,40,.15);
+    }
     .progress-track{
       width:100%;
       height:5px;
@@ -121,6 +156,25 @@
       border:1px solid var(--line);
       border-radius:18px;
       box-shadow:var(--shadow);
+      transition:opacity .24s ease, transform .24s ease, box-shadow .24s ease;
+    }
+    body.is-ready .problem-card{animation:cardInLeft .34s cubic-bezier(.2,.75,.2,1) both;}
+    body.is-ready .answer-card{animation:cardInRight .34s cubic-bezier(.2,.75,.2,1) .04s both;}
+    body.is-ready .explain-card{animation:cardInUp .34s cubic-bezier(.2,.75,.2,1) .08s both;}
+    body.is-leaving .problem-card{opacity:0;transform:translateX(-18px) scale(.99);}
+    body.is-leaving .answer-card{opacity:0;transform:translateX(18px) scale(.99);}
+    body.is-leaving .explain-card{opacity:0;transform:translateY(16px) scale(.99);}
+    @keyframes cardInLeft{
+      from{opacity:0;transform:translateX(-18px) scale(.99);}
+      to{opacity:1;transform:none;}
+    }
+    @keyframes cardInRight{
+      from{opacity:0;transform:translateX(18px) scale(.99);}
+      to{opacity:1;transform:none;}
+    }
+    @keyframes cardInUp{
+      from{opacity:0;transform:translateY(16px) scale(.99);}
+      to{opacity:1;transform:none;}
     }
     .problem-card{
       grid-area:problem;
@@ -138,6 +192,30 @@
       justify-content:space-between;
       gap:16px;
       margin-bottom:18px;
+    }
+    .problem-label-row{
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:8px;
+    }
+    .problem-label-row .section-label{margin:0;}
+    .learning-tag{
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      border:1px solid rgba(63,143,118,.16);
+      border-radius:999px;
+      background:#f3faf6;
+      color:var(--primary-dark);
+      padding:4px 9px;
+      font-size:11px;
+      font-weight:700;
+      line-height:1;
+    }
+    .learning-tag .material-symbols-outlined{
+      font-size:14px;
     }
     .section-label{
       margin:0 0 8px;
@@ -469,6 +547,14 @@
       .footer-inner{justify-content:stretch;}
       .primary-action{width:100%;}
     }
+    @media (prefers-reduced-motion:reduce){
+      .page,
+      .card,
+      .progress-bar{
+        animation:none !important;
+        transition:none !important;
+      }
+    }
   </style>
 </head>
 
@@ -481,6 +567,10 @@
       <div class="title-block">
         <h1 id="unitTitle">因数分解</h1>
         <p id="questionCounter">第 1 問 / 全 10 問</p>
+        <div class="footprint-wrap" aria-label="今日の足あと">
+          <span class="footprint-label">今日の足あと</span>
+          <div class="footprints" id="footprints"></div>
+        </div>
       </div>
       <button id="closeBtn" class="icon-button" type="button" aria-label="閉じる">
         <span class="material-symbols-outlined">close</span>
@@ -493,7 +583,13 @@
     <section class="card problem-card" aria-labelledby="problemTitle">
       <div class="card-head">
         <div>
-          <p class="section-label" id="problemTitle">問題</p>
+          <div class="problem-label-row">
+            <p class="section-label" id="problemTitle">問題</p>
+            <span class="learning-tag">
+              <span class="material-symbols-outlined">category</span>
+              <span id="learningItemTag">学習項目</span>
+            </span>
+          </div>
           <p class="problem-prompt">
             <strong id="questionIndexLabel">【問題1】</strong>
             <span id="questionPrompt">次の式を因数分解しなさい。</span>
@@ -733,6 +829,30 @@
         if(el) el.innerHTML = html;
       }
 
+      function getLearningType(question){
+        const map = {
+          '3-A-02-01':'共通因数',
+          '3-A-02-02':'積と和',
+          '3-A-02-03':'平方公式',
+          '3-A-02-04':'平方の差',
+          '3-A-02-05':'共通因数＋公式'
+        };
+        return map[question?.itemId] || question?.ability || '学習項目';
+      }
+
+      function renderFootprints(mode){
+        const container = document.getElementById('footprints');
+        if(!container) return;
+        container.innerHTML = Array.from({ length: total }, (_, index) => {
+          const number = index + 1;
+          let state = '';
+          if(number < currentIndex) state = 'done';
+          if(number === currentIndex) state = mode === 'correct' ? 'correct' : 'current';
+          const label = state === 'done' || state === 'correct' ? '完了' : state === 'current' ? '学習中' : '未実施';
+          return `<span class="footprint-dot ${state}" title="${number}問目 ${label}" aria-label="${number}問目 ${label}"></span>`;
+        }).join('');
+      }
+
       function renderQuestion(){
         currentQuestion = questions[currentIndex - 1] || questions[0] || {
           prompt:'次の式を因数分解しなさい。',
@@ -749,11 +869,12 @@
         setText('questionCounter', `第 ${currentIndex} 問 / 全 ${total} 問`);
         setText('questionIndexLabel', `【問題${currentIndex}】`);
         setText('questionPrompt', currentQuestion.prompt || '次の式を因数分解しなさい。');
+        setText('learningItemTag', getLearningType(currentQuestion));
         setText('difficultyLabel', `難易度 ${currentQuestion.irtDifficulty ?? '-'} / 300`);
         setText('difficultySummary', `難易度 ${currentQuestion.irtDifficulty ?? '-'} / 300`);
         setText('problemNumberLabel', `問題番号：${currentQuestion.problemNumber || currentQuestion.itemId || '-'}`);
         setText('levelLabel', currentQuestion.levelLabel || '基礎レベル');
-        setText('abilityLabel', currentQuestion.ability || currentQuestion.title || '学習項目');
+        setText('abilityLabel', getLearningType(currentQuestion));
         setHtml('questionFormula', renderMath(currentQuestion.formula));
         setHtml('studentAnswer', renderMath(currentQuestion.answer));
         setHtml('correctAnswer', renderMath(currentQuestion.answer));
@@ -762,6 +883,7 @@
         if(formula) formula.setAttribute('aria-label', normalizeMathSource(currentQuestion.formula));
         const progress = document.getElementById('progressBar');
         if(progress) progress.style.width = `${Math.max(8, Math.round(currentIndex / total * 100))}%`;
+        renderFootprints('correct');
         const next = document.getElementById('nextQuestionLink');
         if(next){
           if(currentIndex >= total){
