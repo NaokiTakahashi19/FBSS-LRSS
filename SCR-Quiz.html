@@ -482,9 +482,16 @@
       background:#f4fbf5;
       border:1px solid rgba(63,143,118,.2);
     }
-    .answer-card.is-incorrect .feedback-card{
+    .feedback-card.is-incorrect{
       background:#fff7ed;
       border-color:rgba(217,154,40,.3);
+    }
+    .result-feedback-card{
+      margin:0;
+      padding:18px 20px;
+      min-height:94px;
+      align-items:center;
+      box-shadow:var(--shadow);
     }
     .feedback-icon{
       width:40px;
@@ -496,7 +503,7 @@
       color:#fff;
       background:var(--primary);
     }
-    .answer-card.is-incorrect .feedback-icon{background:var(--orange);}
+    .feedback-card.is-incorrect .feedback-icon{background:var(--orange);}
     .feedback-copy{
       display:grid;
       gap:3px;
@@ -508,7 +515,7 @@
       color:var(--primary-dark);
       font-size:15px;
     }
-    .answer-card.is-incorrect .feedback-copy b{color:#a45d12;}
+    .feedback-card.is-incorrect .feedback-copy b{color:#a45d12;}
     .answer-paper{
       position:relative;
       min-height:224px;
@@ -847,39 +854,62 @@
     body.is-grading .primary-action .material-symbols-outlined{
       animation:gradeSpin .7s linear infinite;
     }
+    .primary-action.action-morph{
+      animation:actionMorph .36s cubic-bezier(.18,.84,.24,1) both;
+    }
     .soft-transition{
-      animation:softFlash .48s cubic-bezier(.18,.84,.24,1) both;
+      animation:viewSettle .34s ease both;
     }
-    .soft-transition .card{
-      animation:cardPopIn .52s cubic-bezier(.18,.84,.24,1) both;
+    .soft-transition .problem-card{
+      animation:problemAnchor .34s ease both;
     }
-    .soft-transition .card:nth-child(2){animation-delay:.04s;}
-    .soft-transition .card:nth-child(3){animation-delay:.08s;}
+    .soft-transition .answer-stack,
+    .soft-transition .result-side{
+      animation:panelSwapIn .58s cubic-bezier(.18,.84,.24,1) both;
+      transform-origin:center;
+    }
+    .soft-transition .calc-card{
+      animation:calcSheetIn .48s cubic-bezier(.18,.84,.24,1) .05s both;
+    }
+    .soft-transition .explain-card{
+      animation:explainReveal .62s cubic-bezier(.18,.84,.24,1) .06s both;
+      transform-origin:top center;
+    }
+    body.transition-to-question .soft-transition .answer-stack{
+      animation-name:panelSwapBack;
+    }
+    body.transition-to-question .soft-transition .calc-card{
+      animation-name:calcSheetBack;
+    }
     .transition-effect{
       position:fixed;
-      inset:72px 0 78px;
+      top:96px;
+      right:24px;
+      bottom:92px;
+      left:calc(50% + 70px);
       z-index:45;
       overflow:hidden;
       pointer-events:none;
       opacity:0;
+      border-radius:20px;
     }
     .transition-effect::before{
       content:"";
       position:absolute;
-      top:20%;
-      left:-18%;
-      width:36%;
-      height:58%;
-      border-radius:24px;
-      background:linear-gradient(100deg, rgba(255,255,251,0), rgba(255,255,251,.82) 48%, rgba(255,255,251,0));
-      transform:skewX(-16deg) translateX(-100%);
+      inset:10px;
+      border-radius:18px;
+      background:
+        linear-gradient(100deg, rgba(255,255,251,0), rgba(255,255,251,.86) 46%, rgba(255,255,251,0)),
+        radial-gradient(circle at 28% 50%, rgba(217,154,40,.12), transparent 48%),
+        radial-gradient(circle at 70% 44%, rgba(63,143,118,.15), transparent 50%);
+      transform:translateX(-105%) skewX(-12deg);
       filter:drop-shadow(0 18px 26px rgba(63,143,118,.08));
     }
     .transition-effect span{
       position:absolute;
-      width:10px;
-      height:10px;
-      border-radius:3px;
+      width:9px;
+      height:9px;
+      border-radius:2px;
       opacity:0;
       background:var(--primary);
       box-shadow:0 8px 16px rgba(63,143,118,.18);
@@ -906,26 +936,51 @@
     .transition-effect.is-active span:nth-child(6){animation-delay:.2s;}
     .transition-effect.is-active span:nth-child(7){animation-delay:.1s;}
     .transition-effect.is-active span:nth-child(8){animation-delay:.18s;}
-    }
-    @keyframes softFlash{
-      0%{opacity:.08; transform:translateX(22px) scale(.985);}
-      68%{opacity:1; transform:translateX(-2px) scale(1.004);}
+    @keyframes viewSettle{
+      0%{opacity:.74;}
       100%{opacity:1; transform:translateX(0);}
     }
-    @keyframes cardPopIn{
-      0%{opacity:.2; transform:translateY(12px) scale(.985);}
-      70%{opacity:1; transform:translateY(-2px) scale(1.004);}
+    @keyframes problemAnchor{
+      0%{opacity:.82; transform:scale(.994);}
+      100%{opacity:1; transform:scale(1);}
+    }
+    @keyframes panelSwapIn{
+      0%{opacity:0; transform:translateX(34px) rotateY(-7deg) scale(.975);}
+      62%{opacity:1; transform:translateX(-3px) rotateY(1deg) scale(1.006);}
+      100%{opacity:1; transform:none;}
+    }
+    @keyframes panelSwapBack{
+      0%{opacity:0; transform:translateX(-28px) rotateY(6deg) scale(.975);}
+      62%{opacity:1; transform:translateX(3px) rotateY(-1deg) scale(1.006);}
+      100%{opacity:1; transform:none;}
+    }
+    @keyframes calcSheetIn{
+      0%{opacity:0; transform:translateY(20px) scale(.99);}
+      100%{opacity:1; transform:none;}
+    }
+    @keyframes calcSheetBack{
+      0%{opacity:0; transform:translateY(14px) scale(.99);}
+      100%{opacity:1; transform:none;}
+    }
+    @keyframes explainReveal{
+      0%{opacity:0; transform:translateY(18px) scaleY(.96);}
+      66%{opacity:1; transform:translateY(-2px) scaleY(1.006);}
       100%{opacity:1; transform:none;}
     }
     @keyframes pageSweep{
-      0%{transform:skewX(-16deg) translateX(-120%); opacity:0;}
+      0%{transform:translateX(-105%) skewX(-12deg); opacity:0;}
       22%{opacity:1;}
-      100%{transform:skewX(-16deg) translateX(380%); opacity:0;}
+      100%{transform:translateX(105%) skewX(-12deg); opacity:0;}
     }
     @keyframes paperSpark{
-      0%{opacity:0; transform:translateY(16px) rotate(0deg) scale(.4);}
-      38%{opacity:1; transform:translateY(-16px) rotate(16deg) scale(1.1);}
-      100%{opacity:0; transform:translateY(-44px) rotate(42deg) scale(.72);}
+      0%{opacity:0; transform:translateY(12px) rotate(0deg) scale(.45);}
+      38%{opacity:1; transform:translateY(-12px) rotate(16deg) scale(1.05);}
+      100%{opacity:0; transform:translateY(-34px) rotate(42deg) scale(.72);}
+    }
+    @keyframes actionMorph{
+      0%{transform:scale(.96);}
+      58%{transform:scale(1.035);}
+      100%{transform:scale(1);}
     }
     @keyframes gradePulse{
       from{transform:translateY(0) scale(1);}
@@ -959,6 +1014,10 @@
       .answer-canvas{height:172px;}
       .calc-canvas{height:260px;}
       .test-formula{font-size:28px;}
+      .transition-effect{
+        inset:auto 14px 92px;
+        height:260px;
+      }
     }
     @media (max-width:640px){
       .header-inner{grid-template-columns:auto 1fr auto;}
@@ -1144,18 +1203,19 @@
                 <span id="statusText">正解</span>
               </div>
             </div>
-            <div class="feedback-card" aria-label="採点フィードバック">
-              <span class="feedback-icon material-symbols-outlined" id="feedbackIcon">workspace_premium</span>
-              <div class="feedback-copy">
-                <b id="feedbackTitle">いい調子、正解です</b>
-                <span id="feedbackText">この1問で累積解答数に +1問。次の問題へ進む準備ができました。</span>
-              </div>
-            </div>
             <div class="answer-paper">
               <div class="answer-label">あなたの解答</div>
               <div class="answer-value" id="studentAnswer">\(3xy(x+2)\)</div>
               <div class="stamp is-correct" id="resultStamp" aria-hidden="true"><span class="stamp-label" id="stampLabel">正解</span></div>
               <div class="answer-badge" id="answerBadge">正解</div>
+            </div>
+          </section>
+
+          <section class="card feedback-card result-feedback-card" id="resultFeedbackCard" aria-label="採点フィードバック">
+            <span class="feedback-icon material-symbols-outlined" id="feedbackIcon">workspace_premium</span>
+            <div class="feedback-copy">
+              <b id="feedbackTitle">いい調子、正解です</b>
+              <span id="feedbackText">この1問で累積解答数に +1問。次の問題へ進む準備ができました。</span>
             </div>
           </section>
         </div>
@@ -1488,9 +1548,14 @@
           card.classList.toggle('is-correct', isCorrect);
           card.classList.toggle('is-incorrect', !isCorrect);
         }
+        const feedbackCard = document.getElementById('resultFeedbackCard');
+        if(feedbackCard){
+          feedbackCard.classList.toggle('is-correct', isCorrect);
+          feedbackCard.classList.toggle('is-incorrect', !isCorrect);
+        }
         setText('statusIcon', isCorrect ? 'check_circle' : 'cancel');
         setText('statusText', isCorrect ? '正解' : '不正解');
-        setText('feedbackIcon', isCorrect ? 'workspace_premium' : 'psychology_alt');
+        setText('feedbackIcon', isCorrect ? 'workspace_premium' : 'error');
         setText('feedbackTitle', isCorrect ? 'いい調子、正解です' : 'あと少し、見直せば届きます');
         setText(
           'feedbackText',
@@ -1512,11 +1577,18 @@
         const action = document.getElementById('primaryAction');
         if(!action) return;
         action.innerHTML = `${escapeHtml(label)} <span class="material-symbols-outlined">${escapeHtml(icon)}</span>`;
+        if(hasShownInitialView){
+          action.classList.remove('action-morph');
+          void action.offsetWidth;
+          action.classList.add('action-morph');
+          window.setTimeout(() => action.classList.remove('action-morph'), 420);
+        }
       }
 
-      function playSwitchEffect(){
+      function playSwitchEffect(name){
         const effect = document.getElementById('transitionEffect');
         if(!effect) return;
+        effect.dataset.mode = name;
         effect.classList.remove('is-active');
         void effect.offsetWidth;
         effect.classList.add('is-active');
@@ -1527,13 +1599,19 @@
       }
 
       function showView(name){
+        const previousView = currentView;
         currentView = name;
         const questionView = document.getElementById('questionView');
         const resultView = document.getElementById('resultView');
         questionView?.classList.toggle('is-active', name === 'question');
         resultView?.classList.toggle('is-active', name === 'result');
-        if(hasShownInitialView){
-          playSwitchEffect();
+        if(hasShownInitialView && previousView !== name){
+          document.body.classList.remove('transition-to-question', 'transition-to-result');
+          document.body.classList.add(`transition-to-${name}`);
+          window.setTimeout(() => {
+            document.body.classList.remove('transition-to-question', 'transition-to-result');
+          }, 760);
+          playSwitchEffect(name);
         } else {
           hasShownInitialView = true;
         }
