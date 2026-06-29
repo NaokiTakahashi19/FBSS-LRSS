@@ -40,6 +40,7 @@
       --line:rgba(63,143,118,.2);
       --shadow:0 14px 28px rgba(71,91,82,.09);
       --radius:18px;
+      --answer-panel-height:184px;
     }
     *{box-sizing:border-box;}
     html{min-width:320px;}
@@ -302,6 +303,7 @@
       justify-content:space-between;
       gap:16px;
       margin-bottom:10px;
+      min-height:40px;
     }
     .tool-group{
       display:flex;
@@ -363,7 +365,7 @@
       right:14px;
       color:#66787d;
     }
-    .answer-canvas{height:184px;}
+    .answer-canvas{height:var(--answer-panel-height);}
     .calc-canvas{
       height:min(44vh,420px);
       min-height:310px;
@@ -453,7 +455,8 @@
       align-items:center;
       justify-content:space-between;
       gap:14px;
-      margin-bottom:14px;
+      margin-bottom:10px;
+      min-height:40px;
     }
     .status-pill{
       display:inline-flex;
@@ -468,9 +471,9 @@
       font-weight:900;
     }
     .answer-card.is-incorrect .status-pill{
-      color:var(--danger);
-      background:var(--danger-soft);
-      border-color:rgba(239,68,68,.28);
+      color:#d27722;
+      background:#fff8e8;
+      border-color:rgba(217,154,40,.34);
     }
     .feedback-card{
       display:flex;
@@ -518,7 +521,8 @@
     .feedback-card.is-incorrect .feedback-copy b{color:#a45d12;}
     .answer-paper{
       position:relative;
-      min-height:224px;
+      min-height:0;
+      height:var(--answer-panel-height);
       border-radius:16px;
       border:2px solid rgba(63,143,118,.28);
       background-color:#fff;
@@ -990,6 +994,7 @@
       to{transform:rotate(360deg);}
     }
     @media (orientation:landscape) and (min-width:900px){
+      :root{--answer-panel-height:224px;}
       .lesson-grid{
         grid-template-columns:minmax(0,.88fr) minmax(440px,.72fr);
       }
@@ -999,9 +1004,7 @@
           "problem answer"
           "explain explain";
       }
-      .answer-canvas{height:224px;}
       .problem-card{min-height:354px;}
-      .answer-paper{min-height:268px;}
     }
     @media (max-width:900px){
       .header-inner,
@@ -1011,7 +1014,7 @@
       .result-grid{grid-template-columns:1fr;}
       .calc-card{grid-column:auto;}
       .problem-card{min-height:250px;}
-      .answer-canvas{height:172px;}
+      :root{--answer-panel-height:172px;}
       .calc-canvas{height:260px;}
       .test-formula{font-size:28px;}
       .transition-effect{
@@ -1024,8 +1027,8 @@
       .mode-pill{display:none;}
       .page{padding-top:18px;}
       .card-head,
-      .result-status,
       .tool-row{align-items:flex-start; flex-direction:column;}
+      .result-status{align-items:center;}
       .tool-row{gap:10px;}
       .tool-group{align-self:flex-end;}
       .problem-card{padding:22px;}
