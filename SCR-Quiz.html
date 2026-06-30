@@ -431,6 +431,13 @@
       font-size:14px;
       font-weight:700;
     }
+    .recognition-box.is-error{
+      color:#b45309;
+      background:#fff8e8;
+      border-color:rgba(217,154,40,.36);
+      box-shadow:0 0 0 4px rgba(217,154,40,.12);
+      animation:noticeShake .32s ease both;
+    }
     .calc-card{
       grid-column:1 / -1;
       padding:18px;
@@ -993,6 +1000,11 @@
     @keyframes gradeSpin{
       to{transform:rotate(360deg);}
     }
+    @keyframes noticeShake{
+      0%,100%{transform:translateX(0);}
+      25%{transform:translateX(-4px);}
+      75%{transform:translateX(4px);}
+    }
     @media (orientation:landscape) and (min-width:900px){
       :root{--answer-panel-height:224px;}
       .lesson-grid{
@@ -1274,6 +1286,7 @@
       let hasShownInitialView = false;
       let isTransitioning = false;
       let effectTimer = null;
+      let hasRecognizedAnswer = false;
 
       const fallbackQuestion = {
         prompt:'次の式を因数分解しなさい。',
@@ -1527,13 +1540,14 @@
         currentQuestion = questions[currentIndex - 1] || questions[0] || fallbackQuestion;
         currentView = 'question';
         currentResult = '';
+        hasRecognizedAnswer = false;
         sessionStorage.setItem('currentMathQuestionIndex', String(currentIndex));
         updateHeader('question');
         renderSharedQuestion('');
         renderFootprints('current');
         setText('ocrResultText', '回答欄の文字認識ボタンを押してください');
         const ocr = document.getElementById('ocrResultText');
-        if(ocr) ocr.classList.remove('has-math');
+        if(ocr) ocr.classList.remove('has-math', 'is-error');
         clearAllCanvases();
         setPrimaryAction('採点する', 'check_circle');
         showView('question');
@@ -1798,6 +1812,8 @@
       document.getElementById('ocrTrigger')?.addEventListener('click', () => {
         const ocrResult = document.getElementById('ocrResultText');
         if(!ocrResult || !currentQuestion) return;
+        hasRecognizedAnswer = true;
+        ocrResult.classList.remove('is-error');
         ocrResult.classList.add('has-math');
         ocrResult.innerHTML = mathInline(currentQuestion.answer);
         typeset();
@@ -1806,6 +1822,15 @@
       document.getElementById('primaryAction')?.addEventListener('click', () => {
         if(isTransitioning) return;
         if(currentView === 'question'){
+          if(!hasRecognizedAnswer){
+            const ocrResult = document.getElementById('ocrResultText');
+            if(ocrResult){
+              ocrResult.classList.remove('has-math');
+              ocrResult.classList.add('is-error');
+              ocrResult.textContent = '未回答です。文字認識ボタンを押してから採点してください。';
+            }
+            return;
+          }
           isTransitioning = true;
           document.body.classList.add('is-grading');
           setPrimaryAction('採点中', 'progress_activity');
