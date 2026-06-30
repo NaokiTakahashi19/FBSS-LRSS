@@ -306,7 +306,7 @@
 		            width: calc(100% - 100px);
 		            height: 92px;
 		            border: 1.5px solid rgba(63, 143, 118, .36);
-		            border-radius: 24px;
+		            border-radius: 12px;
 		            background: linear-gradient(150deg, #f8fffb 0%, #d6eee5 100%);
 		            box-shadow: 0 12px 18px rgba(72, 92, 82, .1);
 		            color: #24332f;
@@ -730,12 +730,12 @@
 	</section>
 </div>
 <div class="analysis-grid grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
-<section class="space-y-4">
+<section class="space-y-4 flex flex-col">
 <div class="ml-1">
 <p class="section-kicker">実施情報</p>
 <h2 class="section-title">実施サマリー</h2>
 </div>
-	<div class="report-card p-5 space-y-4">
+	<div class="report-card p-5 space-y-4 flex-1">
 	<div class="grid grid-cols-2 gap-3">
 	<div class="rounded-xl border border-emerald-100 bg-white/85 p-3 shadow-sm">
 	<p class="metric-label">推定学力値</p>
@@ -786,12 +786,12 @@
 </div>
 	</div>
 	</section>
-<section class="space-y-4">
+<section class="space-y-4 flex flex-col">
 <div class="ml-1">
 <p class="section-kicker">領域分析</p>
 <h2 class="section-title">各領域の評価</h2>
 </div>
-	<div class="report-card p-4">
+	<div class="report-card p-4 flex-1">
 	<div class="flex items-center justify-between mb-2">
 	<p class="card-subtitle">領域別バランス</p>
 	<p class="text-[11px] font-bold text-slate-400">現在・前回</p>
