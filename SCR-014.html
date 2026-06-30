@@ -282,12 +282,8 @@
 	        }
 	        .result-textbook .ability-stack-card {
 		            position: relative;
-		            min-height: 142px;
+		            min-height: 150px;
 		            overflow: visible;
-		            opacity: 0;
-		            transform: translateY(34px) scale(.62) rotate(-4deg);
-		            animation: masteryCardIn .9s cubic-bezier(.14, .9, .18, 1.22) forwards;
-		            animation-delay: var(--delay, .1s);
 	        }
 	        .result-textbook .ability-card-count {
 		            position: absolute;
@@ -304,16 +300,32 @@
 	        }
 	        .result-textbook .ability-stack-layer {
 		            position: absolute;
-		            left: calc(var(--i) * 18px);
-		            top: calc(var(--i) * 14px);
+		            left: calc(var(--i) * 28px);
+		            top: calc(var(--i) * 15px);
 		            z-index: calc(10 - var(--i));
-		            width: calc(100% - 54px);
+		            width: calc(100% - 100px);
 		            height: 92px;
 		            border: 1.5px solid rgba(63, 143, 118, .36);
 		            border-radius: 24px;
 		            background: linear-gradient(150deg, #f8fffb 0%, #d6eee5 100%);
 		            box-shadow: 0 12px 18px rgba(72, 92, 82, .1);
 		            color: #24332f;
+		            opacity: 0;
+		            transform: translateY(-18px) scale(.94) rotate(-2deg);
+		            transform-origin: center top;
+		            animation: abilityLayerStack .62s cubic-bezier(.18, .88, .2, 1.18) forwards;
+	        }
+	        .result-textbook .ability-stack-layer:nth-of-type(1) {
+		            animation-delay: calc(var(--delay, .1s) + .04s);
+	        }
+	        .result-textbook .ability-stack-layer:nth-of-type(2) {
+		            animation-delay: calc(var(--delay, .1s) + .18s);
+	        }
+	        .result-textbook .ability-stack-layer:nth-of-type(3) {
+		            animation-delay: calc(var(--delay, .1s) + .32s);
+	        }
+	        .result-textbook .ability-stack-layer:nth-of-type(4) {
+		            animation-delay: calc(var(--delay, .1s) + .46s);
 	        }
 	        .result-textbook .ability-stack-card.is-warm .ability-stack-layer {
 		            border-color: rgba(211, 154, 58, .38);
@@ -333,7 +345,7 @@
 	        }
 	        .result-textbook .ability-stack-q {
 		            position: absolute;
-		            right: 18px;
+		            right: 6px;
 		            bottom: 14px;
 		            font-family: Lexend, "Noto Sans JP", sans-serif;
 		            font-size: 18px;
@@ -361,14 +373,14 @@
 		            margin-top: 28px;
 	        }
 	        .result-textbook .radar-panel {
-		            height: 220px;
+		            height: 340px;
 		            min-height: 0;
 		            display: flex;
 		            align-items: center;
 		            justify-content: center;
 	        }
 	        .result-textbook .radar-wrap {
-		            width: min(88%, 300px);
+		            width: min(90%, 370px);
 	        }
 	        .result-textbook .session-area-path {
 		            opacity: 0;
@@ -482,6 +494,20 @@
 		                transform: rotate(20deg) translateX(420%);
 		            }
 	        }
+	        @keyframes abilityLayerStack {
+		            0% {
+		                opacity: 0;
+		                transform: translateY(-18px) scale(.94) rotate(-2deg);
+		            }
+		            62% {
+		                opacity: 1;
+		                transform: translateY(3px) scale(1.02) rotate(1deg);
+		            }
+		            100% {
+		                opacity: 1;
+		                transform: none;
+		            }
+	        }
 	        @keyframes sessionLineDraw {
 		            to {
 		                stroke-dashoffset: 0;
@@ -520,7 +546,7 @@
 		            .result-textbook .mastery-card::after,
 		            .result-textbook .mastery-icon,
 		            .result-textbook .ability-stack-card,
-		            .result-textbook .ability-stack-card::after,
+		            .result-textbook .ability-stack-layer,
 		            .result-textbook .session-area-path,
 		            .result-textbook .session-line,
 		            .result-textbook .session-point,
@@ -772,8 +798,8 @@
 	</div>
 	<div class="soft-panel radar-panel rounded-2xl p-1 overflow-hidden">
 	<div class="radar-wrap mx-auto">
-	<svg class="h-auto w-full" viewBox="0 8 300 232" role="img" aria-label="数学の領域別バランス 現在と前回の比較">
-	<g transform="translate(150 118)">
+	<svg class="h-auto w-full" viewBox="0 0 300 250" role="img" aria-label="数学の領域別バランス 現在と前回の比較">
+	<g transform="translate(150 122)">
 	<g fill="none" stroke="#dbe4f0" stroke-width="1.4">
 	<circle r="88"></circle>
 	<circle r="66"></circle>
@@ -793,12 +819,12 @@
 	<g font-family="Noto Sans JP, sans-serif" font-weight="900" font-size="13" fill="#808080">
 	<text x="150" y="18" text-anchor="middle">数と式</text>
 	<text x="284" y="127" text-anchor="end">関数</text>
-	<text x="150" y="238" text-anchor="middle">図形</text>
+	<text x="150" y="242" text-anchor="middle">図形</text>
 	<text x="16" y="127">資料活用</text>
 	</g>
 	<g font-family="Noto Sans JP, sans-serif" font-size="10" font-weight="800">
-	<circle cx="106" cy="216" r="4" fill="#00906c"></circle><text x="114" y="220" fill="#808080">現在</text>
-	<circle cx="160" cy="216" r="4" fill="#d39a3a"></circle><text x="168" y="220" fill="#808080">前回</text>
+	<circle cx="106" cy="220" r="4" fill="#00906c"></circle><text x="114" y="224" fill="#808080">現在</text>
+	<circle cx="160" cy="220" r="4" fill="#d39a3a"></circle><text x="168" y="224" fill="#808080">前回</text>
 	</g>
 	</svg>
 	</div>
@@ -831,19 +857,19 @@
 	</div>
 <div class="overflow-hidden rounded-xl border border-primary/10">
 	<div class="grid grid-cols-[72px_72px_1fr] bg-primary/5 px-4 py-2 text-xs font-bold text-slate-500">
-	<span>問題</span><span>結果</span><span>関連する主要能力</span>
+	<span>問題</span><span>結果</span><span>学習項目</span>
 	</div>
 	<div class="divide-y divide-primary/10 text-sm">
-	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q1</span><span class="font-bold text-primary">○</span><span>因数分解の公式適用・構造認識</span></div>
-	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q2</span><span class="font-bold text-primary">○</span><span>因数分解の公式適用・構造認識</span></div>
-	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q3</span><span class="font-bold text-primary">○</span><span>因数分解の公式適用・構造認識</span></div>
-	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q4</span><span class="font-bold text-[#9a4b45]">×</span><span>因数分解の公式適用・構造認識</span></div>
-	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q5</span><span class="font-bold text-primary">○</span><span>正負の数の乗除・符号判断</span></div>
-	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q6</span><span class="font-bold text-primary">○</span><span>正負の数の乗除・符号判断</span></div>
-	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q7</span><span class="font-bold text-[#9a4b45]">×</span><span>正負の数の乗除・符号判断</span></div>
-	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q8</span><span class="font-bold text-[#9a4b45]">×</span><span>正負の数の乗除・符号判断</span></div>
-	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q9</span><span class="font-bold text-primary">○</span><span>因数分解の公式適用・正負の数の乗除・符号判断</span></div>
-	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q10</span><span class="font-bold text-[#9a4b45]">×</span><span>因数分解の公式適用・構造認識・符号判断</span></div>
+	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q1</span><span class="font-bold text-primary">○</span><span>因数分解－共通因数のくくりだし</span></div>
+	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q2</span><span class="font-bold text-primary">○</span><span>因数分解－共通因数のくくりだし</span></div>
+	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q3</span><span class="font-bold text-primary">○</span><span>因数分解－共通因数のくくりだし</span></div>
+	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q4</span><span class="font-bold text-[#9a4b45]">×</span><span>因数分解－共通因数のくくりだし</span></div>
+	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q5</span><span class="font-bold text-primary">○</span><span>因数分解－乗法の公式 (x + a)(x + b) = x^2 + (a + b)x + ab を利用した因数分解</span></div>
+	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q6</span><span class="font-bold text-primary">○</span><span>因数分解－乗法の公式 (x + a)(x + b) = x^2 + (a + b)x + ab を利用した因数分解</span></div>
+	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q7</span><span class="font-bold text-[#9a4b45]">×</span><span>因数分解－乗法の公式 (x + a)(x + b) = x^2 + (a + b)x + ab を利用した因数分解</span></div>
+	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q8</span><span class="font-bold text-[#9a4b45]">×</span><span>因数分解－乗法の公式 (x + a)(x + b) = x^2 + (a + b)x + ab を利用した因数分解</span></div>
+	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q9</span><span class="font-bold text-primary">○</span><span>因数分解－(x + a)^2, (x - a)^2 の乗法の公式を利用した因数分解</span></div>
+	<div class="grid grid-cols-[72px_72px_1fr] items-center px-4 py-2"><span class="font-bold text-slate-500">Q10</span><span class="font-bold text-[#9a4b45]">×</span><span>因数分解－(x + a)^2, (x - a)^2 の乗法の公式を利用した因数分解</span></div>
 	</div>
 	</div>
 	</div>
