@@ -354,7 +354,7 @@
 		            color: #2f745f;
 	        }
 	        .result-textbook .session-chart-panel {
-		            min-height: 350px;
+		            min-height: 410px;
 		            display: flex;
 		            align-items: stretch;
 	        }
@@ -362,7 +362,7 @@
 		            display: block;
 		            width: 100%;
 		            height: 100%;
-		            min-height: 340px;
+		            min-height: 400px;
 	        }
 	        .result-textbook .analysis-grid {
 		            margin-bottom: 24px;
@@ -372,6 +372,7 @@
 		            z-index: 1;
 		            clear: both;
 		            margin-top: 0;
+		            margin-bottom: 24px;
 	        }
 	        .result-textbook .radar-panel {
 		            height: 340px;
@@ -673,7 +674,7 @@
 	</div>
 	</div>
 	<div class="soft-panel session-chart-panel rounded-2xl p-3">
-	<svg class="session-chart-svg" viewBox="0 0 760 400" role="img" aria-label="過去7セッションの推定学力値推移">
+	<svg class="session-chart-svg" viewBox="0 0 760 460" role="img" aria-label="過去7セッションの推定学力値推移">
 	<defs>
 	<linearGradient id="sessionFill" x1="0" x2="0" y1="0" y2="1">
 	<stop offset="0%" stop-color="#3f8f76" stop-opacity=".22"></stop>
@@ -681,55 +682,55 @@
 	</linearGradient>
 	</defs>
 	<g font-family="Noto Sans JP, sans-serif" font-size="16" font-weight="800" fill="#6b756f">
-	<text x="42" y="22">300</text>
-	<text x="42" y="126">200</text>
-	<text x="42" y="230">100</text>
-	<text x="54" y="334">0</text>
+	<text x="42" y="18">300</text>
+	<text x="42" y="143">200</text>
+	<text x="42" y="268">100</text>
+	<text x="54" y="396">0</text>
 	</g>
 	<g stroke="#d8e4dd" stroke-width="1">
-	<line x1="82" y1="18" x2="724" y2="18"></line>
-	<line x1="82" y1="122" x2="724" y2="122"></line>
-	<line x1="82" y1="226" x2="724" y2="226"></line>
-	<line x1="82" y1="330" x2="724" y2="330"></line>
+	<line x1="82" y1="14" x2="724" y2="14"></line>
+	<line x1="82" y1="139" x2="724" y2="139"></line>
+	<line x1="82" y1="264" x2="724" y2="264"></line>
+	<line x1="82" y1="392" x2="724" y2="392"></line>
 	</g>
-	<path class="session-area-path" d="M98 138 L202 128 L306 120 L410 111 L514 105 L618 97 L720 93 L720 330 L98 330 Z" fill="url(#sessionFill)"></path>
-	<polyline class="session-line" points="98,138 202,128 306,120 410,111 514,105 618,97 720,93"></polyline>
+	<path class="session-area-path" d="M98 160 L202 149 L306 139 L410 127 L514 121 L618 111 L720 106 L720 392 L98 392 Z" fill="url(#sessionFill)"></path>
+	<polyline class="session-line" points="98,160 202,149 306,139 410,127 514,121 618,111 720,106"></polyline>
 	<g fill="#fff" stroke="#3f8f76" stroke-width="5">
-	<circle class="session-point" style="--delay:.56s" cx="98" cy="138" r="8"></circle>
-	<circle class="session-point" style="--delay:.66s" cx="202" cy="128" r="8"></circle>
-	<circle class="session-point" style="--delay:.76s" cx="306" cy="120" r="8"></circle>
-	<circle class="session-point" style="--delay:.86s" cx="410" cy="111" r="8"></circle>
-	<circle class="session-point" style="--delay:.96s" cx="514" cy="105" r="8"></circle>
-	<circle class="session-point" style="--delay:1.06s" cx="618" cy="97" r="8"></circle>
-	<circle class="session-point" style="--delay:1.16s" cx="720" cy="93" r="8"></circle>
+	<circle class="session-point" style="--delay:.56s" cx="98" cy="160" r="8"></circle>
+	<circle class="session-point" style="--delay:.66s" cx="202" cy="149" r="8"></circle>
+	<circle class="session-point" style="--delay:.76s" cx="306" cy="139" r="8"></circle>
+	<circle class="session-point" style="--delay:.86s" cx="410" cy="127" r="8"></circle>
+	<circle class="session-point" style="--delay:.96s" cx="514" cy="121" r="8"></circle>
+	<circle class="session-point" style="--delay:1.06s" cx="618" cy="111" r="8"></circle>
+	<circle class="session-point" style="--delay:1.16s" cx="720" cy="106" r="8"></circle>
 	</g>
 	<g font-family="Lexend, Noto Sans JP, sans-serif" font-size="18" font-weight="800" fill="#3f8f76">
-	<text class="session-value-label" style="--delay:.62s" x="80" y="121">185</text>
-	<text class="session-value-label" style="--delay:.72s" x="184" y="111">194</text>
-	<text class="session-value-label" style="--delay:.82s" x="288" y="103">202</text>
-	<text class="session-value-label" style="--delay:.92s" x="392" y="94">211</text>
-	<text class="session-value-label" style="--delay:1.02s" x="496" y="88">216</text>
-	<text class="session-value-label" style="--delay:1.12s" x="600" y="80">224</text>
-	<text class="session-value-label" style="--delay:1.22s" x="702" y="76">228</text>
+	<text class="session-value-label" style="--delay:.62s" x="80" y="143">185</text>
+	<text class="session-value-label" style="--delay:.72s" x="184" y="132">194</text>
+	<text class="session-value-label" style="--delay:.82s" x="288" y="122">202</text>
+	<text class="session-value-label" style="--delay:.92s" x="392" y="110">211</text>
+	<text class="session-value-label" style="--delay:1.02s" x="496" y="104">216</text>
+	<text class="session-value-label" style="--delay:1.12s" x="600" y="94">224</text>
+	<text class="session-value-label" style="--delay:1.22s" x="702" y="89">228</text>
 	</g>
 	<g font-family="Noto Sans JP, sans-serif" text-anchor="middle">
 	<g font-size="17" font-weight="900" fill="#3f8f76">
-	<text x="98" y="363">S1</text>
-	<text x="202" y="363">S2</text>
-	<text x="306" y="363">S3</text>
-	<text x="410" y="363">S4</text>
-	<text x="514" y="363">S5</text>
-	<text x="618" y="363">S6</text>
-	<text x="720" y="363">S7</text>
+	<text x="98" y="423">S1</text>
+	<text x="202" y="423">S2</text>
+	<text x="306" y="423">S3</text>
+	<text x="410" y="423">S4</text>
+	<text x="514" y="423">S5</text>
+	<text x="618" y="423">S6</text>
+	<text x="720" y="423">S7</text>
 	</g>
 	<g font-size="15" font-weight="800" fill="#6b756f">
-	<text x="98" y="386">10/21</text>
-	<text x="202" y="386">10/22</text>
-	<text x="306" y="386">10/23</text>
-	<text x="410" y="386">10/24</text>
-	<text x="514" y="386">10/24</text>
-	<text x="618" y="386">10/25</text>
-	<text x="720" y="386">10/25</text>
+	<text x="98" y="446">10/21</text>
+	<text x="202" y="446">10/22</text>
+	<text x="306" y="446">10/23</text>
+	<text x="410" y="446">10/24</text>
+	<text x="514" y="446">10/24</text>
+	<text x="618" y="446">10/25</text>
+	<text x="720" y="446">10/25</text>
 	</g>
 	</g>
 	</svg>
