@@ -434,7 +434,8 @@
 </div>
 </div>
 </section>
-<section class="mastery-section report-card p-5 mb-6" aria-label="正解した学習項目">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 items-stretch">
+<section class="mastery-section report-card p-5 h-full" aria-label="正解した学習項目">
 <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
 <div>
 <p class="text-xs font-bold text-slate-500">できた学習項目</p>
@@ -442,7 +443,7 @@
 </div>
 <span class="book-pill px-3 py-1 text-xs font-bold self-start sm:self-auto">8項目クリア</span>
 </div>
-<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8">
+<div class="grid gap-3 sm:grid-cols-2">
 <div class="mastery-card p-3 pl-4" style="--delay:.08s">
 <div class="flex items-center justify-between gap-2"><span class="mastery-icon material-symbols-outlined text-base">check</span><span class="text-[11px] font-bold text-primary">Q1</span></div>
 <p class="mt-3 text-sm font-bold text-slate-700">平方の差</p>
@@ -485,6 +486,78 @@
 </div>
 </div>
 </section>
+<section class="report-card p-5 h-full" aria-label="過去7セッションの推定学力値の変化">
+	<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mb-4">
+	<div>
+	<h3 class="text-sm font-bold text-slate-500">過去7セッションの推定学力値の変化</h3>
+	<p class="mt-1 text-xs font-bold text-slate-400">学習修了画面が表示されるたびに1セッションとして記録します。</p>
+	</div>
+	<span class="book-pill px-3 py-1 text-xs font-bold self-start sm:self-auto">最新 435 pt</span>
+	</div>
+	<div class="soft-panel rounded-2xl p-4">
+	<svg class="h-auto w-full" viewBox="0 0 760 268" role="img" aria-label="過去7セッションの推定学力値推移">
+	<defs>
+	<linearGradient id="sessionFill" x1="0" x2="0" y1="0" y2="1">
+	<stop offset="0%" stop-color="#3f8f76" stop-opacity=".22"></stop>
+	<stop offset="100%" stop-color="#3f8f76" stop-opacity=".02"></stop>
+	</linearGradient>
+	</defs>
+	<g font-family="Noto Sans JP, sans-serif" font-size="12" font-weight="700" fill="#6b756f">
+	<text x="36" y="36">450</text>
+	<text x="36" y="104">425</text>
+	<text x="36" y="172">400</text>
+	<text x="36" y="232">375</text>
+	</g>
+	<g stroke="#d8e4dd" stroke-width="1">
+	<line x1="78" y1="32" x2="724" y2="32"></line>
+	<line x1="78" y1="100" x2="724" y2="100"></line>
+	<line x1="78" y1="168" x2="724" y2="168"></line>
+	<line x1="78" y1="228" x2="724" y2="228"></line>
+	</g>
+	<path class="session-area-path" d="M96 183 L200 148 L304 125 L408 106 L512 84 L616 76 L720 68 L720 228 L96 228 Z" fill="url(#sessionFill)"></path>
+	<polyline class="session-line" points="96,183 200,148 304,125 408,106 512,84 616,76 720,68"></polyline>
+	<g fill="#fff" stroke="#3f8f76" stroke-width="4">
+	<circle class="session-point" style="--delay:.56s" cx="96" cy="183" r="6"></circle>
+	<circle class="session-point" style="--delay:.66s" cx="200" cy="148" r="6"></circle>
+	<circle class="session-point" style="--delay:.76s" cx="304" cy="125" r="6"></circle>
+	<circle class="session-point" style="--delay:.86s" cx="408" cy="106" r="6"></circle>
+	<circle class="session-point" style="--delay:.96s" cx="512" cy="84" r="6"></circle>
+	<circle class="session-point" style="--delay:1.06s" cx="616" cy="76" r="6"></circle>
+	<circle class="session-point" style="--delay:1.16s" cx="720" cy="68" r="6"></circle>
+	</g>
+	<g font-family="Lexend, Noto Sans JP, sans-serif" font-size="12" font-weight="800" fill="#3f8f76">
+	<text class="session-value-label" style="--delay:.62s" x="82" y="171">392</text>
+	<text class="session-value-label" style="--delay:.72s" x="186" y="136">405</text>
+	<text class="session-value-label" style="--delay:.82s" x="290" y="113">414</text>
+	<text class="session-value-label" style="--delay:.92s" x="394" y="94">421</text>
+	<text class="session-value-label" style="--delay:1.02s" x="498" y="72">429</text>
+	<text class="session-value-label" style="--delay:1.12s" x="602" y="64">432</text>
+	<text class="session-value-label" style="--delay:1.22s" x="706" y="56">435</text>
+	</g>
+	<g font-family="Noto Sans JP, sans-serif" text-anchor="middle">
+	<g font-size="12" font-weight="900" fill="#3f8f76">
+	<text x="96" y="246">S1</text>
+	<text x="200" y="246">S2</text>
+	<text x="304" y="246">S3</text>
+	<text x="408" y="246">S4</text>
+	<text x="512" y="246">S5</text>
+	<text x="616" y="246">S6</text>
+	<text x="720" y="246">S7</text>
+	</g>
+	<g font-size="10" font-weight="700" fill="#6b756f">
+	<text x="96" y="262">10/21</text>
+	<text x="200" y="262">10/22</text>
+	<text x="304" y="262">10/23</text>
+	<text x="408" y="262">10/24</text>
+	<text x="512" y="262">10/24</text>
+	<text x="616" y="262">10/25</text>
+	<text x="720" y="262">10/25</text>
+	</g>
+	</g>
+	</svg>
+	</div>
+	</section>
+</div>
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12 items-stretch">
 <section class="space-y-4">
 <h3 class="text-sm font-bold text-slate-500 ml-1">実施サマリー</h3>
@@ -582,91 +655,6 @@
 </div>
 </section>
 </div>
-<section class="mb-6">
-	<div class="report-card p-6">
-	<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mb-5">
-	<div>
-	<h3 class="text-sm font-bold text-slate-500">過去7セッションの推定学力値の変化</h3>
-	<p class="mt-1 text-xs font-bold text-slate-400">学習修了画面が表示されるたびに1セッションとして記録します。</p>
-	</div>
-	<span class="book-pill px-3 py-1 text-xs font-bold">最新 435 pt</span>
-	</div>
-	<div class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_220px]">
-	<div class="soft-panel rounded-2xl p-4">
-	<svg class="h-auto w-full" viewBox="0 0 760 268" role="img" aria-label="過去7セッションの推定学力値推移">
-	<defs>
-	<linearGradient id="sessionFill" x1="0" x2="0" y1="0" y2="1">
-	<stop offset="0%" stop-color="#3f8f76" stop-opacity=".22"></stop>
-	<stop offset="100%" stop-color="#3f8f76" stop-opacity=".02"></stop>
-	</linearGradient>
-	</defs>
-	<g font-family="Noto Sans JP, sans-serif" font-size="12" font-weight="700" fill="#6b756f">
-	<text x="36" y="36">450</text>
-	<text x="36" y="104">425</text>
-	<text x="36" y="172">400</text>
-	<text x="36" y="232">375</text>
-	</g>
-	<g stroke="#d8e4dd" stroke-width="1">
-	<line x1="78" y1="32" x2="724" y2="32"></line>
-	<line x1="78" y1="100" x2="724" y2="100"></line>
-	<line x1="78" y1="168" x2="724" y2="168"></line>
-	<line x1="78" y1="228" x2="724" y2="228"></line>
-	</g>
-	<path class="session-area-path" d="M96 183 L200 148 L304 125 L408 106 L512 84 L616 76 L720 68 L720 228 L96 228 Z" fill="url(#sessionFill)"></path>
-	<polyline class="session-line" points="96,183 200,148 304,125 408,106 512,84 616,76 720,68"></polyline>
-	<g fill="#fff" stroke="#3f8f76" stroke-width="4">
-	<circle class="session-point" style="--delay:.56s" cx="96" cy="183" r="6"></circle>
-	<circle class="session-point" style="--delay:.66s" cx="200" cy="148" r="6"></circle>
-	<circle class="session-point" style="--delay:.76s" cx="304" cy="125" r="6"></circle>
-	<circle class="session-point" style="--delay:.86s" cx="408" cy="106" r="6"></circle>
-	<circle class="session-point" style="--delay:.96s" cx="512" cy="84" r="6"></circle>
-	<circle class="session-point" style="--delay:1.06s" cx="616" cy="76" r="6"></circle>
-	<circle class="session-point" style="--delay:1.16s" cx="720" cy="68" r="6"></circle>
-	</g>
-	<g font-family="Lexend, Noto Sans JP, sans-serif" font-size="12" font-weight="800" fill="#3f8f76">
-	<text class="session-value-label" style="--delay:.62s" x="82" y="171">392</text>
-	<text class="session-value-label" style="--delay:.72s" x="186" y="136">405</text>
-	<text class="session-value-label" style="--delay:.82s" x="290" y="113">414</text>
-	<text class="session-value-label" style="--delay:.92s" x="394" y="94">421</text>
-	<text class="session-value-label" style="--delay:1.02s" x="498" y="72">429</text>
-	<text class="session-value-label" style="--delay:1.12s" x="602" y="64">432</text>
-	<text class="session-value-label" style="--delay:1.22s" x="706" y="56">435</text>
-	</g>
-	<g font-family="Noto Sans JP, sans-serif" text-anchor="middle">
-	<g font-size="12" font-weight="900" fill="#3f8f76">
-	<text x="96" y="246">S1</text>
-	<text x="200" y="246">S2</text>
-	<text x="304" y="246">S3</text>
-	<text x="408" y="246">S4</text>
-	<text x="512" y="246">S5</text>
-	<text x="616" y="246">S6</text>
-	<text x="720" y="246">S7</text>
-	</g>
-	<g font-size="10" font-weight="700" fill="#6b756f">
-	<text x="96" y="262">10/21</text>
-	<text x="200" y="262">10/22</text>
-	<text x="304" y="262">10/23</text>
-	<text x="408" y="262">10/24</text>
-	<text x="512" y="262">10/24</text>
-	<text x="616" y="262">10/25</text>
-	<text x="720" y="262">10/25</text>
-	</g>
-	</g>
-	</svg>
-	</div>
-	<div class="grid gap-3">
-	<div class="rounded-xl border border-emerald-100 bg-white/80 p-4">
-	<p class="text-xs font-bold text-slate-500">7セッション差分</p>
-	<p class="mt-1 text-2xl font-bold text-primary">+43 pt</p>
-	</div>
-	<div class="rounded-xl border border-amber-100 bg-white/80 p-4">
-	<p class="text-xs font-bold text-slate-500">同日内セッション</p>
-	<p class="mt-1 text-lg font-bold text-slate-700">10/24・10/25 に複数回</p>
-	</div>
-	</div>
-	</div>
-	</div>
-	</section>
 <section class="mb-6">
 	<div class="bg-gradient-to-r from-primary to-[#4c7da8] p-1 rounded-2xl shadow-lg shadow-primary/20">
 <div class="bg-white rounded-[calc(1rem-2px)] p-6 flex items-start gap-5">
