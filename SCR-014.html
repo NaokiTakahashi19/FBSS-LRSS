@@ -341,7 +341,7 @@
 		            color: #2f745f;
 	        }
 	        .result-textbook .session-chart-panel {
-		            min-height: 380px;
+		            min-height: 300px;
 		            display: flex;
 		            align-items: stretch;
 	        }
@@ -349,7 +349,7 @@
 		            display: block;
 		            width: 100%;
 		            height: 100%;
-		            min-height: 365px;
+		            min-height: 285px;
 	        }
 	        .result-textbook .analysis-grid {
 		            margin-bottom: 88px;
@@ -361,14 +361,14 @@
 		            margin-top: 28px;
 	        }
 	        .result-textbook .radar-panel {
-		            height: 270px;
+		            height: 220px;
 		            min-height: 0;
 		            display: flex;
 		            align-items: center;
 		            justify-content: center;
 	        }
 	        .result-textbook .radar-wrap {
-		            width: min(88%, 320px);
+		            width: min(88%, 300px);
 	        }
 	        .result-textbook .session-area-path {
 		            opacity: 0;
@@ -639,7 +639,7 @@
 	</div>
 	</div>
 	<div class="soft-panel session-chart-panel rounded-2xl p-3">
-	<svg class="session-chart-svg" viewBox="0 0 760 390" role="img" aria-label="過去7セッションの推定学力値推移">
+	<svg class="session-chart-svg" viewBox="0 0 760 320" role="img" aria-label="過去7セッションの推定学力値推移">
 	<defs>
 	<linearGradient id="sessionFill" x1="0" x2="0" y1="0" y2="1">
 	<stop offset="0%" stop-color="#3f8f76" stop-opacity=".22"></stop>
@@ -647,55 +647,55 @@
 	</linearGradient>
 	</defs>
 	<g font-family="Noto Sans JP, sans-serif" font-size="16" font-weight="800" fill="#6b756f">
-	<text x="34" y="34">450</text>
-	<text x="34" y="134">425</text>
-	<text x="34" y="234">400</text>
-	<text x="34" y="334">375</text>
+	<text x="34" y="24">450</text>
+	<text x="34" y="104">425</text>
+	<text x="34" y="184">400</text>
+	<text x="34" y="264">375</text>
 	</g>
 	<g stroke="#d8e4dd" stroke-width="1">
-	<line x1="82" y1="30" x2="724" y2="30"></line>
-	<line x1="82" y1="130" x2="724" y2="130"></line>
-	<line x1="82" y1="230" x2="724" y2="230"></line>
-	<line x1="82" y1="330" x2="724" y2="330"></line>
+	<line x1="82" y1="20" x2="724" y2="20"></line>
+	<line x1="82" y1="100" x2="724" y2="100"></line>
+	<line x1="82" y1="180" x2="724" y2="180"></line>
+	<line x1="82" y1="260" x2="724" y2="260"></line>
 	</g>
-	<path class="session-area-path" d="M98 264 L202 212 L306 176 L410 148 L514 116 L618 104 L720 92 L720 330 L98 330 Z" fill="url(#sessionFill)"></path>
-	<polyline class="session-line" points="98,264 202,212 306,176 410,148 514,116 618,104 720,92"></polyline>
+	<path class="session-area-path" d="M98 207 L202 166 L306 137 L410 114 L514 88 L618 78 L720 68 L720 260 L98 260 Z" fill="url(#sessionFill)"></path>
+	<polyline class="session-line" points="98,207 202,166 306,137 410,114 514,88 618,78 720,68"></polyline>
 	<g fill="#fff" stroke="#3f8f76" stroke-width="5">
-	<circle class="session-point" style="--delay:.56s" cx="98" cy="264" r="8"></circle>
-	<circle class="session-point" style="--delay:.66s" cx="202" cy="212" r="8"></circle>
-	<circle class="session-point" style="--delay:.76s" cx="306" cy="176" r="8"></circle>
-	<circle class="session-point" style="--delay:.86s" cx="410" cy="148" r="8"></circle>
-	<circle class="session-point" style="--delay:.96s" cx="514" cy="116" r="8"></circle>
-	<circle class="session-point" style="--delay:1.06s" cx="618" cy="104" r="8"></circle>
-	<circle class="session-point" style="--delay:1.16s" cx="720" cy="92" r="8"></circle>
+	<circle class="session-point" style="--delay:.56s" cx="98" cy="207" r="8"></circle>
+	<circle class="session-point" style="--delay:.66s" cx="202" cy="166" r="8"></circle>
+	<circle class="session-point" style="--delay:.76s" cx="306" cy="137" r="8"></circle>
+	<circle class="session-point" style="--delay:.86s" cx="410" cy="114" r="8"></circle>
+	<circle class="session-point" style="--delay:.96s" cx="514" cy="88" r="8"></circle>
+	<circle class="session-point" style="--delay:1.06s" cx="618" cy="78" r="8"></circle>
+	<circle class="session-point" style="--delay:1.16s" cx="720" cy="68" r="8"></circle>
 	</g>
 	<g font-family="Lexend, Noto Sans JP, sans-serif" font-size="18" font-weight="800" fill="#3f8f76">
-	<text class="session-value-label" style="--delay:.62s" x="80" y="245">392</text>
-	<text class="session-value-label" style="--delay:.72s" x="184" y="193">405</text>
-	<text class="session-value-label" style="--delay:.82s" x="288" y="157">414</text>
-	<text class="session-value-label" style="--delay:.92s" x="392" y="129">421</text>
-	<text class="session-value-label" style="--delay:1.02s" x="496" y="97">429</text>
-	<text class="session-value-label" style="--delay:1.12s" x="600" y="85">432</text>
-	<text class="session-value-label" style="--delay:1.22s" x="702" y="73">435</text>
+	<text class="session-value-label" style="--delay:.62s" x="80" y="190">392</text>
+	<text class="session-value-label" style="--delay:.72s" x="184" y="149">405</text>
+	<text class="session-value-label" style="--delay:.82s" x="288" y="120">414</text>
+	<text class="session-value-label" style="--delay:.92s" x="392" y="97">421</text>
+	<text class="session-value-label" style="--delay:1.02s" x="496" y="71">429</text>
+	<text class="session-value-label" style="--delay:1.12s" x="600" y="61">432</text>
+	<text class="session-value-label" style="--delay:1.22s" x="702" y="51">435</text>
 	</g>
 	<g font-family="Noto Sans JP, sans-serif" text-anchor="middle">
 	<g font-size="17" font-weight="900" fill="#3f8f76">
-	<text x="98" y="362">S1</text>
-	<text x="202" y="362">S2</text>
-	<text x="306" y="362">S3</text>
-	<text x="410" y="362">S4</text>
-	<text x="514" y="362">S5</text>
-	<text x="618" y="362">S6</text>
-	<text x="720" y="362">S7</text>
+	<text x="98" y="289">S1</text>
+	<text x="202" y="289">S2</text>
+	<text x="306" y="289">S3</text>
+	<text x="410" y="289">S4</text>
+	<text x="514" y="289">S5</text>
+	<text x="618" y="289">S6</text>
+	<text x="720" y="289">S7</text>
 	</g>
 	<g font-size="15" font-weight="800" fill="#6b756f">
-	<text x="98" y="382">10/21</text>
-	<text x="202" y="382">10/22</text>
-	<text x="306" y="382">10/23</text>
-	<text x="410" y="382">10/24</text>
-	<text x="514" y="382">10/24</text>
-	<text x="618" y="382">10/25</text>
-	<text x="720" y="382">10/25</text>
+	<text x="98" y="309">10/21</text>
+	<text x="202" y="309">10/22</text>
+	<text x="306" y="309">10/23</text>
+	<text x="410" y="309">10/24</text>
+	<text x="514" y="309">10/24</text>
+	<text x="618" y="309">10/25</text>
+	<text x="720" y="309">10/25</text>
 	</g>
 	</g>
 	</svg>
@@ -765,15 +765,15 @@
 <p class="section-kicker">領域分析</p>
 <h2 class="section-title">各領域の評価</h2>
 </div>
-	<div class="report-card p-5">
-	<div class="flex items-center justify-between mb-4">
+	<div class="report-card p-4">
+	<div class="flex items-center justify-between mb-2">
 	<p class="card-subtitle">領域別バランス</p>
 	<p class="text-[11px] font-bold text-slate-400">現在・前回</p>
 	</div>
 	<div class="soft-panel radar-panel rounded-2xl p-1 overflow-hidden">
 	<div class="radar-wrap mx-auto">
-	<svg class="h-auto w-full" viewBox="0 0 300 250" role="img" aria-label="数学の領域別バランス 現在と前回の比較">
-	<g transform="translate(150 122)">
+	<svg class="h-auto w-full" viewBox="0 8 300 232" role="img" aria-label="数学の領域別バランス 現在と前回の比較">
+	<g transform="translate(150 118)">
 	<g fill="none" stroke="#dbe4f0" stroke-width="1.4">
 	<circle r="88"></circle>
 	<circle r="66"></circle>
@@ -793,12 +793,12 @@
 	<g font-family="Noto Sans JP, sans-serif" font-weight="900" font-size="13" fill="#808080">
 	<text x="150" y="18" text-anchor="middle">数と式</text>
 	<text x="284" y="127" text-anchor="end">関数</text>
-	<text x="150" y="242" text-anchor="middle">図形</text>
+	<text x="150" y="238" text-anchor="middle">図形</text>
 	<text x="16" y="127">資料活用</text>
 	</g>
 	<g font-family="Noto Sans JP, sans-serif" font-size="10" font-weight="800">
-	<circle cx="106" cy="220" r="4" fill="#00906c"></circle><text x="114" y="224" fill="#808080">現在</text>
-	<circle cx="160" cy="220" r="4" fill="#d39a3a"></circle><text x="168" y="224" fill="#808080">前回</text>
+	<circle cx="106" cy="216" r="4" fill="#00906c"></circle><text x="114" y="220" fill="#808080">現在</text>
+	<circle cx="160" cy="216" r="4" fill="#d39a3a"></circle><text x="168" y="220" fill="#808080">前回</text>
 	</g>
 	</svg>
 	</div>
