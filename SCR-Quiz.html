@@ -1016,12 +1016,16 @@
         grid-template-areas:
           "problem answer"
           "explain explain";
+        align-items:stretch;
       }
       .lesson-grid > .problem-card{
         height:100%;
         min-height:354px;
       }
-      .result-grid > .problem-card{min-height:354px;}
+      .result-grid > .problem-card{
+        height:100%;
+        min-height:354px;
+      }
     }
     @media (max-width:900px){
       .header-inner,
