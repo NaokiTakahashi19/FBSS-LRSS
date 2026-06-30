@@ -134,6 +134,8 @@
       margin-top:4px;
     }
     .footprint-dot{
+      position:relative;
+      display:inline-block;
       width:9px;
       height:9px;
       border-radius:999px;
@@ -150,8 +152,26 @@
       box-shadow:0 0 0 3px rgba(217,154,40,.12);
     }
     .footprint-dot.incorrect{
-      background:var(--danger);
-      box-shadow:0 0 0 3px rgba(239,68,68,.12);
+      width:12px;
+      height:12px;
+      background:#fff9ed;
+      border:2px solid var(--orange);
+      box-shadow:0 0 0 3px rgba(217,154,40,.12);
+    }
+    .footprint-dot.incorrect::before,
+    .footprint-dot.incorrect::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:7px;
+      height:2px;
+      border-radius:999px;
+      background:var(--orange);
+      transform:translate(-50%,-50%) rotate(45deg);
+    }
+    .footprint-dot.incorrect::after{
+      transform:translate(-50%,-50%) rotate(-45deg);
     }
     .progress-track{
       height:5px;
@@ -455,7 +475,15 @@
     }
     .answer-card{
       padding:20px;
-      transition:border-color .2s ease, background .2s ease;
+      transition:border-color .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+    .answer-card.is-correct{
+      border-color:rgba(63,143,118,.24);
+      background:linear-gradient(180deg, #fffffb 0%, #f8fcf8 100%);
+    }
+    .answer-card.is-incorrect{
+      border-color:rgba(217,154,40,.3);
+      background:linear-gradient(180deg, #fffffb 0%, #fffaf1 100%);
     }
     .result-status{
       display:flex;
@@ -582,6 +610,11 @@
       bottom:13px;
       color:var(--orange);
       border-color:rgba(217,154,40,.28);
+    }
+    .answer-card.is-correct .answer-badge{
+      color:var(--primary-dark);
+      border-color:rgba(63,143,118,.24);
+      background:#f4fbf5;
     }
     .answer-value{
       position:absolute;
@@ -720,7 +753,21 @@
       to{opacity:.78;transform:scale(1) rotate(0deg);}
     }
     .explain-card{
+      position:relative;
+      overflow:hidden;
       padding:22px;
+    }
+    .explain-card::before{
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:4px;
+      background:linear-gradient(90deg, var(--primary), #82b99a 52%, var(--orange));
+      opacity:0;
+      transform:scaleX(0);
+      transform-origin:left center;
     }
     .explain-head{
       display:flex;
@@ -828,7 +875,6 @@
       justify-content:flex-end;
       gap:12px;
     }
-    .secondary-action,
     .primary-action{
       min-width:178px;
       min-height:52px;
@@ -851,12 +897,6 @@
       background:var(--primary-dark);
       transform:translateY(-1px);
     }
-    .secondary-action{
-      color:var(--primary-dark);
-      background:#fff;
-      border:1px solid var(--line);
-    }
-    .secondary-action:hover{background:var(--primary-soft);}
     body.is-grading .primary-action{
       background:var(--orange);
       box-shadow:0 16px 32px rgba(217,154,40,.24);
@@ -879,13 +919,44 @@
       animation:panelSwapIn .58s cubic-bezier(.18,.84,.24,1) both;
       transform-origin:center;
     }
+    .soft-transition .answer-card.is-correct{
+      animation:correctCardIn .74s cubic-bezier(.16,.86,.22,1.12) .05s both;
+    }
+    .soft-transition .answer-card.is-incorrect{
+      animation:incorrectCardIn .66s cubic-bezier(.18,.84,.24,1) .05s both;
+    }
+    .soft-transition .answer-card.is-correct .answer-paper{
+      animation:correctPaperPop .64s cubic-bezier(.16,.86,.22,1.12) .26s both;
+    }
+    .soft-transition .answer-card.is-incorrect .answer-paper{
+      animation:incorrectPaperSink .56s ease .26s both;
+    }
+    .soft-transition .result-feedback-card.is-correct{
+      animation:correctFeedbackIn .58s cubic-bezier(.16,.86,.22,1.12) .22s both;
+    }
+    .soft-transition .result-feedback-card.is-incorrect{
+      animation:incorrectFeedbackIn .58s ease .22s both;
+    }
     .soft-transition .calc-card{
       animation:calcSheetIn .48s cubic-bezier(.18,.84,.24,1) .05s both;
     }
     .soft-transition .explain-card{
-      animation:explainReveal .62s cubic-bezier(.18,.84,.24,1) .06s both;
+      animation:explainReveal .72s cubic-bezier(.18,.84,.24,1) .28s both;
       transform-origin:top center;
     }
+    .soft-transition .explain-card::before{
+      animation:explainTopLine .62s cubic-bezier(.16,.86,.22,1) .42s both;
+    }
+    .soft-transition .explain-head,
+    .soft-transition .summary-strip,
+    .soft-transition .explain-card .panel-title,
+    .soft-transition .explain-body{
+      animation:explainContentIn .44s ease both;
+    }
+    .soft-transition .explain-head{animation-delay:.42s;}
+    .soft-transition .summary-strip{animation-delay:.5s;}
+    .soft-transition .explain-card .panel-title{animation-delay:.58s;}
+    .soft-transition .explain-body{animation-delay:.66s;}
     body.transition-to-question .soft-transition .answer-stack{
       animation-name:panelSwapBack;
     }
@@ -940,6 +1011,14 @@
     .transition-effect.is-active span{
       animation:paperSpark .66s cubic-bezier(.14,.88,.24,1) both;
     }
+    .transition-effect.is-incorrect-result::before{
+      background:
+        linear-gradient(100deg, rgba(255,255,251,0), rgba(255,248,237,.8) 46%, rgba(255,255,251,0)),
+        radial-gradient(circle at 66% 48%, rgba(217,154,40,.16), transparent 48%);
+    }
+    .transition-effect.is-incorrect-result span{
+      display:none;
+    }
     .transition-effect.is-active span:nth-child(2){animation-delay:.04s;}
     .transition-effect.is-active span:nth-child(3){animation-delay:.08s;}
     .transition-effect.is-active span:nth-child(4){animation-delay:.12s;}
@@ -965,6 +1044,42 @@
       62%{opacity:1; transform:translateX(3px) rotateY(-1deg) scale(1.006);}
       100%{opacity:1; transform:none;}
     }
+    @keyframes correctCardIn{
+      0%{opacity:0; transform:translateY(16px) scale(.975); box-shadow:var(--shadow);}
+      45%{opacity:1; transform:translateY(-5px) scale(1.012); box-shadow:0 0 0 7px rgba(63,143,118,.12), var(--shadow);}
+      100%{opacity:1; transform:none; box-shadow:var(--shadow);}
+    }
+    @keyframes incorrectCardIn{
+      0%{opacity:0; transform:translateY(12px) scale(.985); box-shadow:var(--shadow);}
+      42%{opacity:1; transform:translateY(4px) scale(.995); box-shadow:0 0 0 5px rgba(217,154,40,.1), var(--shadow);}
+      58%{transform:translateX(-5px) translateY(2px);}
+      74%{transform:translateX(4px) translateY(2px);}
+      100%{opacity:1; transform:none; box-shadow:var(--shadow);}
+    }
+    @keyframes correctPaperPop{
+      0%{transform:scale(.985); border-color:rgba(63,143,118,.2);}
+      48%{transform:scale(1.018); border-color:rgba(63,143,118,.48);}
+      100%{transform:scale(1); border-color:rgba(63,143,118,.28);}
+    }
+    @keyframes incorrectPaperSink{
+      0%{transform:translateY(0); filter:saturate(1);}
+      46%{transform:translateY(5px); filter:saturate(.94);}
+      66%{transform:translateX(-3px) translateY(3px);}
+      82%{transform:translateX(2px) translateY(2px);}
+      100%{transform:none; filter:saturate(1);}
+    }
+    @keyframes correctFeedbackIn{
+      0%{opacity:0; transform:translateX(18px) scale(.97);}
+      58%{opacity:1; transform:translateX(-3px) scale(1.012);}
+      100%{opacity:1; transform:none;}
+    }
+    @keyframes incorrectFeedbackIn{
+      0%{opacity:0; transform:translateY(10px) scale(.985);}
+      48%{opacity:1; transform:translateY(3px) scale(.995);}
+      64%{transform:translateX(-4px) translateY(2px);}
+      82%{transform:translateX(3px) translateY(1px);}
+      100%{opacity:1; transform:none;}
+    }
     @keyframes calcSheetIn{
       0%{opacity:0; transform:translateY(20px) scale(.99);}
       100%{opacity:1; transform:none;}
@@ -974,8 +1089,17 @@
       100%{opacity:1; transform:none;}
     }
     @keyframes explainReveal{
-      0%{opacity:0; transform:translateY(18px) scaleY(.96);}
-      66%{opacity:1; transform:translateY(-2px) scaleY(1.006);}
+      0%{opacity:0; transform:translateY(22px) scale(.985); clip-path:inset(0 0 100% 0 round 18px);}
+      54%{opacity:1; transform:translateY(-3px) scale(1.004); clip-path:inset(0 0 0 0 round 18px);}
+      100%{opacity:1; transform:none;}
+    }
+    @keyframes explainTopLine{
+      0%{opacity:0; transform:scaleX(0);}
+      24%{opacity:1;}
+      100%{opacity:1; transform:scaleX(1);}
+    }
+    @keyframes explainContentIn{
+      0%{opacity:0; transform:translateY(10px);}
       100%{opacity:1; transform:none;}
     }
     @keyframes pageSweep{
@@ -1056,8 +1180,7 @@
       .problem-prompt{font-size:16px;}
       .answer-value{font-size:28px;}
       .footer-inner{justify-content:stretch;}
-      .primary-action,
-      .secondary-action{flex:1; min-width:0;}
+      .primary-action{flex:1; min-width:0;}
     }
     @media (prefers-reduced-motion:reduce){
       .soft-transition,
@@ -1266,10 +1389,6 @@
 
   <footer class="footer">
     <div class="footer-inner">
-      <button id="secondaryAction" class="secondary-action" type="button">
-        <span class="material-symbols-outlined">edit</span>
-        もう一度書く
-      </button>
       <button id="primaryAction" class="primary-action" type="button">
         採点する
         <span class="material-symbols-outlined">check_circle</span>
@@ -1625,6 +1744,7 @@
         const effect = document.getElementById('transitionEffect');
         if(!effect) return;
         effect.dataset.mode = name;
+        effect.classList.toggle('is-incorrect-result', name === 'result' && currentResult === 'incorrect');
         effect.classList.remove('is-active');
         void effect.offsetWidth;
         effect.classList.add('is-active');
@@ -1657,8 +1777,6 @@
           void active.offsetWidth;
           active.classList.add('soft-transition');
         }
-        const secondary = document.getElementById('secondaryAction');
-        if(secondary) secondary.style.display = name === 'result' ? 'inline-flex' : 'none';
       }
 
       function resizeCanvas(canvas){
@@ -1850,10 +1968,6 @@
           return;
         }
         currentIndex += 1;
-        renderQuestion();
-      });
-
-      document.getElementById('secondaryAction')?.addEventListener('click', () => {
         renderQuestion();
       });
 
