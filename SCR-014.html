@@ -63,6 +63,50 @@
 		            background: rgba(255, 255, 253, .96);
 		            box-shadow: 0 12px 22px rgba(72, 92, 82, .08);
 	        }
+	        .result-textbook .section-kicker {
+		            margin: 0;
+		            color: #6f7f78;
+		            font-size: 12px;
+		            font-weight: 800;
+		            line-height: 1.35;
+	        }
+	        .result-textbook .section-title {
+		            margin: 3px 0 0;
+		            color: #344640;
+		            font-size: 17px;
+		            font-weight: 800;
+		            line-height: 1.45;
+	        }
+	        .result-textbook .ai-title {
+		            margin-top: 0;
+		            color: #3f8f76;
+	        }
+	        .result-textbook .section-note {
+		            margin: 4px 0 0;
+		            color: #7e8c86;
+		            font-size: 12px;
+		            font-weight: 700;
+		            line-height: 1.6;
+	        }
+	        .result-textbook .card-subtitle {
+		            margin: 0;
+		            color: #344640;
+		            font-size: 15px;
+		            font-weight: 800;
+		            line-height: 1.45;
+	        }
+	        .result-textbook .metric-label {
+		            margin: 0;
+		            color: #6f7f78;
+		            font-size: 11px;
+		            font-weight: 800;
+	        }
+	        .result-textbook .metric-value {
+		            margin-top: 4px;
+		            font-size: 24px;
+		            font-weight: 800;
+		            line-height: 1.2;
+	        }
 	        .result-textbook .book-pill {
 	            border-radius: 4px;
 		            background: #2f745f;
@@ -424,23 +468,23 @@
 <span class="material-symbols-outlined text-3xl">workspace_premium</span>
 </div>
 <div>
-<p class="text-xs font-bold text-slate-500">今回の成長</p>
+<p class="section-kicker">今回の成長</p>
 <h2 class="growth-title mt-1 text-2xl font-bold">前回より <span class="growth-title-score">+12pt</span> アップ</h2>
-<p class="mt-1 text-sm font-bold text-slate-500">423 pt から 435 pt へ。学習の積み上げが見えています。</p>
+<p class="section-note">423 pt から 435 pt へ。学習の積み上げが見えています。</p>
 </div>
 </div>
 <div class="grid gap-3 sm:grid-cols-3">
 <div class="growth-badge is-main p-4" style="--delay:.04s">
-<p class="text-[11px] font-bold text-slate-500">推定学力値</p>
-<p class="mt-1 text-2xl font-bold text-primary">435<span class="ml-1 text-sm">pt</span></p>
+<p class="metric-label">推定学力値</p>
+<p class="metric-value text-primary">435<span class="ml-1 text-sm">pt</span></p>
 </div>
 <div class="growth-badge is-warm p-4" style="--delay:.12s">
-<p class="text-[11px] font-bold text-slate-500">正解数</p>
-<p class="mt-1 text-2xl font-bold text-[#d39a3a]">+1<span class="ml-1 text-sm">問</span></p>
+<p class="metric-label">正解数</p>
+<p class="metric-value text-[#d39a3a]">+1<span class="ml-1 text-sm">問</span></p>
 </div>
 <div class="growth-badge p-4" style="--delay:.2s">
-<p class="text-[11px] font-bold text-slate-500">7セッション</p>
-<p class="mt-1 text-2xl font-bold text-primary">+43<span class="ml-1 text-sm">pt</span></p>
+<p class="metric-label">7セッション</p>
+<p class="metric-value text-primary">+43<span class="ml-1 text-sm">pt</span></p>
 </div>
 </div>
 </div>
@@ -449,8 +493,8 @@
 <section class="mastery-section report-card p-5 h-full" aria-label="正解した学習項目">
 <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
 <div>
-<p class="text-xs font-bold text-slate-500">できた学習項目</p>
-<h2 class="mt-1 text-lg font-bold text-slate-700">今回正解したところ</h2>
+<p class="section-kicker">できた学習項目</p>
+<h2 class="section-title">今回正解したところ</h2>
 </div>
 <span class="book-pill px-3 py-1 text-xs font-bold self-start sm:self-auto">8項目クリア</span>
 </div>
@@ -500,8 +544,9 @@
 <section class="report-card p-5 h-full" aria-label="過去7セッションの推定学力値の変化">
 	<div class="mb-4">
 	<div>
-	<h3 class="text-sm font-bold text-slate-500">過去7セッションの推定学力値の変化</h3>
-	<p class="mt-1 text-xs font-bold text-slate-400">学習修了画面が表示されるたびに1セッションとして記録します。</p>
+	<p class="section-kicker">学力値の推移</p>
+	<h2 class="section-title">過去7セッションの推定学力値の変化</h2>
+	<p class="section-note">学習修了画面が表示されるたびに1セッションとして記録します。</p>
 	</div>
 	</div>
 	<div class="soft-panel session-chart-panel rounded-2xl p-4">
@@ -570,16 +615,19 @@
 </div>
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12 items-stretch">
 <section class="space-y-4">
-<h3 class="text-sm font-bold text-slate-500 ml-1">実施サマリー</h3>
+<div class="ml-1">
+<p class="section-kicker">実施情報</p>
+<h2 class="section-title">実施サマリー</h2>
+</div>
 	<div class="report-card p-6 space-y-5 h-full">
 	<div class="grid grid-cols-2 gap-3">
 	<div class="rounded-xl border border-emerald-100 bg-white/85 p-4 shadow-sm">
-	<p class="text-xs font-bold text-slate-500">推定学力値</p>
-	<p class="mt-1 text-2xl font-bold text-primary">435<span class="ml-1 text-sm">pt</span></p>
+	<p class="metric-label">推定学力値</p>
+	<p class="metric-value text-primary">435<span class="ml-1 text-sm">pt</span></p>
 	</div>
 	<div class="rounded-xl border border-emerald-100 bg-white/85 p-4 shadow-sm">
-	<p class="text-xs font-bold text-slate-500">前回との差</p>
-	<p class="mt-1 text-2xl font-bold text-primary">+12<span class="ml-1 text-sm">pt</span></p>
+	<p class="metric-label">前回との差</p>
+	<p class="metric-value text-primary">+12<span class="ml-1 text-sm">pt</span></p>
 	</div>
 	</div>
 <div class="flex items-center justify-between">
@@ -623,10 +671,13 @@
 	</div>
 	</section>
 <section class="space-y-4">
-<h3 class="text-sm font-bold text-slate-500 ml-1">各領域の評価</h3>
+<div class="ml-1">
+<p class="section-kicker">領域分析</p>
+<h2 class="section-title">各領域の評価</h2>
+</div>
 	<div class="report-card p-6 h-full">
 	<div class="flex items-center justify-between mb-4">
-	<p class="text-xs text-slate-500 font-bold uppercase tracking-wider">領域別バランス</p>
+	<p class="card-subtitle">領域別バランス</p>
 	<p class="text-[11px] font-bold text-slate-400">現在・前回</p>
 	</div>
 	<div class="soft-panel rounded-2xl p-4 overflow-hidden">
@@ -672,7 +723,7 @@
 <span class="material-symbols-outlined text-primary text-3xl">auto_awesome</span>
 </div>
 <div>
-<h4 class="text-sm font-bold text-primary mb-1">AIからのコメント</h4>
+<h4 class="section-title ai-title">AIからのコメント</h4>
 <p class="text-slate-700 leading-relaxed font-medium">
                             方程式の計算ミスが減り、正答率が安定してきましたね！<br/>
                             この調子で、次は「図形」の応用問題にもチャレンジしてみましょう。今のあなたならきっと解けるはずです。
@@ -684,8 +735,9 @@
 	<section class="pb-24">
 	<div class="report-card p-6">
 	<div class="mb-4 flex flex-col gap-1 text-center">
-	<h3 class="text-sm font-bold text-slate-500">問題別正誤一覧</h3>
-	<p class="text-xs font-bold text-slate-400">各問題で扱った学習項目と正誤を確認できます。</p>
+	<p class="section-kicker">問題ごとの結果</p>
+	<h2 class="section-title">問題別正誤一覧</h2>
+	<p class="section-note">各問題で扱った学習項目と正誤を確認できます。</p>
 	</div>
 	<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
 	<div class="answer-ok rounded-xl border p-3"><div class="flex items-center justify-between"><span class="book-pill px-2 py-0.5 text-[10px] font-bold">1</span><b>○</b></div><p class="mt-2 text-sm font-bold text-slate-700">平方の差</p><p class="mt-1 text-[11px] font-bold text-slate-400">公式の適用</p></div>
