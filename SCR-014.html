@@ -88,6 +88,9 @@
 		            font-weight: 700;
 		            line-height: 1.6;
 	        }
+	        .result-textbook .top-card-heading {
+		            min-height: 64px;
+	        }
 	        .result-textbook .card-subtitle {
 		            margin: 0;
 		            color: #344640;
@@ -516,9 +519,9 @@
 </div>
 </div>
 </section>
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 items-start">
-<section class="mastery-section report-card p-5" aria-label="正解した学習項目">
-<div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 items-stretch">
+<section class="mastery-section report-card p-5 h-full" aria-label="正解した学習項目">
+<div class="top-card-heading mb-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
 <div>
 <p class="section-kicker">できた学習項目</p>
 <h2 class="section-title">今回正解したところ</h2>
@@ -568,12 +571,11 @@
 </div>
 </div>
 </section>
-<section class="report-card p-5" aria-label="過去7セッションの推定学力値の変化">
-	<div class="mb-4">
+<section class="report-card p-5 h-full" aria-label="過去7セッションの推定学力値の変化">
+	<div class="top-card-heading mb-4">
 	<div>
 	<p class="section-kicker">学力値の推移</p>
 	<h2 class="section-title">過去7セッションの推定学力値の変化</h2>
-	<p class="section-note">学習修了画面が表示されるたびに1セッションとして記録します。</p>
 	</div>
 	</div>
 	<div class="soft-panel session-chart-panel rounded-2xl p-3">
@@ -638,6 +640,7 @@
 	</g>
 	</svg>
 	</div>
+	<p class="section-note mt-3">学習修了画面が表示されるたびに1セッションとして記録します。</p>
 	</section>
 </div>
 <div class="analysis-grid grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
