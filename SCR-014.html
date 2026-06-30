@@ -278,7 +278,7 @@
 		            animation-delay: calc(var(--delay, .1s) + .28s);
 	        }
 	        .result-textbook .session-chart-panel {
-		            min-height: 390px;
+		            min-height: 330px;
 		            display: flex;
 		            align-items: stretch;
 	        }
@@ -286,10 +286,10 @@
 		            display: block;
 		            width: 100%;
 		            height: 100%;
-		            min-height: 360px;
+		            min-height: 315px;
 	        }
 	        .result-textbook .analysis-grid {
-		            margin-bottom: 88px;
+		            margin-bottom: 56px;
 	        }
 	        .result-textbook .ai-comment-section {
 		            position: relative;
@@ -516,8 +516,8 @@
 </div>
 </div>
 </section>
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 items-stretch">
-<section class="mastery-section report-card p-5 h-full" aria-label="正解した学習項目">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 items-start">
+<section class="mastery-section report-card p-5" aria-label="正解した学習項目">
 <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
 <div>
 <p class="section-kicker">できた学習項目</p>
@@ -568,7 +568,7 @@
 </div>
 </div>
 </section>
-<section class="report-card p-5 h-full" aria-label="過去7セッションの推定学力値の変化">
+<section class="report-card p-5" aria-label="過去7セッションの推定学力値の変化">
 	<div class="mb-4">
 	<div>
 	<p class="section-kicker">学力値の推移</p>
@@ -577,7 +577,7 @@
 	</div>
 	</div>
 	<div class="soft-panel session-chart-panel rounded-2xl p-3">
-	<svg class="session-chart-svg" viewBox="0 0 760 470" role="img" aria-label="過去7セッションの推定学力値推移">
+	<svg class="session-chart-svg" viewBox="0 0 760 390" role="img" aria-label="過去7セッションの推定学力値推移">
 	<defs>
 	<linearGradient id="sessionFill" x1="0" x2="0" y1="0" y2="1">
 	<stop offset="0%" stop-color="#3f8f76" stop-opacity=".22"></stop>
@@ -585,55 +585,55 @@
 	</linearGradient>
 	</defs>
 	<g font-family="Noto Sans JP, sans-serif" font-size="16" font-weight="800" fill="#6b756f">
-	<text x="34" y="58">450</text>
-	<text x="34" y="178">425</text>
-	<text x="34" y="298">400</text>
-	<text x="34" y="418">375</text>
+	<text x="34" y="34">450</text>
+	<text x="34" y="134">425</text>
+	<text x="34" y="234">400</text>
+	<text x="34" y="334">375</text>
 	</g>
 	<g stroke="#d8e4dd" stroke-width="1">
-	<line x1="82" y1="54" x2="724" y2="54"></line>
-	<line x1="82" y1="174" x2="724" y2="174"></line>
-	<line x1="82" y1="294" x2="724" y2="294"></line>
-	<line x1="82" y1="414" x2="724" y2="414"></line>
+	<line x1="82" y1="30" x2="724" y2="30"></line>
+	<line x1="82" y1="130" x2="724" y2="130"></line>
+	<line x1="82" y1="230" x2="724" y2="230"></line>
+	<line x1="82" y1="330" x2="724" y2="330"></line>
 	</g>
-	<path class="session-area-path" d="M98 332 L202 270 L306 227 L410 193 L514 155 L618 140 L720 126 L720 414 L98 414 Z" fill="url(#sessionFill)"></path>
-	<polyline class="session-line" points="98,332 202,270 306,227 410,193 514,155 618,140 720,126"></polyline>
+	<path class="session-area-path" d="M98 264 L202 212 L306 176 L410 148 L514 116 L618 104 L720 92 L720 330 L98 330 Z" fill="url(#sessionFill)"></path>
+	<polyline class="session-line" points="98,264 202,212 306,176 410,148 514,116 618,104 720,92"></polyline>
 	<g fill="#fff" stroke="#3f8f76" stroke-width="5">
-	<circle class="session-point" style="--delay:.56s" cx="98" cy="332" r="8"></circle>
-	<circle class="session-point" style="--delay:.66s" cx="202" cy="270" r="8"></circle>
-	<circle class="session-point" style="--delay:.76s" cx="306" cy="227" r="8"></circle>
-	<circle class="session-point" style="--delay:.86s" cx="410" cy="193" r="8"></circle>
-	<circle class="session-point" style="--delay:.96s" cx="514" cy="155" r="8"></circle>
-	<circle class="session-point" style="--delay:1.06s" cx="618" cy="140" r="8"></circle>
-	<circle class="session-point" style="--delay:1.16s" cx="720" cy="126" r="8"></circle>
+	<circle class="session-point" style="--delay:.56s" cx="98" cy="264" r="8"></circle>
+	<circle class="session-point" style="--delay:.66s" cx="202" cy="212" r="8"></circle>
+	<circle class="session-point" style="--delay:.76s" cx="306" cy="176" r="8"></circle>
+	<circle class="session-point" style="--delay:.86s" cx="410" cy="148" r="8"></circle>
+	<circle class="session-point" style="--delay:.96s" cx="514" cy="116" r="8"></circle>
+	<circle class="session-point" style="--delay:1.06s" cx="618" cy="104" r="8"></circle>
+	<circle class="session-point" style="--delay:1.16s" cx="720" cy="92" r="8"></circle>
 	</g>
 	<g font-family="Lexend, Noto Sans JP, sans-serif" font-size="18" font-weight="800" fill="#3f8f76">
-	<text class="session-value-label" style="--delay:.62s" x="80" y="313">392</text>
-	<text class="session-value-label" style="--delay:.72s" x="184" y="251">405</text>
-	<text class="session-value-label" style="--delay:.82s" x="288" y="208">414</text>
-	<text class="session-value-label" style="--delay:.92s" x="392" y="174">421</text>
-	<text class="session-value-label" style="--delay:1.02s" x="496" y="136">429</text>
-	<text class="session-value-label" style="--delay:1.12s" x="600" y="121">432</text>
-	<text class="session-value-label" style="--delay:1.22s" x="702" y="107">435</text>
+	<text class="session-value-label" style="--delay:.62s" x="80" y="245">392</text>
+	<text class="session-value-label" style="--delay:.72s" x="184" y="193">405</text>
+	<text class="session-value-label" style="--delay:.82s" x="288" y="157">414</text>
+	<text class="session-value-label" style="--delay:.92s" x="392" y="129">421</text>
+	<text class="session-value-label" style="--delay:1.02s" x="496" y="97">429</text>
+	<text class="session-value-label" style="--delay:1.12s" x="600" y="85">432</text>
+	<text class="session-value-label" style="--delay:1.22s" x="702" y="73">435</text>
 	</g>
 	<g font-family="Noto Sans JP, sans-serif" text-anchor="middle">
 	<g font-size="17" font-weight="900" fill="#3f8f76">
-	<text x="98" y="444">S1</text>
-	<text x="202" y="444">S2</text>
-	<text x="306" y="444">S3</text>
-	<text x="410" y="444">S4</text>
-	<text x="514" y="444">S5</text>
-	<text x="618" y="444">S6</text>
-	<text x="720" y="444">S7</text>
+	<text x="98" y="362">S1</text>
+	<text x="202" y="362">S2</text>
+	<text x="306" y="362">S3</text>
+	<text x="410" y="362">S4</text>
+	<text x="514" y="362">S5</text>
+	<text x="618" y="362">S6</text>
+	<text x="720" y="362">S7</text>
 	</g>
 	<g font-size="15" font-weight="800" fill="#6b756f">
-	<text x="98" y="464">10/21</text>
-	<text x="202" y="464">10/22</text>
-	<text x="306" y="464">10/23</text>
-	<text x="410" y="464">10/24</text>
-	<text x="514" y="464">10/24</text>
-	<text x="618" y="464">10/25</text>
-	<text x="720" y="464">10/25</text>
+	<text x="98" y="382">10/21</text>
+	<text x="202" y="382">10/22</text>
+	<text x="306" y="382">10/23</text>
+	<text x="410" y="382">10/24</text>
+	<text x="514" y="382">10/24</text>
+	<text x="618" y="382">10/25</text>
+	<text x="720" y="382">10/25</text>
 	</g>
 	</g>
 	</svg>
