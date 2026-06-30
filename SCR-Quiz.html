@@ -997,6 +997,7 @@
       :root{--answer-panel-height:224px;}
       .lesson-grid{
         grid-template-columns:minmax(0,.88fr) minmax(440px,.72fr);
+        align-items:stretch;
       }
       .result-grid{
         grid-template-columns:minmax(0,.88fr) minmax(440px,.72fr);
@@ -1004,7 +1005,11 @@
           "problem answer"
           "explain explain";
       }
-      .problem-card{min-height:354px;}
+      .lesson-grid > .problem-card{
+        height:100%;
+        min-height:354px;
+      }
+      .result-grid > .problem-card{min-height:354px;}
     }
     @media (max-width:900px){
       .header-inner,
