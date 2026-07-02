@@ -436,11 +436,15 @@
       transition:transform .18s ease, background .18s ease;
     }
     .photo-trigger{
+      position:absolute;
+      left:14px;
+      bottom:14px;
+      z-index:3;
       min-width:94px;
-      border:1px solid rgba(63,143,118,.2);
-      background:#fff;
-      color:var(--primary);
-      box-shadow:0 10px 20px rgba(63,143,118,.12);
+      border:1px solid rgba(217,154,40,.26);
+      background:#d99a28;
+      color:#fff;
+      box-shadow:0 10px 20px rgba(217,154,40,.22);
     }
     .ocr-trigger{
       border:0;
@@ -448,7 +452,7 @@
       color:#fff;
       box-shadow:0 12px 24px rgba(63,143,118,.24);
     }
-    .photo-trigger:hover{background:#f4fbf7; transform:translateY(-1px);}
+    .photo-trigger:hover{background:#c98215; transform:translateY(-1px);}
     .ocr-trigger:hover{background:var(--primary-dark); transform:translateY(-1px);}
     .ocr-card{
       padding:16px 18px;
@@ -1285,11 +1289,11 @@
             </div>
             <div class="canvas-box answer-canvas">
               <div class="canvas-label">回答欄</div>
+              <button type="button" id="photoTrigger" class="photo-trigger" aria-label="紙の解答を撮影して読み込む">
+                <span class="material-symbols-outlined">photo_camera</span>
+                撮影
+              </button>
               <div class="answer-action-row">
-                <button type="button" id="photoTrigger" class="photo-trigger" aria-label="紙の解答を撮影して読み込む">
-                  <span class="material-symbols-outlined">photo_camera</span>
-                  撮影
-                </button>
                 <button type="button" id="ocrTrigger" class="ocr-trigger" aria-label="回答欄を文字認識">
                   <span class="material-symbols-outlined">spellcheck</span>
                   文字認識
