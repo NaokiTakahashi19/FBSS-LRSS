@@ -412,18 +412,20 @@
       font-weight:700;
       pointer-events:none;
     }
-    .ocr-trigger{
+    .answer-action-row{
       position:absolute;
       right:14px;
       bottom:14px;
       z-index:3;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .photo-trigger,
+    .ocr-trigger{
       min-width:126px;
       min-height:44px;
-      border:0;
       border-radius:999px;
-      background:var(--primary);
-      color:#fff;
-      box-shadow:0 12px 24px rgba(63,143,118,.24);
       display:inline-flex;
       align-items:center;
       justify-content:center;
@@ -433,6 +435,20 @@
       cursor:pointer;
       transition:transform .18s ease, background .18s ease;
     }
+    .photo-trigger{
+      min-width:94px;
+      border:1px solid rgba(63,143,118,.2);
+      background:#fff;
+      color:var(--primary);
+      box-shadow:0 10px 20px rgba(63,143,118,.12);
+    }
+    .ocr-trigger{
+      border:0;
+      background:var(--primary);
+      color:#fff;
+      box-shadow:0 12px 24px rgba(63,143,118,.24);
+    }
+    .photo-trigger:hover{background:#f4fbf7; transform:translateY(-1px);}
     .ocr-trigger:hover{background:var(--primary-dark); transform:translateY(-1px);}
     .ocr-card{
       padding:16px 18px;
@@ -1269,10 +1285,17 @@
             </div>
             <div class="canvas-box answer-canvas">
               <div class="canvas-label">回答欄</div>
-              <button type="button" id="ocrTrigger" class="ocr-trigger" aria-label="回答欄を文字認識">
-                <span class="material-symbols-outlined">spellcheck</span>
-                文字認識
-              </button>
+              <div class="answer-action-row">
+                <button type="button" id="photoTrigger" class="photo-trigger" aria-label="紙の解答を撮影して読み込む">
+                  <span class="material-symbols-outlined">photo_camera</span>
+                  撮影
+                </button>
+                <button type="button" id="ocrTrigger" class="ocr-trigger" aria-label="回答欄を文字認識">
+                  <span class="material-symbols-outlined">spellcheck</span>
+                  文字認識
+                </button>
+              </div>
+              <input type="file" id="photoInput" accept="image/*" capture="environment" hidden>
               <canvas id="answerCanvas"></canvas>
               <p id="answerPlaceholder" class="placeholder">答えはここに書いてください</p>
             </div>
@@ -1930,6 +1953,20 @@
         });
         Object.values(areas).forEach((area) => area && ro.observe(area.canvas));
       }
+
+      const photoInput = document.getElementById('photoInput');
+      document.getElementById('photoTrigger')?.addEventListener('click', () => {
+        photoInput?.click();
+      });
+
+      photoInput?.addEventListener('change', () => {
+        const ocrResult = document.getElementById('ocrResultText');
+        const hasPhoto = photoInput.files && photoInput.files.length > 0;
+        if(!ocrResult || !hasPhoto) return;
+        hasRecognizedAnswer = false;
+        ocrResult.classList.remove('is-error', 'has-math');
+        ocrResult.textContent = '撮影画像を読み込みました。文字認識ボタンを押してください。';
+      });
 
       document.getElementById('ocrTrigger')?.addEventListener('click', () => {
         const ocrResult = document.getElementById('ocrResultText');
