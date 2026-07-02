@@ -78,7 +78,6 @@
 		            line-height: 1.45;
 	        }
 	        .result-textbook .ai-title {
-		            margin-top: 0;
 		            color: #3f8f76;
 	        }
 	        .result-textbook .section-note {
@@ -656,14 +655,14 @@
 </div>
 </section>
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 items-stretch">
-<section class="space-y-4 flex flex-col">
-<div class="ml-1">
-<p class="section-kicker">実施情報</p>
-<h2 class="section-title">実施サマリー</h2>
-</div>
+<section class="flex flex-col">
 	<div class="report-card p-5 space-y-4 flex-1">
-	<div class="grid grid-cols-2 gap-3">
-	<div class="rounded-xl border border-emerald-100 bg-white/85 p-3 shadow-sm">
+	<div class="top-card-heading">
+	<p class="section-kicker">実施情報</p>
+	<h2 class="section-title">実施サマリー</h2>
+	</div>
+		<div class="grid grid-cols-2 gap-3">
+		<div class="rounded-xl border border-emerald-100 bg-white/85 p-3 shadow-sm">
 	<p class="metric-label">推定学力値</p>
 	<p class="metric-value text-primary">228</p>
 	</div>
@@ -713,7 +712,7 @@
 	</div>
 </section>
 <section class="report-card p-5 h-full" aria-label="過去7セッションの推定学力値の変化">
-	<div class="top-card-heading mb-2">
+	<div class="top-card-heading mb-4">
 	<div>
 	<p class="section-kicker">学力値の推移</p>
 	<h2 class="section-title">過去7セッションの推定学力値の変化</h2>
@@ -824,7 +823,10 @@
 <span class="grid size-9 place-items-center rounded-xl bg-primary/10 text-primary">
 <span class="material-symbols-outlined text-[22px]">pentagon</span>
 </span>
-<h2 class="section-title mt-0">領域別バランス</h2>
+<div>
+<p class="section-kicker">領域分析</p>
+<h2 class="section-title">領域別バランス</h2>
+</div>
 </div>
 <div class="soft-panel compact-radar-panel rounded-2xl p-1 overflow-hidden">
 <div class="compact-radar-wrap mx-auto">
@@ -870,6 +872,7 @@
 <span class="material-symbols-outlined text-primary text-3xl">auto_awesome</span>
 </div>
 <div>
+<p class="section-kicker">学習コメント</p>
 <h4 class="section-title ai-title">AIからのコメント</h4>
 <p class="text-slate-700 leading-relaxed font-medium">
                             方程式の計算ミスが減り、正答率が安定してきましたね！<br/>
