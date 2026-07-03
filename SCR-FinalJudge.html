@@ -176,6 +176,32 @@
       border-radius: 10px;
       background: #fff;
     }
+    .grading-layout {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 250px;
+      gap: 18px;
+      align-items: start;
+    }
+    .grading-layout .image-card {
+      width: 100%;
+      margin: 0;
+    }
+    .grading-panel {
+      position: sticky;
+      top: 92px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .grading-panel-title {
+      margin: 0;
+      color: #344640;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.5;
+    }
     .screen-actions {
       width: min(1000px, 100%);
       margin: 18px auto 0;
@@ -210,14 +236,14 @@
     }
     .ghost-button:hover { background: var(--primary-soft); }
     .grading-grid {
-      width: min(1000px, 100%);
-      margin: 18px auto 0;
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      width: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
       gap: 10px;
     }
     .grade-card {
-      padding: 12px;
+      padding: 11px;
       border: 1px solid var(--line);
       border-radius: 16px;
       background: rgba(255, 255, 251, .96);
@@ -263,13 +289,13 @@
       background: var(--orange-soft);
     }
     .grading-message {
-      width: min(1000px, 100%);
-      margin: 12px auto 0;
+      width: 100%;
+      margin: 0;
       min-height: 24px;
-      color: var(--danger);
+      color: var(--muted);
       font-size: 13px;
       font-weight: 800;
-      text-align: right;
+      text-align: left;
     }
     .result-card {
       width: min(1000px, 100%);
@@ -384,7 +410,14 @@
         align-items: flex-start;
         flex-direction: column;
       }
+      .grading-layout {
+        grid-template-columns: 1fr;
+      }
+      .grading-panel {
+        position: static;
+      }
       .grading-grid {
+        display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       .result-card {
@@ -446,16 +479,17 @@
           難易度 <b>270</b> / 300
         </div>
       </div>
-      <div class="paper-card image-card">
-        <img src="assets/final-judge/final-judge-answer.png" alt="解答入り修了判定問題" />
+      <div class="grading-layout">
+        <div class="paper-card image-card">
+          <img src="assets/final-judge/final-judge-answer.png" alt="解答入り修了判定問題" />
+        </div>
+        <aside class="grading-panel" aria-label="小問ごとの採点">
+          <p class="grading-panel-title">小問ごとに採点してください</p>
+          <div class="grading-grid" id="gradingGrid"></div>
+          <p class="grading-message" id="gradingMessage" aria-live="polite">未選択の小問は不正解として集計します。</p>
+        </aside>
       </div>
-      <div class="grading-grid" id="gradingGrid"></div>
-      <p class="grading-message" id="gradingMessage" aria-live="polite"></p>
       <div class="screen-actions">
-        <button class="ghost-button" type="button" data-go="problem">
-          <span class="material-symbols-outlined">arrow_back</span>
-          問題へ戻る
-        </button>
         <button class="primary-button" type="button" id="showResultButton">
           次へ
           <span class="material-symbols-outlined">arrow_forward</span>
@@ -585,12 +619,8 @@
     }
 
     function showResult() {
-      const ungraded = grades.findIndex((grade) => grade === null);
-      if (ungraded !== -1) {
-        gradingMessage.textContent = `${items[ungraded].id} の正解・不正解を選択してください。`;
-        return;
-      }
-      const correct = grades.filter(Boolean).length;
+      const settledGrades = grades.map((grade) => grade === true);
+      const correct = settledGrades.filter(Boolean).length;
       const passed = correct === items.length;
       const ability = passed ? 270 : 228 + correct * 6;
       document.getElementById("correctCount").textContent = String(correct);
@@ -621,7 +651,7 @@
       if (gradeButton) {
         const index = Number(gradeButton.dataset.grade);
         grades[index] = gradeButton.dataset.value === "true";
-        gradingMessage.textContent = "";
+        gradingMessage.textContent = "未選択の小問は不正解として集計します。";
         updateGradeCard(index);
         return;
       }
