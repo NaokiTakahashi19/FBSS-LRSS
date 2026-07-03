@@ -391,12 +391,73 @@
       font-size: 16px;
       font-weight: 800;
     }
+    .modal-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .detail-button {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border: 1px solid rgba(217, 154, 40, .38);
+      border-radius: 999px;
+      background: var(--orange-soft);
+      color: #b87008;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .detail-button:hover {
+      background: #ffedc5;
+    }
+    .detail-button:disabled {
+      opacity: .72;
+    }
     .modal-panel img {
       display: block;
       width: 100%;
       height: auto;
       border-radius: 10px;
       background: #fff;
+    }
+    .detail-panel {
+      margin-top: 14px;
+      padding: 16px 18px;
+      border: 1px solid rgba(63, 143, 118, .2);
+      border-radius: 16px;
+      background: #f8fcf7;
+      color: #2f3f3a;
+      animation: detailIn .22s ease both;
+    }
+    .detail-panel[hidden] {
+      display: none;
+    }
+    .detail-status {
+      margin: 0 0 8px;
+      color: var(--primary-dark);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .detail-body {
+      display: grid;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.8;
+    }
+    .detail-body p {
+      margin: 0;
+    }
+    .detail-body ol {
+      margin: 0;
+      padding-left: 1.35em;
+    }
+    @keyframes detailIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     @media (max-width: 900px) {
       .header-inner {
@@ -539,21 +600,76 @@
     <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <div class="modal-header">
         <h3 id="modalTitle">解説</h3>
-        <button class="icon-link" type="button" id="closeModalButton" aria-label="閉じる">
-          <span class="material-symbols-outlined">close</span>
-        </button>
+        <div class="modal-actions">
+          <button class="detail-button" type="button" id="detailButton">
+            <span class="material-symbols-outlined">auto_awesome</span>
+            詳しく
+          </button>
+          <button class="icon-link" type="button" id="closeModalButton" aria-label="閉じる">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
       </div>
       <img id="modalImage" src="" alt="小問の解説" />
+      <div class="detail-panel" id="detailPanel" hidden>
+        <p class="detail-status" id="detailStatus"></p>
+        <div class="detail-body" id="detailBody"></div>
+      </div>
     </div>
   </div>
 
   <script>
     const items = [
-      { id: "(1) ①", title: "正の数・負の数", image: "assets/final-judge/final-judge-explain-1.png" },
-      { id: "(1) ②", title: "式の計算", image: "assets/final-judge/final-judge-explain-2.png" },
-      { id: "(1) ③", title: "式の計算", image: "assets/final-judge/final-judge-explain-3.png" },
-      { id: "(1) ④", title: "平方根", image: "assets/final-judge/final-judge-explain-4.png" },
-      { id: "(2)", title: "因数分解", image: "assets/final-judge/final-judge-explain-5.png" }
+      {
+        id: "(1) ①",
+        title: "正の数・負の数",
+        image: "assets/final-judge/final-judge-explain-1.png",
+        detail: [
+          "負の数から正の数を引くと、数直線ではさらに左へ進みます。",
+          "−3−3 は、−3 から 3 だけ小さくなるので −6 です。",
+          "迷ったときは、−3−3=−(3+3) とまとめて考えると符号ミスを防げます。"
+        ]
+      },
+      {
+        id: "(1) ②",
+        title: "式の計算",
+        image: "assets/final-judge/final-judge-explain-2.png",
+        detail: [
+          "まず、かっこの前の係数をそれぞれの項にかけて展開します。",
+          "3(x+y)=3x+3y、−2(x−6y)=−2x+12y です。",
+          "同類項をまとめると、3x−2x=x、3y+12y=15y なので、答えは x+15y です。"
+        ]
+      },
+      {
+        id: "(1) ③",
+        title: "式の計算",
+        image: "assets/final-judge/final-judge-explain-3.png",
+        detail: [
+          "割り算は逆数をかける形に直すと整理しやすくなります。",
+          "2b^2÷ab×5a^2b は、分母に ab、分子に 2b^2×5a^2b を置いて考えます。",
+          "分子は 10a^2b^3 となり、ab で約分すると 10ab^2 になります。"
+        ]
+      },
+      {
+        id: "(1) ④",
+        title: "平方根",
+        image: "assets/final-judge/final-judge-explain-4.png",
+        detail: [
+          "分母の √2 でそれぞれの項を割ると、計算の見通しがよくなります。",
+          "√8÷√2=√4=2、√18÷√2=√9=3 です。",
+          "したがって、(√8+√18)÷√2 は 2+3=5 になります。"
+        ]
+      },
+      {
+        id: "(2)",
+        title: "因数分解",
+        image: "assets/final-judge/final-judge-explain-5.png",
+        detail: [
+          "9x^2−49y^2 は、2つの平方の差の形です。",
+          "9x^2=(3x)^2、49y^2=(7y)^2 と見ます。",
+          "A^2−B^2=(A+B)(A−B) を使うと、(3x+7y)(3x−7y) になります。"
+        ]
+      }
     ];
     const grades = Array(items.length).fill(null);
     const labels = {
@@ -567,6 +683,12 @@
     const modal = document.getElementById("explainModal");
     const modalTitle = document.getElementById("modalTitle");
     const modalImage = document.getElementById("modalImage");
+    const detailButton = document.getElementById("detailButton");
+    const detailPanel = document.getElementById("detailPanel");
+    const detailStatus = document.getElementById("detailStatus");
+    const detailBody = document.getElementById("detailBody");
+    let currentExplanationIndex = 0;
+    let detailTimer = null;
 
     function showScreen(name) {
       document.querySelectorAll(".screen").forEach((screen) => {
@@ -605,9 +727,11 @@
 
     function openExplanation(index) {
       const item = items[index];
+      currentExplanationIndex = index;
       modalTitle.textContent = `${item.id} ${item.title} の解説`;
       modalImage.src = item.image;
       modalImage.alt = `${item.id} ${item.title} の解説`;
+      resetDetailedExplanation();
       modal.classList.add("open");
       modal.setAttribute("aria-hidden", "false");
     }
@@ -616,6 +740,33 @@
       modal.classList.remove("open");
       modal.setAttribute("aria-hidden", "true");
       modalImage.src = "";
+      resetDetailedExplanation();
+    }
+
+    function resetDetailedExplanation() {
+      clearTimeout(detailTimer);
+      detailPanel.hidden = true;
+      detailStatus.textContent = "";
+      detailBody.innerHTML = "";
+      detailButton.disabled = false;
+    }
+
+    function showDetailedExplanation() {
+      const item = items[currentExplanationIndex];
+      detailPanel.hidden = false;
+      detailStatus.textContent = "詳しい解説を準備しています...";
+      detailBody.innerHTML = "";
+      detailButton.disabled = true;
+      detailTimer = setTimeout(() => {
+        detailStatus.textContent = "AI詳解";
+        detailBody.innerHTML = `
+          <p>画像の解説を、途中式の意味が追いやすいように分解して説明します。</p>
+          <ol>
+            ${item.detail.map((line) => `<li>${line}</li>`).join("")}
+          </ol>
+        `;
+        detailButton.disabled = false;
+      }, 450);
     }
 
     function showResult() {
@@ -637,6 +788,7 @@
       button.addEventListener("click", () => showScreen(button.dataset.go));
     });
     document.getElementById("showResultButton").addEventListener("click", showResult);
+    detailButton.addEventListener("click", showDetailedExplanation);
     document.getElementById("closeModalButton").addEventListener("click", closeExplanation);
     modal.addEventListener("click", (event) => {
       if (event.target === modal) closeExplanation();
