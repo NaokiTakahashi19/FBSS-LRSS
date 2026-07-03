@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>修了判定</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #edf2df;
+      --paper: #fffffb;
+      --ink: #24332f;
+      --muted: #6f7f78;
+      --line: rgba(63, 143, 118, .18);
+      --primary: #3f8f76;
+      --primary-dark: #2f745f;
+      --primary-soft: #e4f1ec;
+      --orange: #d99a28;
+      --orange-soft: #fff5e3;
+      --danger: #ef4444;
+      --danger-soft: #fff1f2;
+      --shadow: 0 14px 30px rgba(74, 92, 82, .09);
+    }
+    * { box-sizing: border-box; }
+    html { min-width: 320px; }
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+    button, a { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled {
+      cursor: not-allowed;
+      opacity: .52;
+    }
+    .material-symbols-outlined {
+      font-family: "Material Symbols Outlined";
+      font-weight: normal;
+      font-style: normal;
+      font-size: 22px;
+      line-height: 1;
+      display: inline-block;
+      white-space: nowrap;
+      text-transform: none;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      font-variation-settings: "FILL" 0, "wght" 650, "GRAD" 0, "opsz" 24;
+    }
+    .judge-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(255, 255, 251, .96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+    .header-inner {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      padding: 14px 24px 12px;
+      display: grid;
+      grid-template-columns: 120px 1fr 120px;
+      align-items: center;
+      gap: 16px;
+    }
+    .icon-link {
+      width: 44px;
+      height: 44px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 999px;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .icon-link:hover { background: var(--primary-soft); }
+    .header-title {
+      text-align: center;
+      line-height: 1.35;
+    }
+    .header-title h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 800;
+    }
+    .header-title p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .step-dots {
+      display: flex;
+      justify-content: flex-end;
+      gap: 7px;
+    }
+    .step-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(63, 143, 118, .22);
+    }
+    .step-dot.active { background: var(--primary); }
+    .judge-main {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 24px 0 42px;
+    }
+    .screen {
+      display: none;
+      animation: screenIn .26s ease both;
+    }
+    .screen.active { display: block; }
+    @keyframes screenIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .screen-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .kicker {
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .screen-heading h2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+    .difficulty-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 38px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 251, .88);
+      color: #344640;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+      box-shadow: 0 6px 14px rgba(70, 90, 80, .06);
+    }
+    .difficulty-pill b {
+      color: var(--primary);
+      font-size: 16px;
+    }
+    .paper-card {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255, 255, 251, .96);
+      box-shadow: var(--shadow);
+    }
+    .image-card {
+      width: min(1000px, 100%);
+      margin: 0 auto;
+      padding: 22px;
+    }
+    .image-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      background: #fff;
+    }
+    .grading-layout {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 250px;
+      gap: 18px;
+      align-items: start;
+    }
+    .grading-layout .image-card {
+      width: 100%;
+      margin: 0;
+    }
+    .grading-panel {
+      position: sticky;
+      top: 92px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .grading-panel-title {
+      margin: 0;
+      color: #344640;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+    .screen-actions {
+      width: min(1000px, 100%);
+      margin: 18px auto 0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+    .primary-button,
+    .ghost-button,
+    .explain-button {
+      border: 0;
+      border-radius: 999px;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .primary-button {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(47, 116, 95, .20);
+    }
+    .primary-button:hover { background: var(--primary-dark); }
+    .ghost-button {
+      border: 1px solid rgba(63, 143, 118, .28);
+      background: #fff;
+      color: var(--primary-dark);
+    }
+    .ghost-button:hover { background: var(--primary-soft); }
+    .grading-grid {
+      width: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .grade-card {
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 251, .96);
+      box-shadow: 0 8px 16px rgba(74, 92, 82, .06);
+    }
+    .grade-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #344640;
+    }
+    .grade-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .grade-choice,
+    .explain-button {
+      border: 1px solid rgba(63, 143, 118, .22);
+      background: #fff;
+      color: #3b4a46;
+      font-size: 12px;
+      font-weight: 800;
+      min-height: 36px;
+      border-radius: 999px;
+      padding: 7px 9px;
+    }
+    .grade-choice.correct.selected {
+      border-color: rgba(63, 143, 118, .7);
+      background: var(--primary);
+      color: #fff;
+    }
+    .grade-choice.wrong.selected {
+      border-color: rgba(239, 68, 68, .55);
+      background: var(--danger);
+      color: #fff;
+    }
+    .explain-button {
+      width: 100%;
+      color: var(--orange);
+      border-color: rgba(217, 154, 40, .34);
+      background: var(--orange-soft);
+    }
+    .grading-message {
+      width: 100%;
+      margin: 0;
+      min-height: 24px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      text-align: left;
+    }
+    .result-card {
+      width: min(1000px, 100%);
+      margin: 0 auto;
+      padding: 34px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+    .result-judgement {
+      min-height: 230px;
+      padding: 26px;
+      border-radius: 18px;
+      background: var(--primary-soft);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+    }
+    .result-judgement.fail {
+      background: var(--orange-soft);
+    }
+    .result-judgement .label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .result-judgement .value {
+      font-size: clamp(44px, 7vw, 78px);
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: 0;
+      color: var(--primary);
+    }
+    .result-judgement.fail .value {
+      color: var(--orange);
+    }
+    .score-panel {
+      padding: 26px;
+      border: 1px solid rgba(63, 143, 118, .18);
+      border-radius: 18px;
+      background: #fff;
+    }
+    .score-panel h3 {
+      margin: 0 0 16px;
+      font-size: 17px;
+      font-weight: 800;
+    }
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      padding: 12px 0;
+      border-top: 1px solid rgba(63, 143, 118, .12);
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .metric-row strong {
+      color: var(--ink);
+      font-size: 24px;
+    }
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(31, 42, 42, .48);
+    }
+    .modal.open { display: flex; }
+    .modal-panel {
+      width: min(1000px, 100%);
+      max-height: min(82vh, 760px);
+      overflow: auto;
+      padding: 18px;
+      border-radius: 20px;
+      background: var(--paper);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, .18);
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .modal-header h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .modal-panel img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      background: #fff;
+    }
+    @media (max-width: 900px) {
+      .header-inner {
+        grid-template-columns: 52px 1fr 80px;
+        padding-inline: 14px;
+      }
+      .judge-main {
+        width: min(100% - 24px, 1180px);
+      }
+      .screen-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .grading-layout {
+        grid-template-columns: 1fr;
+      }
+      .grading-panel {
+        position: static;
+      }
+      .grading-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .result-card {
+        grid-template-columns: 1fr;
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="judge-header">
+    <div class="header-inner">
+      <a class="icon-link" href="SCR-002.html" aria-label="ホームへ戻る">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </a>
+      <div class="header-title">
+        <h1>修了判定</h1>
+        <p id="screenLabel">問題画面</p>
+      </div>
+      <div class="step-dots" aria-label="進行状況">
+        <span class="step-dot active" data-dot="problem"></span>
+        <span class="step-dot" data-dot="grading"></span>
+        <span class="step-dot" data-dot="result"></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="judge-main">
+    <section class="screen active" id="screen-problem">
+      <div class="screen-heading">
+        <div>
+          <p class="kicker">修了判定問題</p>
+          <h2>問題に取り組みましょう</h2>
+        </div>
+        <div class="difficulty-pill">
+          <span class="material-symbols-outlined">trending_up</span>
+          難易度 <b>270</b> / 300
+        </div>
+      </div>
+      <div class="paper-card image-card">
+        <img src="assets/final-judge/final-judge-problem.png" alt="修了判定問題" />
+      </div>
+      <div class="screen-actions">
+        <button class="primary-button" type="button" data-go="grading">
+          解答
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-grading">
+      <div class="screen-heading">
+        <div>
+          <p class="kicker">自己採点</p>
+          <h2>解答を見ながら採点しましょう</h2>
+        </div>
+        <div class="difficulty-pill">
+          <span class="material-symbols-outlined">trending_up</span>
+          難易度 <b>270</b> / 300
+        </div>
+      </div>
+      <div class="grading-layout">
+        <div class="paper-card image-card">
+          <img src="assets/final-judge/final-judge-answer.png" alt="解答入り修了判定問題" />
+        </div>
+        <aside class="grading-panel" aria-label="小問ごとの採点">
+          <p class="grading-panel-title">小問ごとに採点してください</p>
+          <div class="grading-grid" id="gradingGrid"></div>
+          <p class="grading-message" id="gradingMessage" aria-live="polite">未選択の小問は不正解として集計します。</p>
+        </aside>
+      </div>
+      <div class="screen-actions">
+        <button class="primary-button" type="button" id="showResultButton">
+          次へ
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-result">
+      <div class="screen-heading">
+        <div>
+          <p class="kicker">判定結果</p>
+          <h2>今回の修了判定結果</h2>
+        </div>
+      </div>
+      <div class="paper-card result-card">
+        <div class="result-judgement" id="resultJudgement">
+          <span class="label">合否判定結果</span>
+          <strong class="value" id="passLabel">合格</strong>
+          <span id="passMessage">全問正解です。次の学習へ進めます。</span>
+        </div>
+        <div class="score-panel">
+          <h3>推定学力値</h3>
+          <div class="metric-row">
+            <span>今回の正解数</span>
+            <strong><span id="correctCount">5</span> / 5</strong>
+          </div>
+          <div class="metric-row">
+            <span>判定前</span>
+            <strong>228</strong>
+          </div>
+          <div class="metric-row">
+            <span>判定後</span>
+            <strong><span id="abilityValue">270</span></strong>
+          </div>
+        </div>
+      </div>
+      <div class="screen-actions">
+        <a class="primary-button" href="SCR-002.html">
+          ホームへ戻る
+          <span class="material-symbols-outlined">home</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="explainModal" aria-hidden="true">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <h3 id="modalTitle">解説</h3>
+        <button class="icon-link" type="button" id="closeModalButton" aria-label="閉じる">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <img id="modalImage" src="" alt="小問の解説" />
+    </div>
+  </div>
+
+  <script>
+    const items = [
+      { id: "(1) ①", title: "正の数・負の数", image: "assets/final-judge/final-judge-explain-1.png" },
+      { id: "(1) ②", title: "式の計算", image: "assets/final-judge/final-judge-explain-2.png" },
+      { id: "(1) ③", title: "式の計算", image: "assets/final-judge/final-judge-explain-3.png" },
+      { id: "(1) ④", title: "平方根", image: "assets/final-judge/final-judge-explain-4.png" },
+      { id: "(2)", title: "因数分解", image: "assets/final-judge/final-judge-explain-5.png" }
+    ];
+    const grades = Array(items.length).fill(null);
+    const labels = {
+      problem: "問題画面",
+      grading: "採点画面",
+      result: "採点結果画面"
+    };
+
+    const gradingGrid = document.getElementById("gradingGrid");
+    const gradingMessage = document.getElementById("gradingMessage");
+    const modal = document.getElementById("explainModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalImage = document.getElementById("modalImage");
+
+    function showScreen(name) {
+      document.querySelectorAll(".screen").forEach((screen) => {
+        screen.classList.toggle("active", screen.id === `screen-${name}`);
+      });
+      document.querySelectorAll(".step-dot").forEach((dot) => {
+        dot.classList.toggle("active", dot.dataset.dot === name);
+      });
+      document.getElementById("screenLabel").textContent = labels[name];
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderGradingCards() {
+      gradingGrid.innerHTML = items.map((item, index) => `
+        <article class="grade-card">
+          <p class="grade-title">${item.id}<br>${item.title}</p>
+          <div class="grade-toggle" role="group" aria-label="${item.id} の採点">
+            <button class="grade-choice correct" type="button" data-grade="${index}" data-value="true">正解</button>
+            <button class="grade-choice wrong" type="button" data-grade="${index}" data-value="false">不正解</button>
+          </div>
+          <button class="explain-button" type="button" data-explain="${index}">
+            解説
+          </button>
+        </article>
+      `).join("");
+    }
+
+    function updateGradeCard(index) {
+      const card = gradingGrid.querySelectorAll(".grade-card")[index];
+      if (!card) return;
+      card.querySelectorAll(".grade-choice").forEach((button) => {
+        const value = button.dataset.value === "true";
+        button.classList.toggle("selected", grades[index] === value);
+      });
+    }
+
+    function openExplanation(index) {
+      const item = items[index];
+      modalTitle.textContent = `${item.id} ${item.title} の解説`;
+      modalImage.src = item.image;
+      modalImage.alt = `${item.id} ${item.title} の解説`;
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeExplanation() {
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      modalImage.src = "";
+    }
+
+    function showResult() {
+      const settledGrades = grades.map((grade) => grade === true);
+      const correct = settledGrades.filter(Boolean).length;
+      const passed = correct === items.length;
+      const ability = passed ? 270 : 228 + correct * 6;
+      document.getElementById("correctCount").textContent = String(correct);
+      document.getElementById("abilityValue").textContent = String(ability);
+      document.getElementById("passLabel").textContent = passed ? "合格" : "不合格";
+      document.getElementById("passMessage").textContent = passed
+        ? "全問正解です。次の学習へ進めます。"
+        : "全問正解ではありません。解説を確認してもう一度整理しましょう。";
+      document.getElementById("resultJudgement").classList.toggle("fail", !passed);
+      showScreen("result");
+    }
+
+    document.querySelectorAll("[data-go]").forEach((button) => {
+      button.addEventListener("click", () => showScreen(button.dataset.go));
+    });
+    document.getElementById("showResultButton").addEventListener("click", showResult);
+    document.getElementById("closeModalButton").addEventListener("click", closeExplanation);
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeExplanation();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && modal.classList.contains("open")) closeExplanation();
+    });
+
+    renderGradingCards();
+    gradingGrid.addEventListener("click", (event) => {
+      const gradeButton = event.target.closest("[data-grade]");
+      if (gradeButton) {
+        const index = Number(gradeButton.dataset.grade);
+        grades[index] = gradeButton.dataset.value === "true";
+        gradingMessage.textContent = "未選択の小問は不正解として集計します。";
+        updateGradeCard(index);
+        return;
+      }
+      const explainButton = event.target.closest("[data-explain]");
+      if (explainButton) {
+        openExplanation(Number(explainButton.dataset.explain));
+      }
+    });
+  </script>
+</body>
+</html>
