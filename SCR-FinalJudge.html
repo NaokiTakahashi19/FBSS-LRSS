@@ -307,24 +307,77 @@
       align-items: stretch;
     }
     .result-judgement {
+      position: relative;
+      overflow: hidden;
       min-height: 230px;
       padding: 26px;
       border-radius: 18px;
       background: var(--primary-soft);
+      border: 1px solid rgba(63, 143, 118, .18);
       display: flex;
       flex-direction: column;
       justify-content: center;
       gap: 8px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .72);
+    }
+    .result-judgement.pass {
+      background: #e4f1ec;
+      border-color: rgba(63, 143, 118, .28);
+    }
+    .result-judgement.pass::after {
+      content: "";
+      position: absolute;
+      right: -54px;
+      top: -54px;
+      width: 180px;
+      height: 180px;
+      border-radius: 999px;
+      background: rgba(63, 143, 118, .12);
+    }
+    .pass-ribbon {
+      position: relative;
+      z-index: 1;
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #fff;
+      color: var(--primary-dark);
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 10px 24px rgba(63, 143, 118, .12);
+    }
+    .pass-ribbon .material-symbols-outlined {
+      font-size: 18px;
+    }
+    .pass-icon {
+      position: relative;
+      z-index: 1;
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 16px 30px rgba(63, 143, 118, .22);
     }
     .result-judgement.fail {
       background: var(--orange-soft);
+      border-color: rgba(217, 154, 40, .28);
     }
     .result-judgement .label {
+      position: relative;
+      z-index: 1;
       color: var(--muted);
       font-size: 13px;
       font-weight: 800;
     }
     .result-judgement .value {
+      position: relative;
+      z-index: 1;
       font-size: clamp(44px, 7vw, 78px);
       line-height: 1;
       font-weight: 800;
@@ -333,6 +386,22 @@
     }
     .result-judgement.fail .value {
       color: var(--orange);
+    }
+    .result-message {
+      position: relative;
+      z-index: 1;
+      max-width: 360px;
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.7;
+    }
+    .result-judgement.fail .pass-ribbon {
+      color: #b87008;
+    }
+    .result-judgement.fail .pass-icon {
+      background: var(--orange);
+      box-shadow: 0 16px 30px rgba(217, 154, 40, .18);
     }
     .score-panel {
       padding: 26px;
@@ -567,9 +636,16 @@
       </div>
       <div class="paper-card result-card">
         <div class="result-judgement" id="resultJudgement">
+          <span class="pass-ribbon" id="resultRibbon">
+            <span class="material-symbols-outlined">workspace_premium</span>
+            修了判定クリア
+          </span>
+          <span class="pass-icon" id="resultIcon" aria-hidden="true">
+            <span class="material-symbols-outlined">task_alt</span>
+          </span>
           <span class="label">合否判定結果</span>
           <strong class="value" id="passLabel">合格</strong>
-          <span id="passMessage">全問正解です。次の学習へ進めます。</span>
+          <span class="result-message" id="passMessage">数と式の修了判定に合格しました。続けて過去問に挑戦できます。</span>
         </div>
         <div class="score-panel">
           <h3>推定学力値</h3>
@@ -777,9 +853,16 @@
       document.getElementById("correctCount").textContent = String(correct);
       document.getElementById("abilityValue").textContent = String(ability);
       document.getElementById("passLabel").textContent = passed ? "合格" : "不合格";
+      document.getElementById("resultRibbon").innerHTML = passed
+        ? '<span class="material-symbols-outlined">workspace_premium</span>修了判定クリア'
+        : '<span class="material-symbols-outlined">rate_review</span>もう一度確認';
+      document.getElementById("resultIcon").innerHTML = passed
+        ? '<span class="material-symbols-outlined">task_alt</span>'
+        : '<span class="material-symbols-outlined">priority_high</span>';
       document.getElementById("passMessage").textContent = passed
-        ? "全問正解です。次の学習へ進めます。"
+        ? "数と式の修了判定に合格しました。続けて過去問に挑戦できます。"
         : "全問正解ではありません。解説を確認してもう一度整理しましょう。";
+      document.getElementById("resultJudgement").classList.toggle("pass", passed);
       document.getElementById("resultJudgement").classList.toggle("fail", !passed);
       showScreen("result");
     }
