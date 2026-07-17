@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>数学・4択トレーニング</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        packages: {'[+]': ['color', 'bbox']},
+        macros: {
+          hlblue: ['{#1}', 1],
+          hlpink: ['{#1}', 1]
+        }
+      },
+      svg: {fontCache: 'global'}
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <style>
+    :root{
+      --bg:#edf2df;
+      --paper:#fffffb;
+      --ink:#1f2a2a;
+      --muted:#657579;
+      --subtle:#8a9aa0;
+      --primary:#3f8f76;
+      --primary-dark:#2f735e;
+      --primary-soft:#e1f0e9;
+      --orange:#d99a28;
+      --orange-soft:#fff4df;
+      --danger:#ef4444;
+      --danger-soft:#fff1f2;
+      --line:rgba(63,143,118,.2);
+      --shadow:0 14px 28px rgba(71,91,82,.09);
+      --radius:18px;
+    }
+    *{box-sizing:border-box;}
+    html{min-width:320px;}
+    body{
+      margin:0;
+      min-height:100dvh;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:"Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing:0;
+      overflow-x:hidden;
+    }
+    button{font:inherit;}
+    .material-symbols-outlined{
+      font-family:"Material Symbols Outlined";
+      font-weight:normal;
+      font-style:normal;
+      font-size:22px;
+      line-height:1;
+      letter-spacing:normal;
+      text-transform:none;
+      display:inline-block;
+      white-space:nowrap;
+      word-wrap:normal;
+      direction:ltr;
+      -webkit-font-feature-settings:"liga";
+      -webkit-font-smoothing:antialiased;
+      font-variation-settings:"FILL" 0, "wght" 600, "GRAD" 0, "opsz" 24;
+    }
+    .lesson-header{
+      position:fixed;
+      inset:0 0 auto 0;
+      z-index:50;
+      background:rgba(255,255,251,.96);
+      border-bottom:1px solid rgba(63,143,118,.18);
+      backdrop-filter:blur(12px);
+    }
+    .header-inner{
+      width:min(1180px,100%);
+      margin:0 auto;
+      padding:12px 24px 10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .header-left,
+    .header-right{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:128px;
+    }
+    .header-right{justify-content:flex-end;}
+    .icon-button{
+      width:42px;
+      height:42px;
+      border:0;
+      border-radius:999px;
+      background:transparent;
+      color:var(--ink);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      transition:background .18s ease, transform .18s ease;
+    }
+    .icon-button:hover{background:var(--primary-soft);}
+    .icon-button:active{transform:scale(.96);}
+    .title-block{
+      text-align:center;
+      display:grid;
+      gap:3px;
+    }
+    .title-block h1{
+      margin:0;
+      font-size:17px;
+      font-weight:800;
+      color:#172322;
+    }
+    .title-block p{
+      margin:0;
+      font-size:12px;
+      font-weight:700;
+      color:#5f7075;
+    }
+    .footprints{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      margin-top:4px;
+    }
+    .footprint-dot{
+      position:relative;
+      display:inline-block;
+      width:9px;
+      height:9px;
+      border-radius:999px;
+      background:#dce8dd;
+      box-shadow:inset 0 0 0 1px rgba(63,143,118,.18);
+    }
+    .footprint-dot.correct{background:var(--primary);}
+    .footprint-dot.current{
+      width:12px;
+      height:12px;
+      background:#fff;
+      border:3px solid var(--orange);
+      box-shadow:0 0 0 3px rgba(217,154,40,.12);
+    }
+    .footprint-dot.incorrect{
+      width:12px;
+      height:12px;
+      background:#fff9ed;
+      border:2px solid var(--orange);
+      box-shadow:0 0 0 3px rgba(217,154,40,.12);
+    }
+    .footprint-dot.incorrect::before,
+    .footprint-dot.incorrect::after{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:7px;
+      height:2px;
+      border-radius:999px;
+      background:var(--orange);
+      transform:translate(-50%,-50%) rotate(45deg);
+    }
+    .footprint-dot.incorrect::after{
+      transform:translate(-50%,-50%) rotate(-45deg);
+    }
+    .progress-track{
+      height:5px;
+      background:rgba(63,143,118,.12);
+      overflow:hidden;
+    }
+    .progress-bar{
+      display:block;
+      width:10%;
+      height:100%;
+      background:var(--primary);
+      transition:width .55s cubic-bezier(.2,.8,.2,1);
+    }
+    .page{
+      width:min(1180px,100%);
+      margin:0 auto;
+      padding:104px 24px 104px;
+    }
+    .quiz-grid{
+      display:grid;
+      grid-template-columns:minmax(0, 1.15fr) minmax(390px, .85fr);
+      gap:22px;
+      align-items:stretch;
+      animation:viewIn .28s ease both;
+    }
+    @keyframes viewIn{
+      from{opacity:0; transform:translateY(10px);}
+      to{opacity:1; transform:translateY(0);}
+    }
+    .card{
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .problem-card{
+      min-height:330px;
+      padding:26px 28px;
+      display:flex;
+      flex-direction:column;
+      gap:0;
+      position:relative;
+    }
+    .problem-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:18px;
+    }
+    .section-label{
+      margin:0 0 8px;
+      color:#8a9690;
+      font-size:12px;
+      font-weight:700;
+    }
+    .problem-label-row{
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .learning-tag{
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      border:1px solid rgba(63,143,118,.16);
+      background:#f3faf6;
+      color:var(--primary-dark);
+      border-radius:999px;
+      padding:5px 9px;
+      font-size:11px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+    .learning-tag .material-symbols-outlined{font-size:16px;}
+    .difficulty-pill{
+      flex:0 0 auto;
+      min-width:132px;
+      padding:9px 16px;
+      border-radius:999px;
+      background:#f8fbf4;
+      color:#4b5c56;
+      border:1px solid rgba(63,143,118,.18);
+      font-size:14px;
+      font-weight:700;
+      text-align:center;
+      white-space:nowrap;
+    }
+    .problem-stem{
+      margin:0;
+      color:#111827;
+      font-size:clamp(14px,1.25vw,17px);
+      line-height:1.8;
+      font-weight:500;
+    }
+    .problem-stem strong{font-weight:700;}
+    .formula-box{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:150px;
+      padding:18px 12px 34px;
+      text-align:center;
+    }
+    .formula-box .MathJax{
+      font-size:clamp(1.65rem,2.55vw,2.15rem) !important;
+    }
+    .problem-meta{
+      position:absolute;
+      right:24px;
+      bottom:18px;
+      text-align:right;
+      color:#8b9aa5;
+      font-size:12px;
+      font-weight:700;
+    }
+    .answer-panel{
+      min-height:560px;
+      padding:28px 28px 26px;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      overflow:hidden;
+    }
+    .panel-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin:0;
+      color:#263633;
+      font-size:20px;
+      font-weight:800;
+    }
+    .panel-title-main{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .panel-title .material-symbols-outlined{color:var(--primary);}
+    .choice-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+    }
+    .choice-button{
+      position:relative;
+      width:100%;
+      min-height:86px;
+      border:2px solid rgba(63,143,118,.18);
+      border-radius:16px;
+      background:#fff;
+      color:#263633;
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:12px;
+      align-items:center;
+      padding:16px 18px;
+      text-align:left;
+      cursor:pointer;
+      box-shadow:0 8px 18px rgba(71,91,82,.05);
+      transition:transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+    .choice-button:hover{
+      border-color:rgba(63,143,118,.45);
+      transform:translateY(-2px);
+      box-shadow:0 12px 22px rgba(71,91,82,.1);
+    }
+    .choice-button:disabled{
+      cursor:default;
+      transform:none;
+    }
+    .choice-number{
+      width:34px;
+      height:34px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:#eef6f0;
+      color:var(--primary-dark);
+      font-size:16px;
+      font-weight:900;
+    }
+    .choice-text{
+      min-width:0;
+      font-size:18px;
+      font-weight:800;
+      line-height:1.35;
+      overflow-wrap:anywhere;
+    }
+    .choice-text .MathJax{
+      max-width:100%;
+      overflow-x:auto;
+      overflow-y:hidden;
+    }
+    .choice-button.is-selected{
+      border-color:var(--orange);
+      background:var(--orange-soft);
+    }
+    .choice-button.is-correct{
+      border-color:rgba(63,143,118,.7);
+      background:linear-gradient(180deg, #f7fffb, #e6f3ec);
+      box-shadow:0 0 0 4px rgba(63,143,118,.1);
+    }
+    .choice-button.is-wrong{
+      border-color:rgba(239,68,68,.45);
+      background:var(--danger-soft);
+    }
+    .feedback-card{
+      display:none;
+      align-items:flex-start;
+      gap:12px;
+      padding:16px 18px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#f7fffb;
+      animation:feedbackIn .3s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .feedback-card.is-visible{display:flex;}
+    .feedback-card.is-incorrect{
+      border-color:rgba(217,154,40,.35);
+      background:var(--orange-soft);
+    }
+    .feedback-icon{
+      flex:0 0 auto;
+      width:38px;
+      height:38px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:var(--primary);
+      color:#fff;
+    }
+    .feedback-card.is-incorrect .feedback-icon{background:var(--orange);}
+    .feedback-copy{
+      display:grid;
+      gap:4px;
+    }
+    .feedback-copy strong{
+      color:var(--primary-dark);
+      font-size:16px;
+      font-weight:900;
+    }
+    .feedback-card.is-incorrect .feedback-copy strong{color:#9a5f12;}
+    .feedback-copy span{
+      color:#526260;
+      font-size:13px;
+      font-weight:700;
+      line-height:1.6;
+    }
+    @keyframes feedbackIn{
+      from{opacity:0; transform:translateY(8px) scale(.98);}
+      to{opacity:1; transform:none;}
+    }
+    .explain-box{
+      display:none;
+      max-height:260px;
+      overflow:auto;
+      padding:18px;
+      border-radius:16px;
+      border:1px solid rgba(217,154,40,.26);
+      background:#fffaf0;
+      color:#233330;
+      font-size:15px;
+      line-height:1.75;
+    }
+    .explain-box.is-visible{display:block;}
+    .explain-box strong{
+      color:#172322;
+      font-weight:900;
+    }
+    .explain-box p{margin:0 0 12px;}
+    .explain-box .MathJax{
+      font-size:108% !important;
+    }
+    .explain-card{
+      display:none;
+      position:relative;
+      overflow:hidden;
+      margin-top:22px;
+      padding:22px;
+      animation:explainAppear .34s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .explain-card.is-visible{display:block;}
+    .explain-card::before{
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:4px;
+      background:linear-gradient(90deg, var(--primary), #82b99a 52%, var(--orange));
+    }
+    .explain-head{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+      padding-bottom:14px;
+      margin-bottom:14px;
+      border-bottom:1px solid rgba(63,143,118,.15);
+    }
+    .tag{
+      padding:5px 10px;
+      border-radius:999px;
+      color:#fff;
+      background:var(--primary);
+      font-size:12px;
+      font-weight:900;
+    }
+    .answer-formula{
+      color:#152222;
+      font-size:24px;
+      line-height:1.5;
+      font-weight:700;
+    }
+    .summary-strip{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:16px;
+    }
+    .summary-chip{
+      border-radius:999px;
+      border:1px solid rgba(63,143,118,.18);
+      background:#fff;
+      color:#637579;
+      padding:6px 10px;
+      font-size:12px;
+      font-weight:800;
+    }
+    .explain-title{
+      margin:0 0 10px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:#263633;
+      font-size:18px;
+      font-weight:900;
+    }
+    .explain-title .material-symbols-outlined{color:var(--primary);}
+    .explain-body{
+      color:#34474b;
+      font-size:16px;
+      line-height:1.9;
+    }
+    .explain-body p{margin:0 0 12px;}
+    .explain-body .MathJax{font-size:108% !important;}
+    @keyframes explainAppear{
+      from{opacity:0; transform:translateY(12px) scale(.985);}
+      to{opacity:1; transform:none;}
+    }
+    .answer-footer{
+      margin-top:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding-top:6px;
+    }
+    .answer-note{
+      min-height:24px;
+      color:var(--orange);
+      font-size:13px;
+      font-weight:800;
+    }
+    .footer{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:28;
+      padding:14px 24px;
+      background:rgba(255,255,251,.96);
+      border-top:1px solid rgba(63,143,118,.16);
+      box-shadow:0 -12px 28px rgba(63,143,118,.08);
+    }
+    .footer-inner{
+      width:min(1180px, 100%);
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:18px;
+    }
+    .primary-action{
+      min-width:168px;
+      min-height:54px;
+      border:0;
+      border-radius:16px;
+      background:var(--primary);
+      color:#fff;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:0 22px;
+      font-weight:900;
+      font-size:16px;
+      cursor:pointer;
+      box-shadow:0 10px 18px rgba(63,143,118,.25);
+      transition:background .18s ease, transform .18s ease, box-shadow .18s ease;
+    }
+    .primary-action:hover{
+      background:var(--primary-dark);
+      transform:translateY(-1px);
+      box-shadow:0 14px 22px rgba(63,143,118,.28);
+    }
+    .primary-action:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+      transform:none;
+      box-shadow:none;
+    }
+    .completion-flash{
+      pointer-events:none;
+      position:fixed;
+      inset:0;
+      z-index:80;
+      display:none;
+      place-items:center;
+      background:rgba(255,255,251,.72);
+      backdrop-filter:blur(4px);
+    }
+    .completion-flash.is-visible{display:grid; animation:fadeIn .18s ease both;}
+    .completion-card{
+      min-width:min(420px, 86vw);
+      padding:34px 38px;
+      border-radius:22px;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:0 24px 56px rgba(45,73,62,.22);
+      text-align:center;
+      color:var(--primary-dark);
+      animation:finishPop .56s cubic-bezier(.2,.9,.2,1) both;
+    }
+    .completion-card strong{
+      display:block;
+      margin-top:10px;
+      font-size:28px;
+      font-weight:900;
+    }
+    @keyframes fadeIn{from{opacity:0;} to{opacity:1;}}
+    @keyframes finishPop{
+      0%{opacity:0; transform:translateY(16px) scale(.92);}
+      60%{opacity:1; transform:translateY(-4px) scale(1.02);}
+      100%{opacity:1; transform:none;}
+    }
+    @media (max-width: 980px){
+      .page{padding-inline:16px;}
+      .quiz-grid{
+        grid-template-columns:1fr;
+      }
+      .problem-card,
+      .answer-panel{
+        min-height:auto;
+      }
+      .formula-box{min-height:180px;}
+    }
+    @media (max-width: 720px){
+      .header-inner{padding-inline:14px;}
+      .header-left,
+      .header-right{min-width:54px;}
+      .title-block h1{font-size:15px;}
+      .page{padding-top:96px;}
+      .problem-card,
+      .answer-panel{padding:22px 18px;}
+      .problem-head{display:grid;}
+      .difficulty-pill{justify-self:start;}
+      .choice-grid{grid-template-columns:1fr;}
+      .choice-button{min-height:92px;}
+      .formula-box .MathJax{font-size:125% !important;}
+    }
+    @media (prefers-reduced-motion: reduce){
+      *,
+      *::before,
+      *::after{
+        scroll-behavior:auto !important;
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="lesson-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <button class="icon-button" type="button" aria-label="ホームへ戻る" id="backButton">
+          <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+        </button>
+      </div>
+      <div class="title-block">
+        <h1>4択トレーニング</h1>
+        <p id="questionCounter">第 1 問 / 全 10 問</p>
+        <div class="footprints" id="progressDots" aria-label="問題の進捗"></div>
+      </div>
+      <div class="header-right">
+        <button class="icon-button" type="button" aria-label="閉じる" id="closeButton">
+          <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        </button>
+      </div>
+    </div>
+    <div class="progress-track" aria-hidden="true"><span class="progress-bar" id="progressBar"></span></div>
+  </header>
+
+  <main class="page">
+    <div class="quiz-grid" id="quizGrid">
+      <section class="card problem-card" aria-labelledby="problemTitle">
+        <div class="problem-head">
+          <div>
+            <div class="problem-label-row">
+              <p class="section-label" id="problemTitle">問題</p>
+              <span class="learning-tag">
+                <span class="material-symbols-outlined" aria-hidden="true">category</span>
+                <span id="learningTag">学習項目</span>
+              </span>
+            </div>
+            <p class="problem-stem">
+              <strong id="problemIndexLabel">【問題1】</strong>
+              <span id="problemStem">次の式を展開しなさい。</span>
+            </p>
+          </div>
+          <div class="difficulty-pill" id="difficultyLabel">難易度 180 / 300</div>
+        </div>
+        <div class="formula-box" id="formulaBox"></div>
+        <div class="problem-meta" id="problemIdLabel">問題番号：---</div>
+      </section>
+
+      <section class="card answer-panel" aria-labelledby="choiceTitle">
+        <h2 class="panel-title" id="choiceTitle">
+          <span class="panel-title-main">
+            <span class="material-symbols-outlined" aria-hidden="true">touch_app</span>
+            4つから選ぶ
+          </span>
+          <span class="learning-tag" id="statusTag">未選択</span>
+        </h2>
+        <div class="choice-grid" id="choiceGrid"></div>
+        <div class="feedback-card" id="feedbackCard" aria-live="polite">
+          <span class="feedback-icon">
+            <span class="material-symbols-outlined" id="feedbackIcon" aria-hidden="true">check</span>
+          </span>
+          <span class="feedback-copy">
+            <strong id="feedbackTitle">正解です</strong>
+            <span id="feedbackText">いい調子です。</span>
+          </span>
+        </div>
+      </section>
+    </div>
+
+    <section class="card explain-card" id="explainCard" aria-labelledby="explainTitle">
+      <div class="explain-head">
+        <span class="tag">解答</span>
+        <div class="answer-formula" id="correctAnswer"></div>
+      </div>
+      <div class="summary-strip">
+        <span class="summary-chip" id="answerChoiceLabel">選択肢</span>
+        <span class="summary-chip" id="abilityLabel">学習項目</span>
+        <span class="summary-chip" id="difficultySummary">難易度 180 / 300</span>
+      </div>
+      <h2 class="explain-title" id="explainTitle">
+        <span class="material-symbols-outlined" aria-hidden="true">tips_and_updates</span>
+        解説
+      </h2>
+      <div class="explain-body" id="explanationBody"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="answer-note" id="answerNote"></div>
+      <button class="primary-action" id="nextButton" type="button" disabled>
+        <span id="nextButtonLabel">次の問題へ</span>
+        <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+      </button>
+    </div>
+  </footer>
+
+  <div class="completion-flash" id="completionFlash" aria-hidden="true">
+    <div class="completion-card">
+      <span class="material-symbols-outlined" aria-hidden="true" style="font-size:42px;">flag</span>
+      <strong>10問完了</strong>
+    </div>
+  </div>
+
+  <script>
+    const QUESTIONS = [
+      {
+        id: "m-jh3-A-01-04s-03",
+        item: "式の展開",
+        difficulty: 205,
+        stem: "次の式を展開しなさい。",
+        formula: String.raw`\[
+(x-3)(2x+5)-(x+4)(x-2)
+\]`,
+        choices: [
+          String.raw`\(x^2+x-23\)`,
+          String.raw`\(x^2-3x-7\)`,
+          String.raw`\(x^2+x-7\)`,
+          String.raw`\(x^2-3x-23\)`
+        ],
+        answer: 1,
+        explanation: String.raw`
+**ステップ1：** 文字式の積の部分を取り出し、分配法則を利用して展開する
+
+\[
+\begin{aligned}
+(x-3)(2x+5)
+&=x(2x+5)-3(2x+5)\\
+&=2x^2+5x-6x-15\\
+&=2x^2-x-15
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+(x+4)(x-2)
+&=x(x-2)+4(x-2)\\
+&=x^2-2x+4x-8\\
+&=x^2+2x-8
+\end{aligned}
+\]
+
+**ステップ2：** もとの式に戻す
+\[
+\begin{aligned}
+(x-3)(2x+5)-(x+4)(x-2)
+&=(2x^2-x-15)-(x^2+2x-8)
+\end{aligned}
+\]
+
+**ステップ3：** かっこを外し、同類項をまとめる
+\[
+\begin{aligned}
+&=2x^2-x-15-x^2-2x+8\\
+&=x^2-3x-7
+\end{aligned}
+\]`
+      },
+      {
+        id: "m-jh3-A-01-05b-01",
+        item: "乗法公式",
+        difficulty: 165,
+        stem: "次の式を展開しなさい。",
+        formula: String.raw`\[
+(x + 4)(x + 6)
+\]`,
+        choices: [
+          String.raw`\(x^2+10x+10\)`,
+          String.raw`\(x^2+24x+10\)`,
+          String.raw`\(x^2+2x+24\)`,
+          String.raw`\(x^2+10x+24\)`
+        ],
+        answer: 3,
+        explanation: String.raw`
+**ステップ1：** 乗法の公式が使えないか検討する
+
+\[
+(x+4)(x+6)
+\]
+は、次の公式の形である。
+
+\[
+(x+a)(x+b)=x^2+(a+b)x+ab
+\]
+
+**ステップ2：** 乗法の公式にあてはめる
+\[
+\begin{aligned}
+(x+4)(x+6)
+&= x^2 + (4 + 6)x + 4 \times 6
+\end{aligned}
+\]
+
+**ステップ3：** 整理する
+\[
+\begin{aligned}
+&= x^2 +10x + 24
+\end{aligned}
+\]`
+      },
+      {
+        id: "m-jh3-A-01-05b-04",
+        item: "乗法公式",
+        difficulty: 168,
+        stem: "次の式を展開しなさい。",
+        formula: String.raw`\[
+(x + 4)(x + 7)
+\]`,
+        choices: [
+          String.raw`\(x^2+11x+28\)`,
+          String.raw`\(x^2+11x+11\)`,
+          String.raw`\(x^2+28x+11\)`,
+          String.raw`\(x^2+3x+28\)`
+        ],
+        answer: 0,
+        explanation: String.raw`
+**ステップ1：** 乗法の公式が使えないか検討する
+
+\[
+(x+4)(x+7)
+\]
+は、次の公式の形である。
+
+\[
+(x+a)(x+b)=x^2+(a+b)x+ab
+\]
+
+**ステップ2：** 乗法の公式にあてはめる
+\[
+\begin{aligned}
+(x+4)(x+7)
+&= x^2 + (4 + 7)x + 4 \times 7
+\end{aligned}
+\]
+
+**ステップ3：** 整理する
+\[
+\begin{aligned}
+&= x^2 +11x + 28
+\end{aligned}
+\]`
+      },
+      {
+        id: "m-jh3-A-01-05s-01",
+        item: "乗法公式",
+        difficulty: 185,
+        stem: "次の式を展開しなさい。",
+        formula: String.raw`\[
+(x + 6)(x - 8)
+\]`,
+        choices: [
+          String.raw`\(x^2+2x-48\)`,
+          String.raw`\(x^2-2x+48\)`,
+          String.raw`\(x^2-2x-48\)`,
+          String.raw`\(x^2-14x-48\)`
+        ],
+        answer: 2,
+        explanation: String.raw`
+**ステップ1：** 乗法の公式が使えないか検討する
+
+\[
+(x+6)(x-8)
+\]
+は、\((x+a)(x+b)\) の形である。ここでは、\(a=6\)、\(b=-8\) と見る。
+
+**ステップ2：** 乗法の公式にあてはめる
+\[
+\begin{aligned}
+(x+6)(x-8)
+&= x^2 + (6 + (-8))x + 6 \times (-8)
+\end{aligned}
+\]
+
+**ステップ3：** 整理する
+\[
+\begin{aligned}
+&= x^2 -2x -48
+\end{aligned}
+\]
+
+符号が異なるときは、\(a+b\) と \(ab\) の符号に注意する。`
+      },
+      {
+        id: "m-jh3-A-01-05s-04",
+        item: "乗法公式",
+        difficulty: 188,
+        stem: "次の式を展開しなさい。",
+        formula: String.raw`\[
+(x - 6)(x + 11)
+\]`,
+        choices: [
+          String.raw`\(x^2-5x-66\)`,
+          String.raw`\(x^2+5x-66\)`,
+          String.raw`\(x^2+17x-66\)`,
+          String.raw`\(x^2+5x+66\)`
+        ],
+        answer: 1,
+        explanation: String.raw`
+**ステップ1：** 乗法の公式が使えないか検討する
+
+\[
+(x-6)(x+11)
+\]
+は、\((x+a)(x+b)\) の形である。ここでは、\(a=-6\)、\(b=11\) と見る。
+
+**ステップ2：** 乗法の公式にあてはめる
+\[
+\begin{aligned}
+(x-6)(x+11)
+&= x^2 + ((-6) + 11)x + (-6) \times 11
+\end{aligned}
+\]
+
+**ステップ3：** 整理する
+\[
+\begin{aligned}
+&= x^2 + 5x - 66
+\end{aligned}
+\]`
+      },
+      {
+        id: "m-jh3-A-02-01b-03",
+        item: "共通因数",
+        difficulty: 205,
+        stem: "次の式を因数分解しなさい。",
+        formula: String.raw`\[
+3a^2b - 6ab^2 + 9ab
+\]`,
+        choices: [
+          String.raw`\(3ab(a-2b+9)\)`,
+          String.raw`\(3ab(a+2b+3)\)`,
+          String.raw`\(3a(a-2b+3)\)`,
+          String.raw`\(3ab(a-2b+3)\)`
+        ],
+        answer: 3,
+        explanation: String.raw`
+それぞれの項に共通してふくまれている因数を共通因数という。因数分解では、まず各項に共通する数や文字がないかを確認する。
+
+**ステップ1：** 各項の共通因数を見つける
+\[
+\begin{aligned}
+3a^2b-6ab^2+9ab
+&= (3 \times a \times a \times b)
+ - (3 \times 2 \times a \times b \times b)
+ + (3 \times a \times b \times 3)
+\end{aligned}
+\]
+
+3つの項に共通している因数は \(3ab\) である。
+
+**ステップ2：** 共通因数でくくりだす
+\[
+\begin{aligned}
+3a^2b-6ab^2+9ab
+&= 3ab(a - 2b + 3)
+\end{aligned}
+\]`
+      },
+      {
+        id: "m-jh3-A-02-01b-04",
+        item: "共通因数",
+        difficulty: 205,
+        stem: "次の式を因数分解しなさい。",
+        formula: String.raw`\[
+6a^2b - 9ab^2 + 3ab
+\]`,
+        choices: [
+          String.raw`\(3ab(2a-3b+1)\)`,
+          String.raw`\(3ab(2a-3b+3)\)`,
+          String.raw`\(3ab(2a+3b+1)\)`,
+          String.raw`\(ab(2a-3b+1)\)`
+        ],
+        answer: 0,
+        explanation: String.raw`
+**ステップ1：** 各項の共通因数を見つける
+\[
+\begin{aligned}
+6a^2b-9ab^2+3ab
+&= (3 \times 2 \times a \times a \times b)
+ - (3 \times 3 \times a \times b \times b)
+ + (3 \times a \times b)
+\end{aligned}
+\]
+
+3つの項に共通している因数は \(3ab\) である。
+
+**ステップ2：** 共通因数でくくりだす
+\[
+\begin{aligned}
+6a^2b-9ab^2+3ab
+&= 3ab(2a - 3b + 1)
+\end{aligned}
+\]
+
+最後の項 \(3ab\) は、共通因数 \(3ab\) で割ると \(1\) になる。`
+      },
+      {
+        id: "m-jh3-A-02-01s-01",
+        item: "共通因数",
+        difficulty: 218,
+        stem: "次の式を因数分解しなさい。",
+        formula: String.raw`\[
+-10x^2y+15xy^2-5xy
+\]`,
+        choices: [
+          String.raw`\(-5xy(2x+3y+1)\)`,
+          String.raw`\(5xy(2x-3y+1)\)`,
+          String.raw`\(-5xy(2x-3y+1)\)`,
+          String.raw`\(-5xy(2x-3y-1)\)`
+        ],
+        answer: 2,
+        explanation: String.raw`
+先頭の項が負の場合は、負の共通因数でくくると、かっこの中の先頭を正にできる。
+
+**ステップ1：** 各項を因数に分解する
+
+\[
+-10x^2y=(-5)\times x\times y\times 2x
+\]
+\[
+15xy^2=(-5)\times x\times y\times (-3y)
+\]
+\[
+-5xy=(-5)\times x\times y
+\]
+
+**ステップ2：** 各項の共通因数を見つける
+
+すべての項に共通している因数は \(-5xy\) である。
+
+**ステップ3：** 共通因数でくくりだす
+\[
+-10x^2y+15xy^2-5xy
+=-5xy(2x-3y+1)
+\]`
+      },
+      {
+        id: "m-jh3-A-02-01s-03",
+        item: "共通因数",
+        difficulty: 220,
+        stem: "次の式を因数分解しなさい。",
+        formula: String.raw`\[
+-6m^2n+15mn^2-9mn
+\]`,
+        choices: [
+          String.raw`\(-3mn(2m+5n+3)\)`,
+          String.raw`\(-3mn(2m-5n+3)\)`,
+          String.raw`\(3mn(2m-5n+3)\)`,
+          String.raw`\(-3mn(2m-5n-3)\)`
+        ],
+        answer: 1,
+        explanation: String.raw`
+**ステップ1：** 各項を因数に分解する
+
+\[
+-6m^2n=(-3)\times 2\times m\times m\times n
+\]
+\[
+15mn^2=(-3)\times m\times n\times(-5n)
+\]
+\[
+-9mn=(-3)\times m\times n\times3
+\]
+
+**ステップ2：** 各項の共通因数を見つける
+
+すべての項に共通している因数は \(-3mn\) である。
+
+**ステップ3：** 共通因数でくくりだす
+\[
+-6m^2n+15mn^2-9mn
+=-3mn(2m-5n+3)
+\]`
+      },
+      {
+        id: "m-jh3-A-02-03b-23",
+        item: "平方公式",
+        difficulty: 238,
+        stem: "次の式を因数分解しなさい。",
+        formula: String.raw`\[
+x^2 + 14x + 49
+\]`,
+        choices: [
+          String.raw`\((x-7)^2\)`,
+          String.raw`\((x+14)^2\)`,
+          String.raw`\((x+7)(x-7)\)`,
+          String.raw`\((x+7)^2\)`
+        ],
+        answer: 3,
+        explanation: String.raw`
+今回は、\(x^2+2ax+a^2\) の形を見つけて、次の乗法の公式を利用する。
+\[
+x^2+2ax+a^2=(x+a)^2
+\]
+
+**ステップ1：** 乗法の公式が使えるか判断する
+
+\(x^2 + 14x + 49\) は、第2項の係数が正の偶数である。そこで、\(x^2 + 2ax + a^2\) の形かを確認する。
+
+**ステップ2：** \(a\) の値を確認する
+
+\(14 \div 2 = 7\) であり、\(7^2=49\) となるので一致する。
+
+**ステップ3：** 乗法の公式を適用する
+\[
+\begin{aligned}
+x^2 + 14x + 49
+&= x^2 + 2 \times 7 \times x + 7^2\\
+&=(x + 7)^2
+\end{aligned}
+\]`
+      }
+    ];
+
+    const RESULT_URL = "SCR-014-design-01.html";
+    const HOME_URL = "SCR-002.html";
+    const CHOICE_LABELS = ["①", "②", "③", "④"];
+
+    const state = {
+      index: 0,
+      answers: Array(QUESTIONS.length).fill(null),
+      selected: null
+    };
+
+    const els = {
+      backButton: document.getElementById("backButton"),
+      closeButton: document.getElementById("closeButton"),
+      questionCounter: document.getElementById("questionCounter"),
+      progressDots: document.getElementById("progressDots"),
+      progressBar: document.getElementById("progressBar"),
+      learningTag: document.getElementById("learningTag"),
+      difficultyLabel: document.getElementById("difficultyLabel"),
+      problemIndexLabel: document.getElementById("problemIndexLabel"),
+      problemStem: document.getElementById("problemStem"),
+      formulaBox: document.getElementById("formulaBox"),
+      problemIdLabel: document.getElementById("problemIdLabel"),
+      statusTag: document.getElementById("statusTag"),
+      choiceGrid: document.getElementById("choiceGrid"),
+      feedbackCard: document.getElementById("feedbackCard"),
+      feedbackIcon: document.getElementById("feedbackIcon"),
+      feedbackTitle: document.getElementById("feedbackTitle"),
+      feedbackText: document.getElementById("feedbackText"),
+      explainCard: document.getElementById("explainCard"),
+      correctAnswer: document.getElementById("correctAnswer"),
+      answerChoiceLabel: document.getElementById("answerChoiceLabel"),
+      abilityLabel: document.getElementById("abilityLabel"),
+      difficultySummary: document.getElementById("difficultySummary"),
+      explanationBody: document.getElementById("explanationBody"),
+      answerNote: document.getElementById("answerNote"),
+      nextButton: document.getElementById("nextButton"),
+      nextButtonLabel: document.getElementById("nextButtonLabel"),
+      completionFlash: document.getElementById("completionFlash"),
+      quizGrid: document.getElementById("quizGrid")
+    };
+
+    function escapeHtml(value){
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+    }
+
+    function formatMathText(value){
+      return escapeHtml(value.trim())
+        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+        .replace(/\n{2,}/g, "</p><p>")
+        .replace(/\n/g, "<br>");
+    }
+
+    function refreshMath(){
+      if (window.MathJax && MathJax.typesetPromise) {
+        MathJax.typesetPromise([document.body]).catch(() => {});
+      }
+    }
+
+    function currentQuestion(){
+      return QUESTIONS[state.index];
+    }
+
+    function renderProgress(){
+      els.questionCounter.textContent = `第 ${state.index + 1} 問 / 全 ${QUESTIONS.length} 問`;
+      els.progressBar.style.width = `${((state.index + 1) / QUESTIONS.length) * 100}%`;
+      els.progressDots.innerHTML = QUESTIONS.map((_, i) => {
+        const result = state.answers[i];
+        const classes = ["footprint-dot"];
+        if (i === state.index && result === null) classes.push("current");
+        if (result === true) classes.push("correct");
+        if (result === false) classes.push("incorrect");
+        return `<span class="${classes.join(" ")}" aria-hidden="true"></span>`;
+      }).join("");
+    }
+
+    function renderQuestion(){
+      const q = currentQuestion();
+      state.selected = null;
+      els.quizGrid.style.animation = "none";
+      void els.quizGrid.offsetWidth;
+      els.quizGrid.style.animation = "";
+
+      renderProgress();
+      els.learningTag.textContent = q.item;
+      els.difficultyLabel.textContent = `難易度 ${q.difficulty} / 300`;
+      els.problemIndexLabel.textContent = `【問題${state.index + 1}】`;
+      els.problemStem.textContent = q.stem;
+      els.formulaBox.innerHTML = q.formula;
+      els.problemIdLabel.textContent = `問題番号：${q.id}`;
+      els.statusTag.textContent = "未選択";
+      els.statusTag.style.background = "var(--primary-soft)";
+      els.statusTag.style.color = "var(--primary-dark)";
+      els.feedbackCard.className = "feedback-card";
+      els.explainCard.className = "card explain-card";
+      els.correctAnswer.innerHTML = "";
+      els.answerChoiceLabel.textContent = "選択肢";
+      els.abilityLabel.textContent = q.item;
+      els.difficultySummary.textContent = `難易度 ${q.difficulty} / 300`;
+      els.explanationBody.innerHTML = "";
+      els.answerNote.textContent = "";
+      els.nextButton.disabled = true;
+      els.nextButtonLabel.textContent = state.index === QUESTIONS.length - 1 ? "終了画面へ" : "次の問題へ";
+      els.choiceGrid.innerHTML = q.choices.map((choice, i) => `
+        <button class="choice-button" type="button" data-choice="${i}">
+          <span class="choice-number">${CHOICE_LABELS[i]}</span>
+          <span class="choice-text">${choice}</span>
+        </button>
+      `).join("");
+      els.choiceGrid.querySelectorAll(".choice-button").forEach((button) => {
+        button.addEventListener("click", () => selectChoice(Number(button.dataset.choice)));
+      });
+      refreshMath();
+    }
+
+    function selectChoice(choiceIndex){
+      const q = currentQuestion();
+      state.selected = choiceIndex;
+      const isCorrect = choiceIndex === q.answer;
+      state.answers[state.index] = isCorrect;
+
+      els.choiceGrid.querySelectorAll(".choice-button").forEach((button) => {
+        const index = Number(button.dataset.choice);
+        button.disabled = true;
+        if (index === q.answer) button.classList.add("is-correct");
+        if (index === choiceIndex && !isCorrect) button.classList.add("is-wrong");
+        if (index === choiceIndex) button.classList.add("is-selected");
+      });
+
+      els.statusTag.textContent = isCorrect ? "正解" : "見直し";
+      els.statusTag.style.background = isCorrect ? "var(--primary-soft)" : "var(--orange-soft)";
+      els.statusTag.style.color = isCorrect ? "var(--primary-dark)" : "#9a5f12";
+      els.feedbackCard.className = `feedback-card is-visible${isCorrect ? "" : " is-incorrect"}`;
+      els.feedbackIcon.textContent = isCorrect ? "check_circle" : "error";
+      els.feedbackTitle.textContent = isCorrect ? "いい調子、正解です" : "あと少し、見直せば届きます";
+      els.feedbackText.textContent = isCorrect
+        ? "選び方が合っています。解説で考え方も確認しておきましょう。"
+        : `正解は ${CHOICE_LABELS[q.answer]} です。どこでずれたかを解説で確認しましょう。`;
+      els.correctAnswer.innerHTML = q.choices[q.answer];
+      els.answerChoiceLabel.textContent = `正解 ${CHOICE_LABELS[q.answer]}`;
+      els.abilityLabel.textContent = q.item;
+      els.difficultySummary.textContent = `難易度 ${q.difficulty} / 300`;
+      els.explanationBody.innerHTML = `<p>${formatMathText(q.explanation)}</p>`;
+      els.explainCard.className = "card explain-card is-visible";
+      els.answerNote.textContent = "";
+      els.nextButton.disabled = false;
+      renderProgress();
+      refreshMath();
+    }
+
+    function goNext(){
+      if (state.selected === null) {
+        els.answerNote.textContent = "先に選択肢を選んでください。";
+        return;
+      }
+      if (state.index >= QUESTIONS.length - 1) {
+        els.completionFlash.classList.add("is-visible");
+        window.setTimeout(() => {
+          window.location.href = RESULT_URL;
+        }, 650);
+        return;
+      }
+      state.index += 1;
+      renderQuestion();
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+
+    els.backButton.addEventListener("click", () => {
+      window.location.href = HOME_URL;
+    });
+    els.closeButton.addEventListener("click", () => {
+      window.location.href = HOME_URL;
+    });
+    els.nextButton.addEventListener("click", goNext);
+
+    window.addEventListener("load", refreshMath);
+    renderQuestion();
+  </script>
+</body>
+</html>
